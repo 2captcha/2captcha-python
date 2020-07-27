@@ -1,7 +1,32 @@
+# PHP Module for 2Captcha API
+The easiest way to quickly integrate [2Captcha] captcha solving service into your code to automate solving of any types of captcha.
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Description](#description)
+- [Solve captcha](#solve-captcha)
+  - [Normal Captcha](#normal-captcha)
+  - [Text](#text-captcha)
+  - [ReCaptcha v2](#recaptcha-v2)
+  - [ReCaptcha v3](#recaptcha-v3)
+  - [FunCaptcha](#funcaptcha)
+  - [GeeTest](#geetest)
+  - [hCaptcha](#hcaptcha)
+  - [KeyCaptcha](#keycaptcha)
+  - [Capy](#capy)
+  - [Grid (ReCaptcha V2 Old Method)](#grid)
+  - [Canvas](#canvas)
+  - [ClickCaptcha](#clickcaptcha)
+  - [Rotate](#rotate)
+- [Other methods](#other-methods)
+  - [send / getResult](#send--getresult)
+  - [balance](#balance)
+  - [report](#report)
+- [Error handling](#error-handling)
+
 ## Installation
 
-
-This package can be installed like this:
+This package can be installed with Pip:
 
 ```pip3 install 2captcha-python```
 
@@ -29,20 +54,51 @@ config = {
 solver = TwoCaptcha(**config)
 ```
 
+### Options description
+
+|Option|Default value|Description|
+|---|---|---|
+|softId|-|your software ID obtained after publishing in [2captcha sofware catalog]|
+|callback|-|URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account|
+|defaultTimeout|120|Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint|
+|recaptchaTimeout|600|Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint|
+|pollingInterval|10|Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended|
+
+>  **IMPORTANT:** once `pingback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+To get the answer manually use [getResult method](#send--getresult)
+
 ## Solve captcha
-Below shown only base examples for every captcha type. Check out examples directory to find more examples with all available options.
+When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
+
+### Options description
+|Option|Default Value|Description|
+|---|---|---|
+|numeric|0|Defines if captcha contains numeric or other symbols [see more info in the API docs][post options]|
+|minLength|0|minimal answer lenght|
+|maxLength|0|maximum answer length|
+|phrase|0|defines if the answer contains multiple words or not|
+|caseSensitive|0|defines if the answer is case sensitive|
+|calc|0|defines captcha requires calculation|
+|lang|-|defines the captcha language, see the [list of supported languages] |
+|hintImg|-|an image with hint shown to workers with the captcha|
+|hintText|-|hint or task text shown to workers with the captcha|
+
+Below you can find basic examples for every captcha type. Check out [examples directory] to find more examples with all available options.
 
 ### Normal Captcha
+To bypass a normal captcha (distorted text on image) use the following method. This method also can be used to recognize any text on the image.
 ```python 
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Text Captcha
+This method can be used to bypass a captcha that requires to answer a question provided in clear text.
 ```python 
 result = solver.text('If tomorrow is Saturday, what day is today?', param1=..., ...)
 ```
 
 ### ReCaptcha v2
+Use this method to solve ReCaptcha V2 and obtain a token to bypass the protection.
 ```python 
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                           url='https://mysite.com/page/with/recaptcha’,
@@ -50,6 +106,7 @@ result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 ```
 
 ### ReCaptcha v3
+This method provides ReCaptcha V3 solver and returns a token.
 ```python
 result = solver.recaptcha(sitekey=’6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/recaptcha',
@@ -58,6 +115,7 @@ result = solver.recaptcha(sitekey=’6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 ```
 
 ### FunCaptcha
+FunCaptcha (Arkoselabs) solving method. Returns a token.
 ```python
 result = solver.funcaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/funcaptcha',
@@ -67,6 +125,7 @@ result = solver.funcaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 
 
 ### GeeTest
+Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
 ```python
 result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
                         challenge='12345678abc90123d45678ef90123a456b',
@@ -77,6 +136,7 @@ result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
 
 
 ### hCaptcha
+Use this method to solve hCaptcha challenge. Returns a token to bypass captcha.
 ```python
 result = solver.funcaptcha(sitekey='f1ab2cdefa3456789012345b6c78d90e',
                             challenge='12345678abc90123d45678ef90123a456b',
@@ -86,6 +146,7 @@ result = solver.funcaptcha(sitekey='f1ab2cdefa3456789012345b6c78d90e',
 ```
 
 ### KeyCaptcha
+Token-based method to solve KeyCaptcha.
 ```python
 result = solver.keycaptcha(s_s_c_user_id=10,
     				   s_s_c_session_id='493e52c37c10c2bcdf4a00cbc9ccd1e8',
@@ -97,25 +158,30 @@ result = solver.keycaptcha(s_s_c_user_id=10,
 ```
 
 ### Capy
+Token-based method to bypass Capy puzzle captcha.
 ```python
 result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
                      url='http://mysite.com/', 
                      param1=..., ...)
 ```
 ### Grid
+Grid method is originally called Old ReCaptcha V2 method. The method can be used to bypass any type of captcha where you can apply a grid on image and need to click specific grid boxes. Returns numbers of boxes.
 ```python
 result = solver.grid('path/to/captcha.jpg', param1=..., ...)
 ```
 ### Canvas
+Canvas method can be used when you need to draw a line around an object on image. Returns a set of points' coordinates to draw a polygon.
 ```python
 result = solver.canvas('path/to/captcha.jpg', param1=..., ...)
 ```
 ### ClickCaptcha
+ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
 ```python
 result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Rotate
+This method can be used to solve a captcha that asks to rotate an object. Mostly used to bypass FunCaptcha. Returns the rotation angle.
 ```python
 result = solver.rotate(['path/to/captcha1.jpg', 'path/to/captcha2.jpg', ...], param1=..., ...)
 ```
@@ -123,6 +189,7 @@ result = solver.rotate(['path/to/captcha1.jpg', 'path/to/captcha2.jpg', ...], pa
 ## Other methods
 
 ### send / getResult
+These methods can be used for manual captcha submission and answer polling.
 ```python
 import time
 . . . . . 
@@ -135,17 +202,20 @@ code = solver.getResult(id)
 ```
 
 ### balance
+Use this method to get your account's balance
 ```python
 balance = solver.balance()
 ```
 
 ### report
+Use this method to report good or bad captcha answer.
 ```python
 solver.report(id, True) # captcha solved correctly
 solver.report(id, False) # captcha solved incorrectly
 ```
 
 ### Error handling
+If case of an error captcha solver throws an exception. It's important to properly handle these cases. We recommend to use `try except` to handle exceptions. 
 ```python
 Try:
     result = solver.text('If tomorrow is Saturday, what day is today?')
@@ -162,3 +232,10 @@ Except TimeoutException as e:
     # captcha is not solved so far
 	print(e)
 ```
+
+[2Captcha]: https://2captcha.com/
+[2captcha sofware catalog]: https://2captcha.com/software
+[pingback settings]: https://2captcha.com/setting/pingback
+[post options]: https://2captcha.com/2captcha-api#normal_post
+[list of supported languages]: https://2captcha.com/2captcha-api#language
+[examples directory]: /examples
