@@ -1,9 +1,8 @@
-# PHP Module for 2Captcha API
+# Python Module for 2Captcha API
 The easiest way to quickly integrate [2Captcha] captcha solving service into your code to automate solving of any types of captcha.
 
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Description](#description)
 - [Solve captcha](#solve-captcha)
   - [Normal Captcha](#normal-captcha)
   - [Text](#text-captcha)
@@ -54,7 +53,7 @@ config = {
 solver = TwoCaptcha(**config)
 ```
 
-### Options description
+### TwoCaptcha instance options
 
 |Option|Default value|Description|
 |---|---|---|
@@ -64,13 +63,13 @@ solver = TwoCaptcha(**config)
 |recaptchaTimeout|600|Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint|
 |pollingInterval|10|Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended|
 
->  **IMPORTANT:** once `pingback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+>  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
 To get the answer manually use [getResult method](#send--getresult)
 
 ## Solve captcha
 When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
 
-### Options description
+### Captcha options
 |Option|Default Value|Description|
 |---|---|---|
 |numeric|0|Defines if captcha contains numeric or other symbols [see more info in the API docs][post options]|
