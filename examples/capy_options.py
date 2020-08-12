@@ -11,7 +11,7 @@ solver = TwoCaptcha(api_key, defaultTimeout=30, pollingInterval=5)
 try:
     result = solver.capy(sitekey='PUZZLE_Cz04hZLjuZRMYC3ee10C32D3uNms5w',
                          url='https://www.mysite.com/captcha/',
-                         api_server="https://capy.me/",
+                         api_server="https://jp.api.capy.me/",
                          softId=33112)
 
 except Exception as e:

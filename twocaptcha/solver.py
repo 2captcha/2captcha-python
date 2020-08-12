@@ -32,14 +32,14 @@ class TimeoutException(SolverExceptions):
 
 class TwoCaptcha():
     def __init__(self,
-                 API_KEY,
+                 apiKey,
                  softId=None,
                  callback=None,
                  defaultTimeout=120,
                  recaptchaTimeout=600,
                  pollingInterval=10):
 
-        self.API_KEY = API_KEY
+        self.API_KEY = apiKey
         self.soft_id = softId
         self.callback = callback
         self.default_timeout = defaultTimeout

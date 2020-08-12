@@ -160,7 +160,8 @@ result = solver.keycaptcha(s_s_c_user_id=10,
 Token-based method to bypass Capy puzzle captcha.
 ```python
 result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
-                     url='http://mysite.com/', 
+                     url='http://mysite.com/',
+                     api_server='https://jp.api.capy.me/',
                      param1=..., ...)
 ```
 ### Grid
