@@ -137,8 +137,7 @@ result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
 ### hCaptcha
 Use this method to solve hCaptcha challenge. Returns a token to bypass captcha.
 ```python
-result = solver.funcaptcha(sitekey='f1ab2cdefa3456789012345b6c78d90e',
-                            challenge='12345678abc90123d45678ef90123a456b',
+result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
                             url='https://www.site.com/page/', 
                             param1=..., ...)
 
