@@ -235,7 +235,7 @@ Except TimeoutException as e:
 ### Async calls
 You can also make async calls with [asyncio], for example:
 
-```
+```python
 import asyncio
 import concurrent.futures
 from twocaptcha import TwoCaptcha
