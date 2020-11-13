@@ -232,9 +232,28 @@ Except TimeoutException as e:
 	print(e)
 ```
 
+### Async calls
+You can also make async calls with [asyncio], for example:
+
+```
+import asyncio
+import concurrent.futures
+from twocaptcha import TwoCaptcha
+
+captcha_result = await captchaSolver(image)
+
+async def captchaSolver(image):
+loop = asyncio.get_running_loop()
+with concurrent.futures.ThreadPoolExecutor() as pool:
+result = await loop.run_in_executor(pool, lambda: TwoCaptcha(API_KEY).normal(image))
+return result
+```
+
+
 [2Captcha]: https://2captcha.com/
 [2captcha sofware catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
 [post options]: https://2captcha.com/2captcha-api#normal_post
 [list of supported languages]: https://2captcha.com/2captcha-api#language
 [examples directory]: /examples
+[asyncio]: https://docs.python.org/3/library/asyncio.html
