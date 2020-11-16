@@ -243,10 +243,10 @@ from twocaptcha import TwoCaptcha
 captcha_result = await captchaSolver(image)
 
 async def captchaSolver(image):
-loop = asyncio.get_running_loop()
-with concurrent.futures.ThreadPoolExecutor() as pool:
-result = await loop.run_in_executor(pool, lambda: TwoCaptcha(API_KEY).normal(image))
-return result
+    loop = asyncio.get_running_loop()
+    with concurrent.future.ThreadPoolExecutor() as pool:
+        result = await loop.run_in_executor(pool, lambda: TwoCaptcha(API_KEY).normal(image))
+        return result
 ```
 
 
