@@ -197,7 +197,7 @@ import time
 id = solver.send(file='path/to/captcha.jpg')
 time.sleep(20)
 
-code = solver.getResult(id)
+code = solver.get_result(id)
 ```
 
 ### balance
