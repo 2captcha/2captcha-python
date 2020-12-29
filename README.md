@@ -232,6 +232,18 @@ Except TimeoutException as e:
 	print(e)
 ```
 
+
+### Proxies
+
+You can pass your proxy as an additional argumen for methods: recaptcha, funcaptcha and geetest. The proxy will be forwarded to the API to solve the captcha.
+
+```python
+proxy={
+    'type': 'HTTPS',
+    'uri': 'login:password@IP_address:PORT'
+}
+```
+
 ### Async calls
 You can also make async calls with [asyncio], for example:
 
