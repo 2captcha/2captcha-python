@@ -12,6 +12,10 @@ class ApiException(Exception):
 
 
 class ApiClient():
+    def __init__(self, post_url = '2captcha.com'):
+        self.post_url = post_url
+        
+        
     def in_(self, files={}, **kwargs):
         '''
         
@@ -39,10 +43,11 @@ class ApiClient():
         '''
 
         try:
+            current_url = 'https://'+self.post_url+'/in.php'
             if files:
 
                 files = {key: open(path, 'rb') for key, path in files.items()}
-                resp = requests.post('https://2captcha.com/in.php',
+                resp = requests.post(current_url,
                                      data=kwargs,
                                      files=files)
 
@@ -51,12 +56,12 @@ class ApiClient():
             elif 'file' in kwargs:
 
                 with open(kwargs.pop('file'), 'rb') as f:
-                    resp = requests.post('https://2captcha.com/in.php',
+                    resp = requests.post(current_url,
                                          data=kwargs,
                                          files={'file': f})
 
             else:
-                resp = requests.post('https://2captcha.com/in.php',
+                resp = requests.post(current_url,
                                      data=kwargs)
 
         except requests.RequestException as e:
@@ -96,7 +101,8 @@ class ApiClient():
         '''
 
         try:
-            resp = requests.get('https://2captcha.com/res.php', params=kwargs)
+            current_url_out = 'https://'+self.post_url+'/res.php'
+            resp = requests.get(current_url_out, params=kwargs)
 
             if resp.status_code != 200:
                 raise NetworkException(f'bad response: {resp.status_code}')

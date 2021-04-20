@@ -37,7 +37,8 @@ class TwoCaptcha():
                  callback=None,
                  defaultTimeout=120,
                  recaptchaTimeout=600,
-                 pollingInterval=10):
+                 pollingInterval=10,
+                 server = '2captcha.com'):
 
         self.API_KEY = apiKey
         self.soft_id = softId
@@ -45,8 +46,7 @@ class TwoCaptcha():
         self.default_timeout = defaultTimeout
         self.recaptcha_timeout = recaptchaTimeout
         self.polling_interval = pollingInterval
-
-        self.api_client = ApiClient()
+        self.api_client = ApiClient(post_url = str(server))
         self.max_files = 9
         self.exceptions = SolverExceptions
 
@@ -396,14 +396,13 @@ class TwoCaptcha():
         id_ = self.send(**kwargs)
         result = {'captchaId': id_}
 
-        if self.has_callback:
-            return result
+        if self.callback is None:
 
-        timeout = float(timeout or self.default_timeout)
-        sleep = int(polling_interval or self.polling_interval)
+            timeout = float(timeout or self.default_timeout)
+            sleep = int(polling_interval or self.polling_interval)
 
-        code = self.wait_result(id_, timeout, sleep)
-        result.update({'code': code})
+            code = self.wait_result(id_, timeout, sleep)
+            result.update({'code': code})
 
         return result
 
