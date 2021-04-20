@@ -5,20 +5,38 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from twocaptcha import TwoCaptcha
 
+# in this example we store the API key inside environment variables that can be set like:
+# export APIKEY_2CAPTCHA=1abc234de56fab7c89012d34e56fa7b8 on Linux or macOS
+# set APIKEY_2CAPTCHA=1abc234de56fab7c89012d34e56fa7b8 on Windows
+# you can just set the API key directly to it's value like:
+# api_key="1abc234de56fab7c89012d34e56fa7b8"
+
 api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
-solver = TwoCaptcha(api_key, defaultTimeout=300, pollingInterval=10)
+
+config = {
+            'server':           '2captcha.com', # can be also set to 'rucaptcha.com'
+    		'apiKey':           api_key,
+    		'softId':            123,
+    		# 'callback':         'https://your.site/result-receiver', # if set, sovler with just return captchaId, not polling API for the answer
+    		'defaultTimeout':    120,
+    		'recaptchaTimeout':  600,
+    		'pollingInterval':   10,
+	    }
+
+solver = TwoCaptcha(**config)
 
 try:
-    result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
-                             url='https://www.site.com/page/',
-                             proxy={
-                                 'type': 'HTTPS',
-                                 'uri': 'login:password@IP_address:PORT'
-                             })
+    result = solver.hcaptcha(sitekey='3ceb8624-1970-4e6b-91d5-70317b70b651',
+                             url='https://2captcha.com/demo/hcaptcha?difficulty=easy',
+                            #  proxy={
+                                #  'type': 'HTTPS',
+                                #  'uri': 'login:password@IP_address:PORT'
+                            #  }
+                            )
 
 except Exception as e:
     sys.exit(e)
 
 else:
-    sys.exit('solved: ' + str(result))
+    sys.exit('result: ' + str(result))

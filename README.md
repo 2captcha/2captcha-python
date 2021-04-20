@@ -43,13 +43,14 @@ Also there are few options that can be configured:
 
 ```python 
 config = {
-    		'apiKey':           'YOUR_API_KEY',
-    		'softId':            123,
-    		'callback':         'https://your.site/result-receiver',
-    		'defaultTimeout':    120,
-    		'recaptchaTimeout':  600,
-    		'pollingInterval':   10,
-	    }
+            'server':           '2captcha.com',
+            'apiKey':           'YOUR_API_KEY',
+            'softId':            123,
+            'callback':         'https://your.site/result-receiver',
+            'defaultTimeout':    120,
+            'recaptchaTimeout':  600,
+            'pollingInterval':   10,
+        }
 solver = TwoCaptcha(**config)
 ```
 
@@ -57,6 +58,7 @@ solver = TwoCaptcha(**config)
 
 |Option|Default value|Description|
 |---|---|---|
+|server|`2captcha.com`|API server. You can set it to `rucaptcha.com` if your account is registered there|
 |softId|-|your software ID obtained after publishing in [2captcha sofware catalog]|
 |callback|-|URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account|
 |defaultTimeout|120|Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint|
@@ -182,7 +184,7 @@ result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 ### Rotate
 This method can be used to solve a captcha that asks to rotate an object. Mostly used to bypass FunCaptcha. Returns the rotation angle.
 ```python
-result = solver.rotate(['path/to/captcha1.jpg', 'path/to/captcha2.jpg', ...], param1=..., ...)
+result = solver.rotate('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ## Other methods
