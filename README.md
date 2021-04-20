@@ -44,13 +44,13 @@ Also there are few options that can be configured:
 ```python 
 config = {
             'server':           '2captcha.com',
-    		'apiKey':           'YOUR_API_KEY',
-    		'softId':            123,
-    		'callback':         'https://your.site/result-receiver',
-    		'defaultTimeout':    120,
-    		'recaptchaTimeout':  600,
-    		'pollingInterval':   10,
-	    }
+            'apiKey':           'YOUR_API_KEY',
+            'softId':            123,
+            'callback':         'https://your.site/result-receiver',
+            'defaultTimeout':    120,
+            'recaptchaTimeout':  600,
+            'pollingInterval':   10,
+        }
 solver = TwoCaptcha(**config)
 ```
 
