@@ -23,6 +23,6 @@ except Exception as e:
     sys.exit(e)
     
 else:
-    sys.exit('solved: ' + str(result))
+    sys.exit('result: ' + str(result))
 
     
