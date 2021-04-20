@@ -25,7 +25,8 @@ class RecaptchaTest(AbstractTest):
                 'method'    : 'userrecaptcha',
                 'googlekey' : '6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                 'pageurl'   : 'https://mysite.com/page/with/recaptcha',
-                'invisible' :  1,
+                'invisible': 1,
+                'enterprise': 0,                
                 'action'    : 'verify',
                 'version'   : 'v2',
                 }
@@ -47,7 +48,8 @@ class RecaptchaTest(AbstractTest):
                 'method'    : 'userrecaptcha',
                 'googlekey' : '6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                 'pageurl'   : 'https://mysite.com/page/with/recaptcha',
-                'invisible' :  1,
+                'invisible' : 1,
+                'enterprise': 0,
                 'action'    : 'verify',
                 'version'   : 'v3',
                 }

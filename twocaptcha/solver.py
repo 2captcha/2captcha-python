@@ -95,7 +95,7 @@ class TwoCaptcha():
         result = self.solve(text=text, method='post', **kwargs)
         return result
 
-    def recaptcha(self, sitekey, url, version='v2', **kwargs):
+    def recaptcha(self, sitekey, url, version='v2', enterprise=0, **kwargs):
         '''
         Wrapper for solving recaptcha (v2, v3)
 
@@ -107,6 +107,7 @@ class TwoCaptcha():
             
             invisible
             version
+            enterprise
             action
             score
             softId
@@ -119,6 +120,7 @@ class TwoCaptcha():
             'url': url,
             'method': 'userrecaptcha',
             'version': version,
+            'enterprise': enterprise,
             **kwargs,
         }
 
@@ -182,7 +184,9 @@ class TwoCaptcha():
             url
 
         Optional params:
-            
+
+            invisible
+            data
             softId
             callback
             proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
