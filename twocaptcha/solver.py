@@ -438,7 +438,7 @@ class TwoCaptcha():
             img_resp = requests.get(file)
             if img_resp.status_code != 200:
                 raise ValidationException(f'File could not be downloaded from url: {file}')
-            return {'method': 'base64', 'body': b64encode(img_resp.content)}
+            return {'method': 'base64', 'body': b64encode(img_resp.content).decode('utf-8')}
 
         if not os.path.exists(file):
             raise ValidationException(f'File not found: {file}')
