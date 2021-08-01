@@ -102,14 +102,14 @@ result = solver.text('If tomorrow is Saturday, what day is today?', param1=..., 
 Use this method to solve ReCaptcha V2 and obtain a token to bypass the protection.
 ```python 
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
-                          url='https://mysite.com/page/with/recaptcha’,
+                          url='https://mysite.com/page/with/recaptcha',
                           param1=..., ...)
 ```
 
 ### ReCaptcha v3
 This method provides ReCaptcha V3 solver and returns a token.
 ```python
-result = solver.recaptcha(sitekey=’6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
+result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/recaptcha',
                             version='v3',
                             param1=..., ...)
