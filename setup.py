@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 
 from setuptools import setup, find_packages
-from twocaptcha import __version__
+import re
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
+def get_version():
+    with open('twocaptcha/__init__.py', 'r') as f:
+        return re.search(r'__version__ = ["\'](.*?)["\']', f.read()).group(1)
+
+
 setup(name='2captcha-python',
-      version=__version__,
+      version=get_version(),
       description='Python module for easy integration with 2Captcha API',
       long_description=long_description,
       long_description_content_type="text/markdown",
