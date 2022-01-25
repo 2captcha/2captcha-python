@@ -90,6 +90,8 @@ Below you can find basic examples for every captcha type. Check out [examples di
 To bypass a normal captcha (distorted text on image) use the following method. This method also can be used to recognize any text on the image.
 ```python 
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
+# OR
+result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Text Captcha

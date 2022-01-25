@@ -2,6 +2,7 @@
 
 import os, sys
 import time
+import requests
 
 try:
     from .api import ApiClient
@@ -55,7 +56,7 @@ class TwoCaptcha():
         Wrapper for solving normal captcha (image)
         
         Required:
-            file                (image or base64)
+            file                (image, base64, or url)
 
         Optional params:
 
@@ -432,6 +433,12 @@ class TwoCaptcha():
 
         if not '.' in file and len(file) > 50:
             return {'method': 'base64', 'body': file}
+        
+        if file.startswith('http'):
+            img_resp = requests.get(file)
+            if img_resp.status_code != 200:
+                raise ValidationException(f'File could not be downloaded from url: {file}')
+            return {'method': 'base64', 'body': b64encode(img_resp.content).decode('utf-8')}
 
         if not os.path.exists(file):
             raise ValidationException(f'File not found: {file}')
