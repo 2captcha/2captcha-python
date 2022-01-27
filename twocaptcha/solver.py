@@ -3,6 +3,8 @@
 import os, sys
 import time
 import requests
+from base64 import b64encode
+
 
 try:
     from .api import ApiClient
