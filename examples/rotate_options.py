@@ -17,7 +17,7 @@ solver = TwoCaptcha(api_key, defaultTimeout=100, pollingInterval=10)
 
 try:
     result = solver.rotate(
-        ['images/rotate.jpg', 'images/rotate_2.jpg', 'images/rotate_3.jpg'],
+        'images/rotate.jpg',
         angle=40,
         lang='en',
         # hintImg  = 'images/rotate_hint.jpg'
