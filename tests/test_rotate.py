@@ -3,9 +3,7 @@
 import unittest
 
 
-files = ['../examples/images/rotate.jpg',
-         '../examples/images/rotate_2.jpg',
-         '../examples/images/rotate_3.jpg']
+files = ['../examples/images/rotate.jpg']
 
 hint_img = '../examples/images/grid_hint.jpg'
 hint_text = 'Put the images in the correct way up'
