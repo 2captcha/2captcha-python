@@ -19,6 +19,7 @@ class RecaptchaTest(AbstractTest):
                 'url'       : 'https://mysite.com/page/with/recaptcha',
                 'invisible' :  1,
                 'action'    : 'verify',
+                'datas'     : 'Crb7VsRAQaBqoaQQtHQQ'
                 }
         
         sends = {
@@ -29,6 +30,7 @@ class RecaptchaTest(AbstractTest):
                 'enterprise': 0,                
                 'action'    : 'verify',
                 'version'   : 'v2',
+                'data-s'    : 'Crb7VsRAQaBqoaQQtHQQ'
                 }
 
         return self.send_return(sends, self.solver.recaptcha, **params)

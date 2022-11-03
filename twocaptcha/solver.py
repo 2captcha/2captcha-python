@@ -524,6 +524,7 @@ class TwoCaptcha():
             'apiServer': 'api_server',
             'softId': 'soft_id',
             'callback': 'pingback',
+            'datas': 'data-s',
         }
 
         new_params = {
