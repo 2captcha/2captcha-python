@@ -43,15 +43,17 @@ class ApiClient():
         '''
 
         try:
-            current_url = 'https://'+self.post_url+'/in.php'
+            current_url = f'https://{self.post_url}/in.php'
             if files:
+                
+                files = {}
+                for key, path in files.items():
+                    with open(path, 'rb') as f:
+                        files[key] = f
 
-                files = {key: open(path, 'rb') for key, path in files.items()}
                 resp = requests.post(current_url,
                                      data=kwargs,
                                      files=files)
-
-                [f.close() for f in files.values()]
 
             elif 'file' in kwargs:
 
@@ -101,7 +103,7 @@ class ApiClient():
         '''
 
         try:
-            current_url_out = 'https://'+self.post_url+'/res.php'
+            current_url_out = f'https://{self.post_url}/res.php'
             resp = requests.get(current_url_out, params=kwargs)
 
             if resp.status_code != 200:
