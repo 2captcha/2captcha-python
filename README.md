@@ -218,20 +218,20 @@ solver.report(id, False) # captcha solved incorrectly
 ```
 
 ### Error handling
-If case of an error captcha solver throws an exception. It's important to properly handle these cases. We recommend to use `try except` to handle exceptions. 
+In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions. 
 ```python
-Try:
+try:
     result = solver.text('If tomorrow is Saturday, what day is today?')
-Except ValidationException as e:
+except ValidationException as e:
     # invalid parameters passed
 	print(e)
-Except NetworkException as e:
+except NetworkException as e:
 	# network error occurred
 	print(e)
-Except ApiException as e:
+except ApiException as e:
     # api respond with error
 	print(e)
-Except TimeoutException as e:
+except TimeoutException as e:
     # captcha is not solved so far
 	print(e)
 ```
@@ -239,7 +239,7 @@ Except TimeoutException as e:
 
 ### Proxies
 
-You can pass your proxy as an additional argumen for methods: recaptcha, funcaptcha and geetest. The proxy will be forwarded to the API to solve the captcha.
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha and geetest. The proxy will be forwarded to the API to solve the captcha.
 
 ```python
 proxy={
