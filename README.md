@@ -147,6 +147,48 @@ result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
 
 ```
 
+### GeeTest v4
+Use this method to solve GeeTest v4. Returns the response in JSON.
+```python
+result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
+                            pageurl='https://www.site.com/page/',  
+                            param1=..., ...)
+
+```
+
+
+### Lemin Cropped Captcha
+Use this method to solve hCaptcha challenge. Returns JSON with answer containing the following values: answer, challenge_id.
+```python
+result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d901d',
+                            div_id='lemin-cropped-captcha', 
+                            pageurl='https://www.site.com/page/',
+                            param1=..., ...)
+
+```
+
+
+### Cloudflare Turnstile
+Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
+```python
+result = solver.turnstile(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
+                            pageurl='http://mysite.com/', 
+                            param1=..., ...)
+
+```
+
+### Amazon WAF
+Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token.
+```python
+result = solver.amazon_waf(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
+                            iv='CgAHbCe2GgAAAAAj', 
+                            context='9BUgmlm48F92WUoqv97a49ZuEJJ50TCk9MVr3C7WMtQ0X6flVbufM4n8mjFLmbLVAPgaQ1Jydeaja94iAS49ljb+sUNLoukWedAQZKrlY4RdbOOzvcFqmD/ZepQFS9N5w15Exr4VwnVq+HIxTsDJwRviElWCdzKDebN/mk8/eX2n7qJi5G3Riq0tdQw9+C4diFZU5E97RSeahejOAAJTDqduqW6uLw9NsjJBkDRBlRjxjn5CaMMo5pYOxYbGrM8Un1JH5DMOLeXbq1xWbC17YSEoM1cRFfTgOoc+VpCe36Ai9Kc='
+                            pageurl='https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest'
+                            param1=..., ...)
+
+```
+
+
 ### KeyCaptcha
 Token-based method to solve KeyCaptcha.
 ```python

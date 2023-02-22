@@ -384,12 +384,13 @@ class TwoCaptcha():
         return result
     
 
-    def geetest_v4(self, captcha_id, **kwargs):
+    def geetest_v4(self, captcha_id, pageurl, **kwargs):
         '''
         Wrapper for solving geetest_v4 captcha
 
         Required:
             captcha_id
+            pageurl
                         
         Optional params:
             
@@ -397,37 +398,41 @@ class TwoCaptcha():
         '''
 
         result = self.solve(captcha_id=captcha_id,
+                            pageurl=pageurl,
                             method='geetest_v4',
                             **kwargs)
         return result
     
 
-    def lemin(self, api_server, div_id, **kwargs):
+    def lemin(self, captcha_id, div_id, pageurl, **kwargs):
         '''
         Wrapper for solving Lemin Cropped Captcha
 
         Required:
-            api_server
+            captcha_id
             div_id
+            pageurl
                         
         Optional params:
             
 
         '''
 
-        result = self.solve(api_server=api_server,
+        result = self.solve(captcha_id=captcha_id,
                             div_id=div_id,
+                            pageurl=pageurl,
                             method='lemin',
                             **kwargs)
         return result
     
 
-    def turnstile(self, sitekey, **kwargs):
+    def turnstile(self, sitekey, pageurl, **kwargs):
         '''
         Wrapper for solving Cloudflare Turnstile
 
         Required:
             sitekey
+            pageurl
                         
         Optional params:
             action
@@ -436,6 +441,7 @@ class TwoCaptcha():
         '''
 
         result = self.solve(sitekey=sitekey,
+                            pageurl=pageurl,
                             method='turnstile',
                             **kwargs)
         return result
