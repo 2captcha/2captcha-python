@@ -382,6 +382,89 @@ class TwoCaptcha():
 
         result = self.solve(files=files, method='rotatecaptcha', **kwargs)
         return result
+    
+
+    def geetest_v4(self, captcha_id, **kwargs):
+        '''
+        Wrapper for solving geetest_v4 captcha
+
+        Required:
+            captcha_id
+                        
+        Optional params:
+            
+
+        '''
+
+        result = self.solve(captcha_id=captcha_id,
+                            method='geetest_v4',
+                            **kwargs)
+        return result
+    
+
+    def lemin(self, api_server, div_id, **kwargs):
+        '''
+        Wrapper for solving Lemin Cropped Captcha
+
+        Required:
+            api_server
+            div_id
+                        
+        Optional params:
+            
+
+        '''
+
+        result = self.solve(api_server=api_server,
+                            div_id=div_id,
+                            method='lemin',
+                            **kwargs)
+        return result
+    
+
+    def turnstile(self, sitekey, **kwargs):
+        '''
+        Wrapper for solving Cloudflare Turnstile
+
+        Required:
+            sitekey
+                        
+        Optional params:
+            action
+            data
+
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            method='turnstile',
+                            **kwargs)
+        return result
+    
+
+    def amazon_waf(self, sitekey, iv, context, pageurl, **kwargs):
+        '''
+        Wrapper for solving Amazon WAF
+
+        Required:
+            sitekey
+            iv
+            context
+            pageurl
+                        
+        Optional params:
+
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            iv=iv, 
+                            context=context,
+                            pageurl=pageurl,
+                            method='amazon_waf',
+                            **kwargs)
+        
+        return result
+
+
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''
