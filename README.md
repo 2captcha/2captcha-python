@@ -1,27 +1,36 @@
 # Python Module for 2Captcha API
 The easiest way to quickly integrate [2Captcha] captcha solving service into your code to automate solving of any types of captcha.
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Solve captcha](#solve-captcha)
-  - [Normal Captcha](#normal-captcha)
-  - [Text](#text-captcha)
-  - [ReCaptcha v2](#recaptcha-v2)
-  - [ReCaptcha v3](#recaptcha-v3)
-  - [FunCaptcha](#funcaptcha)
-  - [GeeTest](#geetest)
-  - [hCaptcha](#hcaptcha)
-  - [KeyCaptcha](#keycaptcha)
-  - [Capy](#capy)
-  - [Grid (ReCaptcha V2 Old Method)](#grid)
-  - [Canvas](#canvas)
-  - [ClickCaptcha](#clickcaptcha)
-  - [Rotate](#rotate)
-- [Other methods](#other-methods)
-  - [send / getResult](#send--getresult)
-  - [balance](#balance)
-  - [report](#report)
-- [Error handling](#error-handling)
+- [Python Module for 2Captcha API](#python-module-for-2captcha-api)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+    - [TwoCaptcha instance options](#twocaptcha-instance-options)
+  - [Solve captcha](#solve-captcha)
+    - [Captcha options](#captcha-options)
+    - [Normal Captcha](#normal-captcha)
+    - [Text Captcha](#text-captcha)
+    - [ReCaptcha v2](#recaptcha-v2)
+    - [ReCaptcha v3](#recaptcha-v3)
+    - [FunCaptcha](#funcaptcha)
+    - [GeeTest](#geetest)
+    - [hCaptcha](#hcaptcha)
+    - [GeeTest v4](#geetest-v4)
+    - [Lemin Cropped Captcha](#lemin-cropped-captcha)
+    - [Cloudflare Turnstile](#cloudflare-turnstile)
+    - [Amazon WAF](#amazon-waf)
+    - [KeyCaptcha](#keycaptcha)
+    - [Capy](#capy)
+    - [Grid](#grid)
+    - [Canvas](#canvas)
+    - [ClickCaptcha](#clickcaptcha)
+    - [Rotate](#rotate)
+  - [Other methods](#other-methods)
+    - [send / getResult](#send--getresult)
+    - [balance](#balance)
+    - [report](#report)
+    - [Error handling](#error-handling)
+    - [Proxies](#proxies)
+    - [Async calls](#async-calls)
 
 ## Installation
 
@@ -56,14 +65,14 @@ solver = TwoCaptcha(**config)
 
 ### TwoCaptcha instance options
 
-|Option|Default value|Description|
-|---|---|---|
-|server|`2captcha.com`|API server. You can set it to `rucaptcha.com` if your account is registered there|
-|softId|-|your software ID obtained after publishing in [2captcha sofware catalog]|
-|callback|-|URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account|
-|defaultTimeout|120|Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint|
-|recaptchaTimeout|600|Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint|
-|pollingInterval|10|Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended|
+| Option           | Default value  | Description                                                                                                                                        |
+| ---------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| server           | `2captcha.com` | API server. You can set it to `rucaptcha.com` if your account is registered there                                                                  |
+| softId           | -              | your software ID obtained after publishing in [2captcha sofware catalog]                                                                           |
+| callback         | -              | URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account      |
+| defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint |
+| recaptchaTimeout | 600            | Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint                          |
+| pollingInterval  | 10             | Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended                              |
 
 >  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
 To get the answer manually use [getResult method](#send--getresult)
@@ -72,17 +81,17 @@ To get the answer manually use [getResult method](#send--getresult)
 When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
 
 ### Captcha options
-|Option|Default Value|Description|
-|---|---|---|
-|numeric|0|Defines if captcha contains numeric or other symbols [see more info in the API docs][post options]|
-|minLength|0|minimal answer lenght|
-|maxLength|0|maximum answer length|
-|phrase|0|defines if the answer contains multiple words or not|
-|caseSensitive|0|defines if the answer is case sensitive|
-|calc|0|defines captcha requires calculation|
-|lang|-|defines the captcha language, see the [list of supported languages] |
-|hintImg|-|an image with hint shown to workers with the captcha|
-|hintText|-|hint or task text shown to workers with the captcha|
+| Option        | Default Value | Description                                                                                        |
+| ------------- | ------------- | -------------------------------------------------------------------------------------------------- |
+| numeric       | 0             | Defines if captcha contains numeric or other symbols [see more info in the API docs][post options] |
+| minLength     | 0             | minimal answer lenght                                                                              |
+| maxLength     | 0             | maximum answer length                                                                              |
+| phrase        | 0             | defines if the answer contains multiple words or not                                               |
+| caseSensitive | 0             | defines if the answer is case sensitive                                                            |
+| calc          | 0             | defines captcha requires calculation                                                               |
+| lang          | -             | defines the captcha language, see the [list of supported languages]                                |
+| hintImg       | -             | an image with hint shown to workers with the captcha                                               |
+| hintText      | -             | hint or task text shown to workers with the captcha                                                |
 
 Below you can find basic examples for every captcha type. Check out [examples directory] to find more examples with all available options.
 
@@ -146,6 +155,48 @@ result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
                             param1=..., ...)
 
 ```
+
+### GeeTest v4
+Use this method to solve GeeTest v4. Returns the response in JSON.
+```python
+result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
+                            url='https://www.site.com/page/',  
+                            param1=..., ...)
+
+```
+
+
+### Lemin Cropped Captcha
+Use this method to solve hCaptcha challenge. Returns JSON with answer containing the following values: answer, challenge_id.
+```python
+result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d901d',
+                            div_id='lemin-cropped-captcha', 
+                            url='https://www.site.com/page/',
+                            param1=..., ...)
+
+```
+
+
+### Cloudflare Turnstile
+Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
+```python
+result = solver.turnstile(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
+                            url='http://mysite.com/', 
+                            param1=..., ...)
+
+```
+
+### Amazon WAF
+Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token.
+```python
+result = solver.amazon_waf(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
+                            iv='CgAHbCe2GgAAAAAj', 
+                            context='9BUgmlm48F92WUoqv97a49ZuEJJ50TCk9MVr3C7WMtQ0X6flVbufM4n8mjFLmbLVAPgaQ1Jydeaja94iAS49ljb+sUNLoukWedAQZKrlY4RdbOOzvcFqmD/ZepQFS9N5w15Exr4VwnVq+HIxTsDJwRviElWCdzKDebN/mk8/eX2n7qJi5G3Riq0tdQw9+C4diFZU5E97RSeahejOAAJTDqduqW6uLw9NsjJBkDRBlRjxjn5CaMMo5pYOxYbGrM8Un1JH5DMOLeXbq1xWbC17YSEoM1cRFfTgOoc+VpCe36Ai9Kc='
+                            url='https://non-existent-example.execute-api.us-east-1.amazonaws.com/latest'
+                            param1=..., ...)
+
+```
+
 
 ### KeyCaptcha
 Token-based method to solve KeyCaptcha.

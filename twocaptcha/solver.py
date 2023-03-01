@@ -382,6 +382,95 @@ class TwoCaptcha():
 
         result = self.solve(files=files, method='rotatecaptcha', **kwargs)
         return result
+    
+
+    def geetest_v4(self, captcha_id, url, **kwargs):
+        '''
+        Wrapper for solving geetest_v4 captcha
+
+        Required:
+            captcha_id
+            url
+                        
+        Optional params:
+            
+
+        '''
+
+        result = self.solve(captcha_id=captcha_id,
+                            url=url,
+                            method='geetest_v4',
+                            **kwargs)
+        return result
+    
+
+    def lemin(self, captcha_id, div_id, url, **kwargs):
+        '''
+        Wrapper for solving Lemin Cropped Captcha
+
+        Required:
+            captcha_id
+            div_id
+            url
+                        
+        Optional params:
+            
+
+        '''
+
+        result = self.solve(captcha_id=captcha_id,
+                            div_id=div_id,
+                            url=url,
+                            method='lemin',
+                            **kwargs)
+        return result
+    
+
+    def turnstile(self, sitekey, url, **kwargs):
+        '''
+        Wrapper for solving Cloudflare Turnstile
+
+        Required:
+            sitekey
+            url
+                        
+        Optional params:
+            action
+            data
+
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            url=url,
+                            method='turnstile',
+                            **kwargs)
+        return result
+    
+
+    def amazon_waf(self, sitekey, iv, context, url, **kwargs):
+        '''
+        Wrapper for solving Amazon WAF
+
+        Required:
+            sitekey
+            iv
+            context
+            url
+                        
+        Optional params:
+
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            iv=iv, 
+                            context=context,
+                            url=url,
+                            method='amazon_waf',
+                            **kwargs)
+        
+        return result
+
+
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''
