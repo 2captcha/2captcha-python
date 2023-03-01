@@ -384,13 +384,13 @@ class TwoCaptcha():
         return result
     
 
-    def geetest_v4(self, captcha_id, pageurl, **kwargs):
+    def geetest_v4(self, captcha_id, url, **kwargs):
         '''
         Wrapper for solving geetest_v4 captcha
 
         Required:
             captcha_id
-            pageurl
+            url
                         
         Optional params:
             
@@ -398,20 +398,20 @@ class TwoCaptcha():
         '''
 
         result = self.solve(captcha_id=captcha_id,
-                            pageurl=pageurl,
+                            url=url,
                             method='geetest_v4',
                             **kwargs)
         return result
     
 
-    def lemin(self, captcha_id, div_id, pageurl, **kwargs):
+    def lemin(self, captcha_id, div_id, url, **kwargs):
         '''
         Wrapper for solving Lemin Cropped Captcha
 
         Required:
             captcha_id
             div_id
-            pageurl
+            url
                         
         Optional params:
             
@@ -420,19 +420,19 @@ class TwoCaptcha():
 
         result = self.solve(captcha_id=captcha_id,
                             div_id=div_id,
-                            pageurl=pageurl,
+                            url=url,
                             method='lemin',
                             **kwargs)
         return result
     
 
-    def turnstile(self, sitekey, pageurl, **kwargs):
+    def turnstile(self, sitekey, url, **kwargs):
         '''
         Wrapper for solving Cloudflare Turnstile
 
         Required:
             sitekey
-            pageurl
+            url
                         
         Optional params:
             action
@@ -441,13 +441,13 @@ class TwoCaptcha():
         '''
 
         result = self.solve(sitekey=sitekey,
-                            pageurl=pageurl,
+                            url=url,
                             method='turnstile',
                             **kwargs)
         return result
     
 
-    def amazon_waf(self, sitekey, iv, context, pageurl, **kwargs):
+    def amazon_waf(self, sitekey, iv, context, url, **kwargs):
         '''
         Wrapper for solving Amazon WAF
 
@@ -455,7 +455,7 @@ class TwoCaptcha():
             sitekey
             iv
             context
-            pageurl
+            url
                         
         Optional params:
 
@@ -464,7 +464,7 @@ class TwoCaptcha():
         result = self.solve(sitekey=sitekey,
                             iv=iv, 
                             context=context,
-                            pageurl=pageurl,
+                            url=url,
                             method='amazon_waf',
                             **kwargs)
         
