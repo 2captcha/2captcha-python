@@ -601,6 +601,8 @@ class TwoCaptcha():
             'caseSensitive': 'regsense',
             'minLen': 'min_len',
             'maxLen': 'max_len',
+            'minLength': 'min_len',
+            'maxLength': 'max_len',
             'hintText': 'textinstructions',
             'hintImg': 'imginstructions',
             'url': 'pageurl',
