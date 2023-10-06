@@ -105,7 +105,9 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 ```
 
 ### Audio Captcha
-To bypass an audio captcha (mp3 formats only) use the following method. Language must be in foramt lang = 'en'. Acceptable languages are "en", "ru", "de", "el", "pt".
+To bypass an audio captcha (mp3 formats only) use the following method. 
+You must provife the language as  `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
+
 ```python 
 result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
 # OR

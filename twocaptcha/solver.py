@@ -94,7 +94,7 @@ class TwoCaptcha():
         #"method":"audio", #method
 
         if not ((not '.' in file and len(file) > 50) or (file.endswith(".mp3") and file.startswith("http"))):
-            raise ValidationException('File has not .mp3 base64 str. You must send .mp3 file or base64 str')
+            raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
 
         method = self.get_method(file)
         method['method'] = "audio"
