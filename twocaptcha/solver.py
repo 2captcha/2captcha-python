@@ -81,7 +81,7 @@ class TwoCaptcha():
         result = self.solve(**method, **kwargs)
         return result
 
-    def audio(self, file, lang, method, **kwargs):
+    def audio(self, file, lang, **kwargs):
         '''
         Wrapper for solving audio captcha
         
