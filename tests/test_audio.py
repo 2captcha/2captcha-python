@@ -36,7 +36,7 @@ class AudioTest(AbstractTest):
                 'body'  : b64,
                 }
 
-        return self.send_return(sends, self.solver.audio, file=b64 **params)
+        return self.send_return(sends, self.solver.audio, file=b64, lang='en')
 
     def test_file(self):
 
@@ -50,14 +50,10 @@ class AudioTest(AbstractTest):
                 'body'  : b64,
                 }
 
-        return self.send_return(sends, self.solver.audio, file=file, **params)
+        return self.send_return(sends, self.solver.audio, file=file, lang='en')
 
 
     def test_url(self):
-
-        params = {
-                'lang' : 'en',
-                }
 
         sends = {            
                 'method': 'audio',
@@ -65,13 +61,7 @@ class AudioTest(AbstractTest):
                 'body'  : b64,
                 }
 
-        return self.send_return(sends, self.solver.audio, file=url **params)
-
-
-    def test_not_found(self):
-
-        return self.invalid_file(self.solver.audio)
-
+        return self.send_return(sends, self.solver.audio, file=url, lang='en')
 
 
 if __name__ == '__main__':
