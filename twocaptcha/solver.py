@@ -91,18 +91,27 @@ class TwoCaptcha():
 
         Optional params:
         '''
-        #"method":"audio", #method
+        method = "audio"
 
-        if not ((not '.' in file and len(file) > 50) or (file.endswith(".mp3") and file.startswith("http"))):
+        if not file:
+            raise ValidationException('File is none')
+        elif not '.' in file and len(file) > 50:
+            body = file
+        elif file.endswith(".mp3") and file.startswith("http"):
+            response = requests.get(file)
+            if response.status_code != 200:
+                raise ValidationException(f'File could not be downloaded from url: {file}')
+            body = b64encode(response.content).decode('utf-8')
+        elif file.endswith(".mp3"):
+            with open(file, "rb") as media:
+                body = b64encode(media.read()).decode('utf-8')                
+        else:
             raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
-
-        method = self.get_method(file)
-        method['method'] = "audio"
 
         if not lang or lang not in ("en", "ru", "de", "el", "pt"):
             raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt". You send {lang}')
 
-        result = self.solve(**method, **kwargs)
+        result = self.solve(body=body, method=method, **kwargs)
         return result
 
     def text(self, text, **kwargs):
