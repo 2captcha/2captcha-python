@@ -81,6 +81,39 @@ class TwoCaptcha():
         result = self.solve(**method, **kwargs)
         return result
 
+    def audio(self, file, lang, **kwargs):
+        '''
+        Wrapper for solving audio captcha
+        
+        Required:
+            file (base64, or url to mp3 file)
+            lang ("en", "ru", "de", "el", "pt")
+
+        Optional params:
+        '''
+        method = "audio"
+
+        if not file:
+            raise ValidationException('File is none')
+        elif not '.' in file and len(file) > 50:
+            body = file
+        elif file.endswith(".mp3") and file.startswith("http"):
+            response = requests.get(file)
+            if response.status_code != 200:
+                raise ValidationException(f'File could not be downloaded from url: {file}')
+            body = b64encode(response.content).decode('utf-8')
+        elif file.endswith(".mp3"):
+            with open(file, "rb") as media:
+                body = b64encode(media.read()).decode('utf-8')                
+        else:
+            raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
+
+        if not lang or lang not in ("en", "ru", "de", "el", "pt"):
+            raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt". You send {lang}')
+
+        result = self.solve(body=body, method=method, **kwargs)
+        return result
+
     def text(self, text, **kwargs):
         '''
         Wrapper for solving text captcha 
@@ -524,7 +557,7 @@ class TwoCaptcha():
 
         if not '.' in file and len(file) > 50:
             return {'method': 'base64', 'body': file}
-        
+
         if file.startswith('http'):
             img_resp = requests.get(file)
             if img_resp.status_code != 200:

@@ -8,6 +8,7 @@ The easiest way to quickly integrate [2Captcha] captcha solving service into you
   - [Solve captcha](#solve-captcha)
     - [Captcha options](#captcha-options)
     - [Normal Captcha](#normal-captcha)
+    - [Audio Captcha](#audio-captcha)
     - [Text Captcha](#text-captcha)
     - [ReCaptcha v2](#recaptcha-v2)
     - [ReCaptcha v3](#recaptcha-v3)
@@ -101,6 +102,16 @@ To bypass a normal captcha (distorted text on image) use the following method. T
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
 # OR
 result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', param1=..., ...)
+```
+
+### Audio Captcha
+To bypass an audio captcha (mp3 formats only) use the following method. 
+You must provife the language as  `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
+
+```python 
+result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
+# OR
+result = solver.audio('https://site-with-captcha.com/path/to/captcha.mp3', lang = 'lang', param1=..., ...)
 ```
 
 ### Text Captcha
