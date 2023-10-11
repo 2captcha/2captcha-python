@@ -39,6 +39,9 @@ This package can be installed with Pip:
 
 ```pip3 install 2captcha-python```
 
+It can also be installed [on Arch Linux](https://aur.archlinux.org/packages/python-2captcha):
+```yay -S python-2captcha```
+
 
 ## Configuration
 
