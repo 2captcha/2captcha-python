@@ -503,7 +503,67 @@ class TwoCaptcha():
         
         return result
 
+    def mtcaptcha(self, sitekey, url, **kwargs):
+        '''
+        Wrapper for solving MTCaptcha
 
+        Required:
+            sitekey
+            url
+
+        Optional params:
+            softId
+            callback
+            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            url=url,
+                            method='mt_captcha',
+                            **kwargs)
+        return result
+
+    def friendly_captcha(self, sitekey, url, **kwargs):
+        '''
+        Wrapper for solving Friendly Captcha
+
+        Required:
+            sitekey
+            url
+
+        Optional params:
+            softId
+            callback
+            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            url=url,
+                            method='friendly_captcha',
+                            **kwargs)
+        return result
+
+    def cutcaptcha(self, misery_key, apikey, url, **kwargs):
+        '''
+        Wrapper for solving Friendly Captcha
+
+        Required:
+            misery_key
+            apikey
+            url
+
+        Optional params:
+            softId
+            callback
+            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        '''
+
+        result = self.solve(misery_key=misery_key,
+                            api_key=apikey,
+                            url=url,
+                            method='cutcaptcha',
+                            **kwargs)
+        return result
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''
