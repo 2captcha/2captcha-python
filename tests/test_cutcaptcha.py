@@ -18,7 +18,7 @@ class CutcaptchaTest(AbstractTest):
         }
 
         sends = {
-            'method':     'cutcaptchaа',
+            'method':     'cutcaptcha',
             'api_key':    'SAs61IAI',
             'misery_key': 'ad52c87af17e2ec09b8d918c9f00416b1cb8c320',
             'pageurl':    'https://www.site.com/page/',
