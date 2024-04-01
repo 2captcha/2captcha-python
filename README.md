@@ -25,6 +25,9 @@ The easiest way to quickly integrate [2Captcha] captcha solving service into you
     - [Canvas](#canvas)
     - [ClickCaptcha](#clickcaptcha)
     - [Rotate](#rotate)
+    - [MTCaptcha](#mtcaptcha)
+    - [Friendly Captcha](#friendly_captcha)
+    - [Cutcaptcha](#cutcaptcha)
   - [Other methods](#other-methods)
     - [send / getResult](#send--getresult)
     - [balance](#balance)
@@ -264,6 +267,32 @@ This method can be used to solve a captcha that asks to rotate an object. Mostly
 ```python
 result = solver.rotate('path/to/captcha.jpg', param1=..., ...)
 ```
+
+### MTCaptcha
+Use this method to solve MTCaptcha and obtain a token to bypass the protection.
+```python
+result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
+                          url='https://2captcha.com/demo/mtcaptcha',
+                          param1=..., ...)
+```
+
+### Friendly Captcha
+Friendly Captcha solving method. Returns a token.
+```python
+result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
+                                 url='https://friendlycaptcha.com/demo',
+                                 param1=..., ...)
+```
+
+### Cutcaptcha
+Use this method to solve Cutcaptcha. Returns the response in JSON.
+```python
+result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320',
+                           apikey='SAs61IAI',
+                           url='https://mysite.com/page/with/cutcaptcha',
+                           param1=..., ...)
+```
+
 
 ## Other methods
 
