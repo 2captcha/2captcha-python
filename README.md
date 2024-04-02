@@ -1,5 +1,5 @@
 # Python Module for 2Captcha API
-The easiest way to quickly integrate [2Captcha] captcha solving service into your code to automate solving of any types of captcha.
+The easiest way to quickly integrate the 2Captcha captcha-solving service into your code and automate the solving of any type of captcha.
 
 - [Python Module for 2Captcha API](#python-module-for-2captcha-api)
   - [Installation](#installation)
@@ -10,8 +10,8 @@ The easiest way to quickly integrate [2Captcha] captcha solving service into you
     - [Normal Captcha](#normal-captcha)
     - [Audio Captcha](#audio-captcha)
     - [Text Captcha](#text-captcha)
-    - [ReCaptcha v2](#recaptcha-v2)
-    - [ReCaptcha v3](#recaptcha-v3)
+    - [reCAPTCHA v2](#recaptcha-v2)
+    - [reCAPTCHA v3](#recaptcha-v3)
     - [FunCaptcha](#funcaptcha)
     - [GeeTest](#geetest)
     - [hCaptcha](#hcaptcha)
@@ -20,13 +20,14 @@ The easiest way to quickly integrate [2Captcha] captcha solving service into you
     - [Cloudflare Turnstile](#cloudflare-turnstile)
     - [Amazon WAF](#amazon-waf)
     - [KeyCaptcha](#keycaptcha)
+    - [atbCAPTCHA](#atbcaptcha)
     - [Capy](#capy)
     - [Grid](#grid)
     - [Canvas](#canvas)
     - [ClickCaptcha](#clickcaptcha)
     - [Rotate](#rotate)
     - [MTCaptcha](#mtcaptcha)
-    - [Friendly Captcha](#friendly_captcha)
+    - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
   - [Other methods](#other-methods)
     - [send / getResult](#send--getresult)
@@ -52,7 +53,7 @@ from twocaptcha import TwoCaptcha
 
 solver = TwoCaptcha('YOUR_API_KEY')
 ```
-Also there are few options that can be configured:
+Also there are a few options that can be configured:
 
 ```python 
 config = {
@@ -74,8 +75,8 @@ solver = TwoCaptcha(**config)
 | server           | `2captcha.com` | API server. You can set it to `rucaptcha.com` if your account is registered there                                                                  |
 | softId           | -              | your software ID obtained after publishing in [2captcha sofware catalog]                                                                           |
 | callback         | -              | URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account      |
-| defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except ReCaptcha. Defines how long the module tries to get the answer from `res.php` API endpoint |
-| recaptchaTimeout | 600            | Polling timeout for ReCaptcha in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint                          |
+| defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from `res.php` API endpoint |
+| recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended                              |
 
 >  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
@@ -100,7 +101,7 @@ When you submit any image-based captcha use can provide additional options to he
 Below you can find basic examples for every captcha type. Check out [examples directory] to find more examples with all available options.
 
 ### Normal Captcha
-To bypass a normal captcha (distorted text on image) use the following method. This method also can be used to recognize any text on the image.
+To bypass a normal captcha (distorted text on an image) use the following method. This method also can be used to recognize any text on the image.
 ```python 
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
 # OR
@@ -109,7 +110,7 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 
 ### Audio Captcha
 To bypass an audio captcha (mp3 formats only) use the following method. 
-You must provife the language as  `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
+You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
 
 ```python 
 result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
@@ -118,21 +119,21 @@ result = solver.audio('https://site-with-captcha.com/path/to/captcha.mp3', lang 
 ```
 
 ### Text Captcha
-This method can be used to bypass a captcha that requires to answer a question provided in clear text.
+This method can be used to bypass a captcha that requires answering a question provided in clear text.
 ```python 
 result = solver.text('If tomorrow is Saturday, what day is today?', param1=..., ...)
 ```
 
-### ReCaptcha v2
-Use this method to solve ReCaptcha V2 and obtain a token to bypass the protection.
+### reCAPTCHA v2
+Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
 ```python 
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                           url='https://mysite.com/page/with/recaptcha',
                           param1=..., ...)
 ```
 
-### ReCaptcha v3
-This method provides ReCaptcha V3 solver and returns a token.
+### reCAPTCHA v3
+This method provides a reCAPTCHA V3 solver and returns a token.
 ```python
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/recaptcha',
@@ -162,7 +163,7 @@ result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
 
 
 ### hCaptcha
-Use this method to solve hCaptcha challenge. Returns a token to bypass captcha.
+Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
 ```python
 result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
                             url='https://www.site.com/page/', 
@@ -181,7 +182,7 @@ result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
 
 
 ### Lemin Cropped Captcha
-Use this method to solve hCaptcha challenge. Returns JSON with answer containing the following values: answer, challenge_id.
+Use this method to solve hCaptcha challenge. Returns JSON with an answer containing the following values: answer, challenge_id.
 ```python
 result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d901d',
                             div_id='lemin-cropped-captcha', 
@@ -228,7 +229,7 @@ result = solver.keycaptcha(s_s_c_user_id=10,
 
 
 ### atbCAPTCHA
-Use this method to solve atbCaptcha challenge. Returns a token to bypass captcha.
+Use this method to solve atbCaptcha challenge. Returns a token to bypass the captcha.
 ```python
 result = solver.atb_captcha(app_id='af25e409b33d722a95e56a230ff8771c',
                             api_server='https://cap.aisecurius.com',
@@ -247,17 +248,19 @@ result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
                      param1=..., ...)
 ```
 ### Grid
-Grid method is originally called Old ReCaptcha V2 method. The method can be used to bypass any type of captcha where you can apply a grid on image and need to click specific grid boxes. Returns numbers of boxes.
+Grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
 ```python
 result = solver.grid('path/to/captcha.jpg', param1=..., ...)
 ```
+
 ### Canvas
-Canvas method can be used when you need to draw a line around an object on image. Returns a set of points' coordinates to draw a polygon.
+Canvas method can be used when you need to draw a line around an object on an image. Returns a set of points' coordinates to draw a polygon.
 ```python
 result = solver.canvas('path/to/captcha.jpg', param1=..., ...)
 ```
+
 ### ClickCaptcha
-ClickCaptcha method returns coordinates of points on captcha image. Can be used if you need to click on particular points on the image.
+ClickCaptcha method returns coordinates of points on the captcha image. Can be used if you need to click on particular points in the image.
 ```python
 result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 ```
@@ -316,7 +319,7 @@ balance = solver.balance()
 ```
 
 ### report
-Use this method to report good or bad captcha answer.
+Use this method to report good or bad captcha answers.
 ```python
 solver.report(id, True) # captcha solved correctly
 solver.report(id, False) # captcha solved incorrectly
