@@ -457,6 +457,26 @@ class TwoCaptcha():
                             method='lemin',
                             **kwargs)
         return result
+
+    def atb_captcha(self, app_id, api_server, url, **kwargs):
+        '''
+        Wrapper for solving atbCAPTCHA
+
+        Required:
+            app_id
+            api_server
+            url
+
+        Optional params:
+
+
+        '''
+        result = self.solve(app_id=app_id,
+                            api_server=api_server,
+                            url=url,
+                            method='atb_captcha',
+                            **kwargs)
+        return result
     
 
     def turnstile(self, sitekey, url, **kwargs):
