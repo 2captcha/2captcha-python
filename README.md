@@ -226,6 +226,18 @@ result = solver.keycaptcha(s_s_c_user_id=10,
 
 ```
 
+
+### atbCAPTCHA
+Use this method to solve atbCaptcha challenge. Returns a token to bypass captcha.
+```python
+result = solver.atb_captcha(app_id='af25e409b33d722a95e56a230ff8771c',
+                            api_server='https://cap.aisecurius.com',
+                            url='http://mysite.com/', 
+                            param1=..., ...)
+
+```
+
+
 ### Capy
 Token-based method to bypass Capy puzzle captcha.
 ```python
