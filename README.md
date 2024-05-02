@@ -30,7 +30,7 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
   - [Other methods](#other-methods)
-    - [send / getResult](#send--getresult)
+    - [send / get_result](#send--getresult)
     - [balance](#balance)
     - [report](#report)
     - [Error handling](#error-handling)
@@ -80,7 +80,7 @@ solver = TwoCaptcha(**config)
 | pollingInterval  | 10             | Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended                              |
 
 >  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
-To get the answer manually use [getResult method](#send--getresult)
+To get the answer manually use [get_result method](#send--getresult)
 
 ## Solve captcha
 When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
@@ -162,20 +162,21 @@ result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
 ```
 
 
-### hCaptcha
-Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
-```python
-result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
-                            url='https://www.site.com/page/', 
-                            param1=..., ...)
-
-```
-
 ### GeeTest v4
 Use this method to solve GeeTest v4. Returns the response in JSON.
 ```python
 result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
                             url='https://www.site.com/page/',  
+                            param1=..., ...)
+
+```
+
+
+### hCaptcha
+Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
+```python
+result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
+                            url='https://www.site.com/page/', 
                             param1=..., ...)
 
 ```
@@ -299,7 +300,7 @@ result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320'
 
 ## Other methods
 
-### send / getResult
+### send / get_result
 These methods can be used for manual captcha submission and answer polling.
 ```python
 import time
@@ -347,7 +348,11 @@ except TimeoutException as e:
 
 ### Proxies
 
-You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha and geetest. The proxy will be forwarded to the API to solve the captcha.
+You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
+keycaptcha, capy pazzle, grid, rotate, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+The proxy will be forwarded to the API to solve the captcha.
+
+We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
 
 ```python
 proxy={
@@ -377,7 +382,9 @@ async def captchaSolver(image):
 [2Captcha]: https://2captcha.com/
 [2captcha sofware catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
-[post options]: https://2captcha.com/2captcha-api#normal_post
+[post options]: https://2captcha.com/2captcha-api#solving_normal_captcha
 [list of supported languages]: https://2captcha.com/2captcha-api#language
 [examples directory]: /examples
 [asyncio]: https://docs.python.org/3/library/asyncio.html
+[Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
+[Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true

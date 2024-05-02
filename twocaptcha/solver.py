@@ -54,27 +54,47 @@ class TwoCaptcha():
         self.exceptions = SolverExceptions
 
     def normal(self, file, **kwargs):
-        '''
-        Wrapper for solving normal captcha (image)
-        
-        Required:
-            file                (image, base64, or url)
+        '''Wrapper for solving normal captcha (image).
 
-        Optional params:
-
-            phrase
-            numeric
-            minLen 
-            maxLen 
-            phrase 
-            caseSensitive
-            calc   
-            lang
-            hintText
-            hintImg
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        file : file
+            Captcha image file. * required if you submit image as a file (method=post).
+        body : str
+            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        phrase : int, optional
+            0 - captcha contains one word. 1 - captcha contains two or more words.
+            Default: 0.
+        numeric : int, optional
+            0 - not specified. 1 - captcha contains only numbers. 2 - captcha contains only letters. 3 - captcha
+            contains only numbers OR only letters. 4 - captcha MUST contain both numbers AND letters.
+            Default: 0
+        minLen : int, optional
+            0 - not specified. 1..20 - minimal number of symbols in captcha.
+            Default: 0.
+        maxLen : int, optional
+            0 - not specified. 1..20 - maximal number of symbols in captcha.
+            Default: 0.
+        caseSensitive : int, optional
+            0 - captcha in not case sensitive. 1 - captcha is case sensitive.
+            Default: 0.
+        calc : int, optional
+            0 - not specified. 1 - captcha requires calculation (e.g. type the result 4 + 8 = ).
+            Default: 0.
+        lang : str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        hintText : str, optional
+            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            For example: type red symbols only.
+        hintImg : img, optional
+            Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
+            instruction as text with textinstructions.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
         method = self.get_method(file)
@@ -82,15 +102,16 @@ class TwoCaptcha():
         return result
 
     def audio(self, file, lang, **kwargs):
-        '''
-        Wrapper for solving audio captcha
-        
-        Required:
-            file (base64, or url to mp3 file)
-            lang ("en", "ru", "de", "el", "pt")
+        '''Wrapper for solving audio captcha.
 
-        Optional params:
+        Parameters
+        __________
+        body : str
+            Base64 encoded audio file in mp3 format. Max file size: 1 MB.
+        lang : str
+          The language of audio record. Supported languages are: "en", "ru", "de", "el", "pt", "fr".
         '''
+
         method = "audio"
 
         if not file:
@@ -108,47 +129,70 @@ class TwoCaptcha():
         else:
             raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
 
-        if not lang or lang not in ("en", "ru", "de", "el", "pt"):
-            raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt". You send {lang}')
+        if not lang or lang not in ("en", "ru", "de", "el", "pt", "fr"):
+            raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt", "fr". You send {lang}')
 
         result = self.solve(body=body, method=method, **kwargs)
         return result
 
     def text(self, text, **kwargs):
-        '''
-        Wrapper for solving text captcha 
+        '''Wrapper for solving text captcha.
 
-        Required:
-            text
-            
-        Optional params:
-            
-            lang
-            softId
-            callback
+        Parameters
+        __________
+        text : str
+            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            For example: type red symbols only.
+        lang: str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
         result = self.solve(text=text, method='post', **kwargs)
         return result
 
     def recaptcha(self, sitekey, url, version='v2', enterprise=0, **kwargs):
-        '''
-        Wrapper for solving recaptcha (v2, v3)
+        '''Wrapper for solving recaptcha (v2, v3).
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-            
-            invisible
-            version
-            enterprise
-            action
-            score
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        _______________
+        sitekey : str
+            Value of sitekey parameter you found on page.
+        url : str
+            Full URL of the page where you see the reCAPTCHA.
+        domain : str, optional
+            Domain used to load the captcha: google.com or recaptcha.net. Default: google.com.
+        invisible : int, optional
+            1 - means that reCAPTCHA is invisible. 0 - normal reCAPTCHA. Default: 0.
+        version : str, optional
+            v3 — defines that you're sending a reCAPTCHA V3. Default: v2.
+        enterprise : str, optional
+            1 - defines that you're sending reCAPTCHA Enterpise. Default: 0.
+        action : str, optional
+            Value of action parameter you found on page. Default: verify.
+        score : str, only for v3, optional
+            The score needed for resolution. Currently, it's almost impossible to get token with score higher than 0.3.
+            Default: 0.4.
+        data-s : str, only for v2, optional
+            Value of data-s parameter you found on page. Curenttly applicable for Google Search and other Google services.
+        cookies : str, only for v2, optional
+            Your cookies that will be passed to our worker who solve the captha. We also return worker's cookies in the
+            response if you use json=1. Format: KEY:Value, separator: semicolon, example: KEY1:Value1;KEY2:Value2;
+        userAgent : str, only for v2, optional
+            Your userAgent that will be passed to our worker and used to solve the captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         params = {
@@ -164,21 +208,28 @@ class TwoCaptcha():
         return result
 
     def funcaptcha(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving funcaptcha
+        '''Wrapper for solving funcaptcha.
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-            
-            surl
-            userAgent
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
-            **{'data[key]': 'anyStringValue'}
+        Parameters
+        __________
+        sitekey : str
+            Value of pk or data-pkey parameter you found on page.
+        url : str
+            Full URL of the page where you see the FunCaptcha.
+        surl : str, optional
+            Value of surl parameter you found on page.
+        userAgent: str, optional
+            Tells us to use your user-agent value.
+        data[key] : str, optional
+            Custom data to pass to FunCaptcha. For example: data[blob]=stringValue.
+        softId : str, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(publickey=sitekey,
@@ -188,20 +239,34 @@ class TwoCaptcha():
         return result
 
     def geetest(self, gt, challenge, url, **kwargs):
-        '''
-        Wrapper for solving geetest captcha
+        '''Wrapper for solving geetest captcha.
 
-        Required:
-            gt
-            challenge
-            url
-                        
-        Optional params:
-            
-            apiServer
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters:
+        __________
+        gt : str
+            Value of gt parameter you found on target website.
+        challenge : str
+            Value of challenge parameter you found on target website.
+        url : str
+            Full URL of the page where you see Geetest captcha.
+        offline : num, optional
+            In rare cases initGeetest can be called with offline parameter. If the call uses offline: true, set the
+            value to 1. Default: 0.
+        new_captcha : num, optional
+            In rare cases initGeetest can be called with new_captcha parameter. If the call uses new_captcha: true, set
+            the value to 1. Mostly used with offline parameter.
+        userAgent : str, optional
+            Your userAgent that will be passed to our worker and used to solve the captcha.
+        apiServer : str, optional
+            Value of api_server parameter you found on target website.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(gt=gt,
@@ -212,20 +277,30 @@ class TwoCaptcha():
         return result
 
     def hcaptcha(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving hcaptcha
+        '''Wrapper for solving hcaptcha.
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-
-            invisible
-            data
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        sitekey : str
+            Value of data-sitekey parameter you found on page.
+        url : str
+            Full URL of the page where you bypass the captcha.
+        invisible : num, optional
+            Use 1 for invisible version of hcaptcha. Currently it is a very rare case.
+            Default: 0.
+        data : str, optional
+            Custom data that is used in some implementations of hCaptcha, mostly with invisible=1. In most cases you see
+            it as rqdata inside network requests. Format: "data": "rqDataValue".
+        domain : str, optional
+            Domain used to load the captcha: hcaptcha.com or js.hcaptcha.com. Default: hcaptcha.com.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(sitekey=sitekey,
@@ -237,21 +312,28 @@ class TwoCaptcha():
     def keycaptcha(self, s_s_c_user_id, s_s_c_session_id,
                    s_s_c_web_server_sign, s_s_c_web_server_sign2, url,
                    **kwargs):
-        '''
-        Wrapper for solving 
+        '''Wrapper for solving.
 
-        Required:
-            s_s_c_user_id
-            s_s_c_session_id
-            s_s_c_web_server_sign
-            s_s_c_web_server_sign2
-            url
-
-        Optional params:
-            
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        s_s_c_user_id : str
+            Value of s_s_c_user_id parameter you found on page.
+        s_s_c_session_id : str
+            Value of s_s_c_session_id parameter you found on page.
+        s_s_c_web_server_sign : str
+            Value of s_s_c_web_server_sign parameter you found on page.
+        s_s_c_web_server_sign2 : str
+            Value of s_s_c_web_server_sign2 parameter you found on page.
+        url : str
+            Full URL of the page where you see the KeyCaptcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         params = {
@@ -268,18 +350,26 @@ class TwoCaptcha():
         return result
 
     def capy(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving capy
+        '''Wrapper for solving capy.
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-            
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        sitekey : str
+            The domain part of script URL you found on page. Default value: https://jp.api.capy.me/.
+        url : str
+            Full URL of the page where you see the captcha.
+        api_server : str, optional
+            The domain part of script URL you found on page. Default value: https://jp.api.capy.me/.
+        version : str, optional
+            The version of captcha task: puzzle (assemble a puzzle) or avatar (drag an object). Default: puzzle.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(captchakey=sitekey,
@@ -289,24 +379,40 @@ class TwoCaptcha():
         return result
 
     def grid(self, file, **kwargs):
-        '''
-        Wrapper for solving grid captcha (image)
-        
-        Required:
-            file                (image or base64)
+        '''Wrapper for solving grid captcha (image).
 
-        Optional params:
-            
-            rows      
-            cols      
-            previousId
-            canSkip   
-            lang      
-            hintImg   
-            hintText  
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Required:
+        file : file
+            Captcha image file. * required if you submit image as a file (method=post).
+        body : str
+            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        hintText : str
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select images
+            with trees. Not required if you're sending instruction as an image with imginstructions.
+        hintImg : img
+            Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
+            instruction as text with textinstructions.
+        rows : int, optional
+            Number of rows in reCAPTCHA grid.
+        cols : itn, optional
+            Number of columns in reCAPTCHA grid.
+        previousId : str, optional
+            Id of your previous request with the same captcha challenge.
+        canSkip : int, optional
+            0 - not specified. 1 - possibly there's no images that fit the instruction. Set the value to 1 only if it's
+            possible that there's no images matching to the instruction. We'll provide a button "No matching images" to
+            worker, and you will receive No_matching_images as answer.
+            Default: 0.
+        lang: str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         method = self.get_method(file)
@@ -321,22 +427,34 @@ class TwoCaptcha():
         return result
 
     def canvas(self, file, **kwargs):
-        '''
-        Wrapper for solving canvas captcha (image)
-        
-        Required:
-            file                (image or base64)
+        '''Wrapper for solving canvas captcha (image).
 
-        Optional params:
-            
-            previousId
-            canSkip   
-            lang      
-            hintImg   
-            hintText  
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        file : file
+            Captcha image file. * required if you submit image as a file (method=post).
+        body : str
+            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        hintText : str
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select
+            images with trees. Not required if you're sending instruction as an image with imginstructions.
+        hintImg : img
+            Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
+            instruction as text with textinstructions.
+        canSkip : int, optional
+            0 - not specified. 1 - possibly there's no images that fit the instruction. Set the value to 1 only if it's
+            possible that there's no images matching to the instruction. We'll provide a button "No matching images" to
+            worker, and you will receive No_matching_images as answer.
+            Default: 0.
+        lang : int, optional
+            0 - not specified. 1 - Cyrillic captcha. 2 - Latin captcha.
+            Default: 0.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
         if not ('hintText' in kwargs or 'hintImg' in kwargs):
@@ -356,20 +474,28 @@ class TwoCaptcha():
         return result
 
     def coordinates(self, file, **kwargs):
-        '''
-        Wrapper for solving coordinates captcha (image)
-        
-        Required:
-            file                (image or base64)
+        '''Wrapper for solving coordinates captcha (image).
 
-        Optional params:
-            
-            hintImg   
-            hintText  
-            lang
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        file : file
+            Captcha image file. * required if you submit image as a file (method=post).
+        body : str
+            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        hintText : str
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving the captcha. For example: click on
+            images with ghosts. Not required if the image already contains the instruction.
+        hintImg : img
+             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
+             instruction as text with textinstructions.
+        lang : str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
         method = self.get_method(file)
@@ -384,21 +510,31 @@ class TwoCaptcha():
         return result
 
     def rotate(self, files, **kwargs):
-        '''
-        Wrapper for solving rotate captcha (image)
-        
-        Required:
-            files               (images)
+        '''Wrapper for solving rotate captcha (image).
 
-        Optional params:
-            
-            angle
-            lang
-            hintImg   
-            hintText  
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        files : file
+            Captcha image file. * required if you submit image as a file (method=post).
+        body : str
+            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        angle : int, optional
+            Angle for one rotation step in degrees. If not defined we'll use the default value for FunCaptcha: 40 degrees.
+            Default: 40.
+        lang : str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        hintImg : str, optional
+            Image with instruction for worker to help him to solve captcha correctly.
+        hintText : str, optional
+            Text will be shown to worker to help him to to solve captcha correctly.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         if isinstance(files, str):
@@ -418,16 +554,22 @@ class TwoCaptcha():
     
 
     def geetest_v4(self, captcha_id, url, **kwargs):
-        '''
-        Wrapper for solving geetest_v4 captcha
+        '''Wrapper for solving geetest_v4 captcha.
 
-        Required:
-            captcha_id
-            url
-                        
-        Optional params:
-            
-
+        Parameters
+        __________
+        captcha_id : str
+            Value of captcha_id parameter you found on target website.
+        url: str
+            Full URL of the page where you see Geetest captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(captcha_id=captcha_id,
@@ -438,17 +580,26 @@ class TwoCaptcha():
     
 
     def lemin(self, captcha_id, div_id, url, **kwargs):
-        '''
-        Wrapper for solving Lemin Cropped Captcha
+        '''Wrapper for solving Lemin Cropped Captcha.
 
-        Required:
-            captcha_id
-            div_id
-            url
-                        
-        Optional params:
-            
-
+        Parameters
+        __________
+        captcha_id : str
+            Value of captcha_id parameter you found on page.
+        div_id : str
+            The id of captcha parent div element.
+        url : str
+            Full URL of the page where you see the captcha.
+        api_server : str, optional
+            The domain part of script URL you found on page. Default value: https://api.leminnow.com/.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(captcha_id=captcha_id,
@@ -459,18 +610,22 @@ class TwoCaptcha():
         return result
 
     def atb_captcha(self, app_id, api_server, url, **kwargs):
+        '''Wrapper for solving atbCAPTCHA.
+
+        Parameters
+        __________
+        app_id : str
+            The value of appId parameter in the website source code.
+        api_server : str
+            The value of apiServer parameter in the website source code.
+        url : str
+            The full URL of target web page where the captcha is loaded. We do not open the page, not a problem if it is
+            available only for authenticated users.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+
         '''
-        Wrapper for solving atbCAPTCHA
 
-        Required:
-            app_id
-            api_server
-            url
-
-        Optional params:
-
-
-        '''
         result = self.solve(app_id=app_id,
                             api_server=api_server,
                             url=url,
@@ -480,17 +635,27 @@ class TwoCaptcha():
     
 
     def turnstile(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving Cloudflare Turnstile
+        '''Wrapper for solving Cloudflare Turnstile.
 
-        Required:
-            sitekey
-            url
-                        
-        Optional params:
-            action
-            data
-
+        Parameters
+        __________
+        sitekey : str
+            Value of sitekey parameter you found on page.
+        url : str
+            Full URL of the page where you see the captcha.
+        action : str. optional
+            Value of optional action parameter you found on page, can be defined in data-action attribute or passed
+            to turnstile.render call.
+        data : str, optional
+            The value of cData passed to turnstile.render call. Also can be defined in data-cdata attribute.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(sitekey=sitekey,
@@ -501,17 +666,30 @@ class TwoCaptcha():
     
 
     def amazon_waf(self, sitekey, iv, context, url, **kwargs):
-        '''
-        Wrapper for solving Amazon WAF
+        '''Wrapper for solving Amazon WAF.
 
-        Required:
-            sitekey
-            iv
-            context
-            url
-                        
-        Optional params:
-
+        Parameters
+        __________
+        sitekey : str
+            Value of key parameter you found on the page.
+        iv : str
+            Value of iv parameter you found on the page.
+        context : str
+            Value of optional context parameter you found on page.
+        url : str
+            Full URL of the page where you see the captcha.
+        challenge_script : str, optional
+            The source URL of challenge.js script on the page.
+        captcha_script : str, optional
+            The source URL of captcha.js script on the page.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(sitekey=sitekey,
@@ -524,17 +702,22 @@ class TwoCaptcha():
         return result
 
     def mtcaptcha(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving MTCaptcha
+        '''Wrapper for solving MTCaptcha.
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        sitekey : str
+            The value of sitekey parameter found on the page.
+        url : str
+            Full URL of the page where you solve the captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(sitekey=sitekey,
@@ -544,17 +727,22 @@ class TwoCaptcha():
         return result
 
     def friendly_captcha(self, sitekey, url, **kwargs):
-        '''
-        Wrapper for solving Friendly Captcha
+        '''Wrapper for solving Friendly Captcha.
 
-        Required:
-            sitekey
-            url
-
-        Optional params:
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        sitekey : str
+            The value of data-sitekey attribute of captcha's div element on page.
+        url : str
+            Full URL of the page where you solve the captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(sitekey=sitekey,
@@ -564,18 +752,24 @@ class TwoCaptcha():
         return result
 
     def cutcaptcha(self, misery_key, apikey, url, **kwargs):
-        '''
-        Wrapper for solving Friendly Captcha
+        '''Wrapper for solving Friendly Captcha.
 
-        Required:
-            misery_key
-            apikey
-            url
-
-        Optional params:
-            softId
-            callback
-            proxy           =  {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'})
+        Parameters
+        __________
+        misery_key : str
+            The value of CUTCAPTCHA_MISERY_KEY variable defined on page.
+        apikey : str
+            The value of data-apikey attribute of iframe's body. Also, the name of javascript file included on the page.
+        url : str
+            Full URL of the page where you solve the captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
         result = self.solve(misery_key=misery_key,
@@ -586,19 +780,19 @@ class TwoCaptcha():
         return result
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
-        '''
-        sends captcha, receives result
-
+        '''Sends captcha, receives result.
 
         Parameters
-        ----------
+        __________
         timeout : float
+
         polling_interval : int
 
-        **kwargs : all captcha params
+        **kwargs : dict
+            all captcha params
 
         Returns
-        -------
+
         result : string
         '''
 
@@ -650,6 +844,15 @@ class TwoCaptcha():
         return {'method': 'post', 'file': file}
 
     def send(self, **kwargs):
+        """This method can be used for manual captcha submission
+
+        Parameters
+        _________
+        kwargs: dict
+
+        Returns
+
+        """
 
         params = self.default_params(kwargs)
         params = self.rename_params(params)
@@ -664,6 +867,16 @@ class TwoCaptcha():
         return response[3:]
 
     def get_result(self, id_):
+        """This method can be used for manual captcha answer polling.
+
+        Parameters
+        __________
+        id_ : str
+            ID of the captcha sent for solution
+        Returns
+
+        answer : text
+        """
 
         response = self.api_client.res(key=self.API_KEY, action='get', id=id_)
 
@@ -676,30 +889,29 @@ class TwoCaptcha():
         return response[3:]
 
     def balance(self):
-        '''
-        get my balance
+        '''Get my balance
 
         Returns
-        -------
-        balance : float
 
+        balance : float
         '''
 
         response = self.api_client.res(key=self.API_KEY, action='getbalance')
         return float(response)
 
     def report(self, id_, correct):
-        '''
-        report of solved captcha: good/bad
+        '''Report of solved captcha: good/bad.
 
         Parameters
-        ----------
-        id_ : captcha ID
-        correct : True/False
+        __________
+        id_ : str
+            captcha ID
+
+        correct : bool
+            True/False
 
         Returns
-        -------
-        None.
+            None.
 
         '''
 
