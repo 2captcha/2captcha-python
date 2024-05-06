@@ -17,8 +17,8 @@ solver = TwoCaptcha(api_key)
 
 try:
     result = solver.tencent(
-        app_id="197322596",
-        url="https://www.holla.world/random-video-chat#app"
+        app_id="913522596",
+        url="https://mysite.com/page/with/tencent"
     )
 
 except Exception as e:
