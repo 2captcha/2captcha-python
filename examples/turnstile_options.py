@@ -27,15 +27,16 @@ config = {
 solver = TwoCaptcha(**config)
 
 try:
-    result = solver.hcaptcha(sitekey='f7de0da3-3303-44e8-ab48-fa32ff8ccc7b',
-                             url='https://2captcha.com/ru/demo/hcaptcha-invisible',
-                             # invisible=1,
-                             # data="rqdata",
-                             # useragent="",
-                             # proxy={
-                             #     'type': 'HTTPS',
-                             #     'uri': 'login:password@IP_address:PORT'
-                             # }
+    result = solver.turnstile(sitekey='0x4AAAAAAAVrOwQWPlm3Bnr5',
+                              url='https://2captcha.com/demo/turnstile',
+                              # data="str",
+                              # pagedata="str",
+                              # action="str",
+                              # useragent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+                              # proxy={
+                              #     'type': 'HTTPS',
+                              #     'uri': 'login:password@IP_address:PORT'
+                              # }
                             )
 
 except Exception as e:
