@@ -751,6 +751,32 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def tencent(self, app_id, url, **kwargs):
+        '''Wrapper for solving Tencent captcha.
+
+        Parameters
+        __________
+        app_id : str
+            The value of appId parameter in the website source code.
+        url : str
+            The full URL of target web page where the captcha is loaded. We do not open the page, not a problem if it is
+            available only for authenticated users.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+        result = self.solve(app_id=app_id,
+                            url=url,
+                            method="tencent",
+                            **kwargs)
+        return result
+
     def cutcaptcha(self, misery_key, apikey, url, **kwargs):
         '''Wrapper for solving Friendly Captcha.
 
