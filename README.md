@@ -29,6 +29,7 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
     - [MTCaptcha](#mtcaptcha)
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
+    - [Tencent](#tencent)
   - [Other methods](#other-methods)
     - [send / get_result](#send--getresult)
     - [balance](#balance)
@@ -297,6 +298,13 @@ result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320'
                            param1=..., ...)
 ```
 
+### Tencent
+Use this method to solve Cutcaptcha. Returns a token.
+```python
+result = solver.tencent(app_id="197326679",
+                        url="https://mysite.com/page/with/tencent",
+                        param1=..., ...)
+```
 
 ## Other methods
 
