@@ -357,7 +357,7 @@ except TimeoutException as e:
 ### Proxies
 
 You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy pazzle, grid, rotate, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
 The proxy will be forwarded to the API to solve the captcha.
 
 We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
@@ -390,7 +390,7 @@ async def captchaSolver(image):
 [2Captcha]: https://2captcha.com/
 [2captcha sofware catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
-[post options]: https://2captcha.com/2captcha-api#solving_normal_captcha
+[post options]: https://2captcha.com/2captcha-api#normal_post
 [list of supported languages]: https://2captcha.com/2captcha-api#language
 [examples directory]: /examples
 [asyncio]: https://docs.python.org/3/library/asyncio.html
