@@ -31,7 +31,7 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
   - [Other methods](#other-methods)
-    - [send / get_result](#send--getresult)
+    - [send / get_result](#send--get_result)
     - [balance](#balance)
     - [report](#report)
     - [Error handling](#error-handling)
@@ -81,7 +81,7 @@ solver = TwoCaptcha(**config)
 | pollingInterval  | 10             | Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended                              |
 
 >  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
-To get the answer manually use [get_result method](#send--getresult)
+To get the answer manually use [get_result method](#send--get_result)
 
 ## Solve captcha
 When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
