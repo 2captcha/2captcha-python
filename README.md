@@ -377,6 +377,9 @@ import asyncio
 import concurrent.futures
 from twocaptcha import TwoCaptcha
 
+API_KEY = "YOUR_API_KEY"
+image = "data:image/png;base64,iVBORw0KGgoA..."
+
 async def captchaSolver(image):
     loop = asyncio.get_running_loop()
     with concurrent.futures.ThreadPoolExecutor() as pool:
