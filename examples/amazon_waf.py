@@ -15,6 +15,11 @@ api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
 solver = TwoCaptcha(api_key)
 
+"""
+Important: the values of the 'iv' and 'context' parameters are dynamic, for every request to our API you need to get new values. 
+The values 'iv' and 'context' need to be looked for in the page code.
+"""
+
 try:
     result = solver.amazon_waf(
         sitekey='AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AFsClhVgr5q0UFRdXhhHEwiAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMLMbH8d6uQSrYTraoAgEQgDvtSNxdEyG7Zu393cHyPdWNCZgeIB52+W7fCTI8U5z15z1NdPUdnB1ZHoK7ewpwoSMm5mzkJJld0cnvGw==',

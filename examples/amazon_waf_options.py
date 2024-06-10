@@ -26,6 +26,11 @@ config = {
 
 solver = TwoCaptcha(**config)
 
+"""
+Important: the values of the 'iv' and 'context' parameters are dynamic, for every request to our API you need to get new values. 
+The values 'iv' and 'context' need to be looked for in the page code.
+"""
+
 try:
     result = solver.amazon_waf(sitekey='AQIDAHjcYu/GjX+QlghicBgQ/7bFaQZ+m5FKCMDnO+vTbNg96AGIqvS8v6ScFa8ZpNRrlQgKAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMx9gxoe10Zg35PWhzAgEQgDvUtMMkqkFQByMLK2329D8iX4mjvaTuUhU70LD4vLp54v3+4K1nYY2hB+OM1hMbncnMbP63y4UOrY77jg==',
                                iv='CgAGVTNd9JAAAAnB',

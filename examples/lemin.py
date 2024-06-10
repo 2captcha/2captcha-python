@@ -15,7 +15,7 @@ api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 solver = TwoCaptcha(api_key)
 
 try:
-    result = solver.lemin(captcha_id='CROPPED_3dfdd5c_d1872b526b794d83ba3b365eb15a200b',
+    result = solver.lemin(captcha_id='CROPPED_5a29582_ca114c2f3314482c84cd32fc7d2feb63',
                                 div_id='lemin-cropped-captcha', 
                                 url='https://2captcha.com/demo/lemin')
 

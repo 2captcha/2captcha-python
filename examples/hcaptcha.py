@@ -17,7 +17,7 @@ solver = TwoCaptcha(api_key)
 
 try:
     result = solver.hcaptcha(
-        sitekey='3ceb8624-1970-4e6b-91d5-70317b70b651',
+        sitekey='41b778e7-8f20-45cc-a804-1f1ebb45c579',
         url='https://2captcha.com/demo/hcaptcha?difficulty=easy',
     )
 
