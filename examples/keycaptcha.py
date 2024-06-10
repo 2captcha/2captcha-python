@@ -17,11 +17,11 @@ solver = TwoCaptcha(api_key)
 
 try:
     result = solver.keycaptcha(
-        s_s_c_user_id=15,
-        s_s_c_session_id='faa8cc1697c962ad4b859aa472f5d992',
-        s_s_c_web_server_sign='4f84e4fe41cf688d8d94361489ecd75c-pz-',
-        s_s_c_web_server_sign2='a9af97bb0a645eec495f2527e431a21b',
-        url='https://www.keycaptcha.com/products/')
+        s_s_c_user_id=184015,
+        s_s_c_session_id='e34ddd2c72e67593ac0b4ca8e4f44725',
+        s_s_c_web_server_sign='a5ebd41ae22348b2cdbdc211792e982d',
+        s_s_c_web_server_sign2='29255689423dd92990f8d06de50560d0',
+        url='https://2captcha.com/demo/keycaptcha')
 
 except Exception as e:
     sys.exit(e)

@@ -17,8 +17,8 @@ solver = TwoCaptcha(api_key)
 
 try:
     result = solver.recaptcha(
-        sitekey='6LfDxboZAAAAAD6GHukjvUy6lszoeG3H4nQW57b6',
-        url='https://2captcha.com/demo/recaptcha-v2-invisible?level=low')
+        sitekey='6LdO5_IbAAAAAAeVBL9TClS19NUTt5wswEb3Q7C5',
+        url='https://2captcha.com/demo/recaptcha-v2-invisible')
 
 except Exception as e:
     sys.exit(e)

@@ -27,15 +27,14 @@ config = {
 solver = TwoCaptcha(**config)
 
 try:
-    result = solver.keycaptcha(s_s_c_user_id          = 184015,
-                            s_s_c_session_id       = 'c32c9934c68b2968bee0332b9346da42',
-                            s_s_c_web_server_sign  = 'c93c8d136d5ee6ee6fe27ab2be54901d',
-                            s_s_c_web_server_sign2 = 'eec85fcfeda28bffd7764d712d4089e7',
-                            url                    = 'https://2captcha.com/ru/demo/keycaptcha'
-                            # proxy                  = {
-                            #                           'type': 'HTTPS',
-                            #                           'uri': 'login:password@IP_address:PORT'}
-                            )
+    result = solver.keycaptcha(s_s_c_user_id=184015,
+                               s_s_c_session_id='e34ddd2c72e67593ac0b4ca8e4f44725',
+                               s_s_c_web_server_sign='a5ebd41ae22348b2cdbdc211792e982d',
+                               s_s_c_web_server_sign2='29255689423dd92990f8d06de50560d0',
+                               url='https://2captcha.com/demo/keycaptcha',
+                               # proxy = {'type': 'HTTPS',
+                               #          'uri': 'login:password@IP_address:PORT'}
+                               )
 
         
 except Exception as e:
