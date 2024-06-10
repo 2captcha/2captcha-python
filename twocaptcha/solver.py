@@ -1021,6 +1021,7 @@ class TwoCaptcha():
             return params, files
 
         if not '.' in hint and len(hint) > 50:
+            params.update({'imginstructions': hint})
             return params, files
 
         if not os.path.exists(hint):
