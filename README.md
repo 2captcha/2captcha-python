@@ -154,7 +154,10 @@ result = solver.funcaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 
 ### GeeTest
 Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
+
 ```python
+# Important: the value of the 'challenge' parameter is dynamic, for each request to our API you need to get a new value.
+
 result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
                         challenge='12345678abc90123d45678ef90123a456b',
                         url='https://www.site.com/page/',
@@ -208,6 +211,9 @@ result = solver.turnstile(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
 ### Amazon WAF
 Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token.
 ```python
+# Important: the values of the 'iv' and 'context' parameters are dynamic, for every request to our API you need to get new values. 
+# The values 'iv' and 'context' need to be looked for in the page code.
+
 result = solver.amazon_waf(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
                             iv='CgAHbCe2GgAAAAAj', 
                             context='9BUgmlm48F92WUoqv97a49ZuEJJ50TCk9MVr3C7WMtQ0X6flVbufM4n8mjFLmbLVAPgaQ1Jydeaja94iAS49ljb+sUNLoukWedAQZKrlY4RdbOOzvcFqmD/ZepQFS9N5w15Exr4VwnVq+HIxTsDJwRviElWCdzKDebN/mk8/eX2n7qJi5G3Riq0tdQw9+C4diFZU5E97RSeahejOAAJTDqduqW6uLw9NsjJBkDRBlRjxjn5CaMMo5pYOxYbGrM8Un1JH5DMOLeXbq1xWbC17YSEoM1cRFfTgOoc+VpCe36Ai9Kc='
