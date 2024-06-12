@@ -42,7 +42,9 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
 
 This package can be installed with Pip:
 
-```pip3 install 2captcha-python```
+```bash
+pip3 install 2captcha-python
+```
 
 
 ## Configuration
@@ -54,7 +56,7 @@ from twocaptcha import TwoCaptcha
 
 solver = TwoCaptcha('YOUR_API_KEY')
 ```
-Also there are a few options that can be configured:
+Also, there are a few options that can be configured:
 
 ```python 
 config = {
@@ -74,35 +76,35 @@ solver = TwoCaptcha(**config)
 | Option           | Default value  | Description                                                                                                                                        |
 | ---------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | server           | `2captcha.com` | API server. You can set it to `rucaptcha.com` if your account is registered there                                                                  |
-| softId           | -              | your software ID obtained after publishing in [2captcha sofware catalog]                                                                           |
-| callback         | -              | URL of your web-sever that receives the captcha recognition result. The URl should be first registered in [pingback settings] of your account      |
-| defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from `res.php` API endpoint |
-| recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from `res.php` API endpoint                          |
-| pollingInterval  | 10             | Interval in seconds between requests to `res.php` API endpoint, setting values less than 5 seconds is not recommended                              |
+| softId           | -              | your software ID obtained after publishing in [2captcha software catalog]                                                                           |
+| callback         | -              | URL of your web server that receives the captcha recognition result. The URL should be first registered in [pingback settings] of your account      |
+| defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from the `res.php` API endpoint |
+| recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
+| pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
 
->  **IMPORTANT:** once `callback` is defined for `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+> **IMPORTANT:** Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
 To get the answer manually use [get_result method](#send--get_result)
 
 ## Solve captcha
-When you submit any image-based captcha use can provide additional options to help 2captcha workers to solve it properly.
+When you submit any image-based CAPTCHA, you can provide additional options to help 2captcha workers solve it properly.
 
 ### Captcha options
 | Option        | Default Value | Description                                                                                        |
 | ------------- | ------------- | -------------------------------------------------------------------------------------------------- |
-| numeric       | 0             | Defines if captcha contains numeric or other symbols [see more info in the API docs][post options] |
-| minLen        | 0             | minimal answer lenght                                                                              |
+| numeric       | 0             | Defines if the captcha contains numeric or other symbols [see more info in the API docs][post options] |
+| minLen        | 0             | minimal answer length                                                                              |
 | maxLen        | 0             | maximum answer length                                                                              |
 | phrase        | 0             | defines if the answer contains multiple words or not                                               |
 | caseSensitive | 0             | defines if the answer is case sensitive                                                            |
 | calc          | 0             | defines captcha requires calculation                                                               |
-| lang          | -             | defines the captcha language, see the [list of supported languages]                                |
-| hintImg       | -             | an image with hint shown to workers with the captcha                                               |
+| lang          | -             | defines the captcha language; see the [list of supported languages]                                |
+| hintImg       | -             | an image with a hint shown to workers with the captcha                                               |
 | hintText      | -             | hint or task text shown to workers with the captcha                                                |
 
-Below you can find basic examples for every captcha type. Check out [examples directory] to find more examples with all available options.
+Below, you can find basic examples for every captcha type. Check out [examples directory] for more examples with all available options.
 
 ### Normal Captcha
-To bypass a normal captcha (distorted text on an image) use the following method. This method also can be used to recognize any text on the image.
+To bypass a normal captcha (distorted text on an image) use the following method. This method can also be used to recognize any text in an image.
 ```python 
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
 # OR
@@ -110,7 +112,7 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 ```
 
 ### Audio Captcha
-To bypass an audio captcha (mp3 formats only) use the following method. 
+Use the following method to bypass an audio captcha (mp3 formats only). 
 You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
 
 ```python 
@@ -126,7 +128,7 @@ result = solver.text('If tomorrow is Saturday, what day is today?', param1=..., 
 ```
 
 ### reCAPTCHA v2
-Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
+Use the following method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
 ```python 
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                           url='https://mysite.com/page/with/recaptcha',
@@ -250,25 +252,25 @@ result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
                      param1=..., ...)
 ```
 ### Grid
-Grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
+The grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
 ```python
 result = solver.grid('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Canvas
-Canvas method can be used when you need to draw a line around an object on an image. Returns a set of points' coordinates to draw a polygon.
+The canvas method can be used when you need to draw a line around an object on an image. Returns a set of points' coordinates to draw a polygon.
 ```python
 result = solver.canvas('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### ClickCaptcha
-ClickCaptcha method returns coordinates of points on the captcha image. Can be used if you need to click on particular points in the image.
+The ClickCaptcha method returns the coordinates of points on the captcha image. It can be used if you need to click on particular points in the image.
 ```python
 result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Rotate
-This method can be used to solve a captcha that asks to rotate an object. Mostly used to bypass FunCaptcha. Returns the rotation angle.
+This method can be used to solve a captcha that asks to rotate an object. It is mostly used to bypass FunCaptcha. Returns the rotation angle.
 ```python
 result = solver.rotate('path/to/captcha.jpg', param1=..., ...)
 ```
@@ -356,11 +358,11 @@ except TimeoutException as e:
 
 ### Proxies
 
-You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
+You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
 keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
 The proxy will be forwarded to the API to solve the captcha.
 
-We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
+We have our own proxies that we can offer you. [Buy residential proxies] to avoid restrictions and blocks. [Quick start].
 
 ```python
 proxy={
@@ -389,7 +391,7 @@ async def captchaSolver(image):
 captcha_result = asyncio.run(captchaSolver(image))
 ```
 
-
+### Useful links
 [2Captcha]: https://2captcha.com/
 [2captcha sofware catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
@@ -398,4 +400,4 @@ captcha_result = asyncio.run(captchaSolver(image))
 [examples directory]: /examples
 [asyncio]: https://docs.python.org/3/library/asyncio.html
 [Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
-[Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
+[Quick Start]: https://2captcha.com/proxy?openAddTrafficModal=true
