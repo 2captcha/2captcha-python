@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-import os, sys
-import time
-import requests
+from requests import get
+from time import sleep, time
+from sys import argv
+from os import path
 from base64 import b64encode
-
 
 try:
     from .api import ApiClient
-
 except ImportError:
     from api import ApiClient
 
@@ -54,7 +53,7 @@ class TwoCaptcha():
         self.exceptions = SolverExceptions
 
     def normal(self, file, **kwargs):
-        '''Wrapper for solving normal captcha (image).
+        '''Wrapper for solving a normal captcha (image).
 
         Parameters
         __________
@@ -119,7 +118,7 @@ class TwoCaptcha():
         elif not '.' in file and len(file) > 50:
             body = file
         elif file.endswith(".mp3") and file.startswith("http"):
-            response = requests.get(file)
+            response = get(file)
             if response.status_code != 200:
                 raise ValidationException(f'File could not be downloaded from url: {file}')
             body = b64encode(response.content).decode('utf-8')
@@ -837,16 +836,16 @@ class TwoCaptcha():
 
     def wait_result(self, id_, timeout, polling_interval):
 
-        max_wait = time.time() + timeout
+        max_wait = time() + timeout
 
-        while time.time() < max_wait:
+        while time() < max_wait:
 
             try:
                 return self.get_result(id_)
 
             except NetworkException:
 
-                time.sleep(polling_interval)
+                sleep(polling_interval)
 
         raise TimeoutException(f'timeout {timeout} exceeded')
 
@@ -859,12 +858,12 @@ class TwoCaptcha():
             return {'method': 'base64', 'body': file}
 
         if file.startswith('http'):
-            img_resp = requests.get(file)
+            img_resp = get(file)
             if img_resp.status_code != 200:
                 raise ValidationException(f'File could not be downloaded from url: {file}')
             return {'method': 'base64', 'body': b64encode(img_resp.content).decode('utf-8')}
 
-        if not os.path.exists(file):
+        if not path.exists(file):
             raise ValidationException(f'File not found: {file}')
 
         return {'method': 'post', 'file': file}
@@ -1004,7 +1003,7 @@ class TwoCaptcha():
             raise ValidationException(
                 f'Too many files (max: {self.max_files})')
 
-        not_exists = [f for f in files if not (os.path.exists(f))]
+        not_exists = [f for f in files if not (path.exists(f))]
 
         if not_exists:
             raise ValidationException(f'File not found: {not_exists}')
@@ -1023,7 +1022,7 @@ class TwoCaptcha():
         if not '.' in hint and len(hint) > 50:
             return params, files
 
-        if not os.path.exists(hint):
+        if not path.exists(hint):
             raise ValidationException(f'File not found: {hint}')
 
         if not files:
@@ -1035,6 +1034,5 @@ class TwoCaptcha():
 
 
 if __name__ == '__main__':
-
-    key = sys.argv[1]
+    key = argv[1]
     sol = TwoCaptcha(key)
