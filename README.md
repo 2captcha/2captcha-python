@@ -111,7 +111,7 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 
 ### Audio Captcha
 To bypass an audio captcha (mp3 formats only) use the following method. 
-You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
+You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt", "fr".
 
 ```python 
 result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
@@ -357,7 +357,7 @@ except TimeoutException as e:
 ### Proxies
 
 You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, tencent, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
 The proxy will be forwarded to the API to solve the captcha.
 
 We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
