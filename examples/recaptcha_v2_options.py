@@ -31,12 +31,12 @@ try:
         sitekey='6LdO5_IbAAAAAAeVBL9TClS19NUTt5wswEb3Q7C5',
         url='https://2captcha.com/demo/recaptcha-v2-invisible',
         invisible=1,
-        enterprise=0
-#        proxy={
-#            'type': 'HTTPS',
-#            'uri': 'login:password@IP_address:PORT'
-#        }
-        )
+        enterprise=0,
+        # datas="bM-8CwwOmqyYCLWatmabvfyYR97ytF95tgu...",
+        # proxy={'type': 'HTTPS',
+        #        'uri': 'login:password@IP_address:PORT'
+        #        }
+    )
 
 except Exception as e:
     sys.exit(e)
