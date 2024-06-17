@@ -879,8 +879,10 @@ class TwoCaptcha():
 
         Parameters
         _________
+        method : str
+            The name of the method must be found in the documentation https://2captcha.com/2captcha-api
         kwargs: dict
-
+            All captcha params
         Returns
 
         """

@@ -309,7 +309,11 @@ result = solver.tencent(app_id="197326679",
 ## Other methods
 
 ### send / get_result
-These methods can be used for manual captcha submission and answer polling.
+These methods can be used for manual captcha submission and answer polling. The `send()` method supports sending any captcha 
+type, to specify the captcha type you must send value `method` manually, for example `method='hcaptcha'` for solving hCapthca. 
+You can find the value of the `method` parameter in the [API documentation](https://2captcha.com/2captcha-api).
+
+Example for solving Normal captcha manually:
 ```python
 import time
 . . . . . 
@@ -318,6 +322,17 @@ import time
 id = solver.send(file='path/to/captcha.jpg')
 time.sleep(20)
 
+code = solver.get_result(id)
+```
+Example for solving hCaptcha manually:
+```python
+import time
+. . . . . 
+id = solver.send(sitekey='41b778e7-8f20-45cc-a804-1f1ebb45c579',
+                 url='https://2captcha.com/demo/hcaptcha?difficulty=easy',
+                 method='hcaptcha')
+print(id)
+time.sleep(20)
 code = solver.get_result(id)
 ```
 
