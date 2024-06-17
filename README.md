@@ -102,7 +102,9 @@ When you submit any image-based captcha use can provide additional options to he
 Below you can find basic examples for every captcha type. Check out [examples directory] to find more examples with all available options.
 
 ### Normal Captcha
-To bypass a normal captcha (distorted text on an image) use the following method. This method also can be used to recognize any text on the image. [API method description](https://2captcha.com/2captcha-api#solving_normal_captcha).
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_normal_captcha)</sup>
+
+To bypass a normal captcha (distorted text on an image) use the following method. This method also can be used to recognize any text on the image.
 ```python 
 result = solver.normal('path/to/captcha.jpg', param1=..., ...)
 # OR
@@ -110,8 +112,11 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 ```
 
 ### Audio Captcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#audio)</sup>
+
 To bypass an audio captcha (mp3 formats only) use the following method. 
-You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt". [API method description](https://2captcha.com/2captcha-api#audio).
+You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
 
 ```python 
 result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
@@ -120,13 +125,19 @@ result = solver.audio('https://site-with-captcha.com/path/to/captcha.mp3', lang 
 ```
 
 ### Text Captcha
-This method can be used to bypass a captcha that requires answering a question provided in clear text. [API method description](https://2captcha.com/2captcha-api#solving_text_captcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_text_captcha)</sup>
+
+This method can be used to bypass a captcha that requires answering a question provided in clear text.
 ```python 
 result = solver.text('If tomorrow is Saturday, what day is today?', param1=..., ...)
 ```
 
 ### reCAPTCHA v2
-Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection. [API method description](https://2captcha.com/2captcha-api#solving_recaptchav2_new).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_recaptchav2_new)</sup>
+
+Use this method to solve reCAPTCHA V2 and obtain a token to bypass the protection.
 ```python 
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                           url='https://mysite.com/page/with/recaptcha',
@@ -134,7 +145,10 @@ result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 ```
 
 ### reCAPTCHA v3
-This method provides a reCAPTCHA V3 solver and returns a token. [API method description](https://2captcha.com/2captcha-api#solving_recaptchav3).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_recaptchav3)</sup>
+
+This method provides a reCAPTCHA V3 solver and returns a token.
 ```python
 result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/recaptcha',
@@ -143,7 +157,10 @@ result = solver.recaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 ```
 
 ### FunCaptcha
-FunCaptcha (Arkoselabs) solving method. Returns a token. [API method description](https://2captcha.com/2captcha-api#solving_funcaptcha_new).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_funcaptcha_new)</sup>
+
+FunCaptcha (Arkoselabs) solving method. Returns a token.
 ```python
 result = solver.funcaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
                             url='https://mysite.com/page/with/funcaptcha',
@@ -153,7 +170,10 @@ result = solver.funcaptcha(sitekey='6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-',
 
 
 ### GeeTest
-Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON. [API method description](https://2captcha.com/2captcha-api#solving_geetest).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_geetest)</sup>
+
+Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
 ```python
 result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
                         challenge='12345678abc90123d45678ef90123a456b',
@@ -164,7 +184,10 @@ result = solver.geetest(gt='f1ab2cdefa3456789012345b6c78d90e',
 
 
 ### GeeTest v4
-Use this method to solve GeeTest v4. Returns the response in JSON. [API method description](https://2captcha.com/2captcha-api#geetest-v4).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#geetest-v4)</sup>
+
+Use this method to solve GeeTest v4. Returns the response in JSON.
 ```python
 result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
                             url='https://www.site.com/page/',  
@@ -174,7 +197,10 @@ result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
 
 
 ### hCaptcha
-Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha. [API method description](https://2captcha.com/2captcha-api#solving_hcaptcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_hcaptcha)</sup>
+
+Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
 ```python
 result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
                             url='https://www.site.com/page/', 
@@ -184,7 +210,10 @@ result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
 
 
 ### Lemin Cropped Captcha
-Use this method to solve hCaptcha challenge. Returns JSON with an answer containing the following values: answer, challenge_id. [API method description](https://2captcha.com/2captcha-api#lemin).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#lemin)</sup>
+
+Use this method to solve hCaptcha challenge. Returns JSON with an answer containing the following values: answer, challenge_id.
 ```python
 result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d901d',
                             div_id='lemin-cropped-captcha', 
@@ -195,7 +224,10 @@ result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d90
 
 
 ### Cloudflare Turnstile
-Use this method to solve Cloudflare Turnstile. Returns JSON with the token. [API method description](https://2captcha.com/2captcha-api#turnstile).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#turnstile)</sup>
+
+Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
 ```python
 result = solver.turnstile(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
                             url='http://mysite.com/', 
@@ -206,7 +238,10 @@ result = solver.turnstile(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
 ```
 
 ### Amazon WAF
-Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token. [API method description](https://2captcha.com/2captcha-api#amazon-waf).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#amazon-waf)</sup>
+
+Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat mitigation for Amazon AWS. Returns JSON with the token.
 ```python
 result = solver.amazon_waf(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
                             iv='CgAHbCe2GgAAAAAj', 
@@ -218,7 +253,10 @@ result = solver.amazon_waf(sitekey='0x1AAAAAAAAkg0s2VIOD34y5',
 
 
 ### KeyCaptcha
-Token-based method to solve KeyCaptcha. [API method description](https://2captcha.com/2captcha-api#solving_keycaptcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_keycaptcha)</sup>
+
+Token-based method to solve KeyCaptcha.
 ```python
 result = solver.keycaptcha(s_s_c_user_id=10,
     				   s_s_c_session_id='493e52c37c10c2bcdf4a00cbc9ccd1e8',
@@ -231,7 +269,10 @@ result = solver.keycaptcha(s_s_c_user_id=10,
 
 
 ### atbCAPTCHA
-Use this method to solve atbCaptcha challenge. Returns a token to bypass the captcha. [API method description](https://2captcha.com/2captcha-api#atb-captcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#atb-captcha)</sup>
+
+Use this method to solve atbCaptcha challenge. Returns a token to bypass the captcha.
 ```python
 result = solver.atb_captcha(app_id='af25e409b33d722a95e56a230ff8771c',
                             api_server='https://cap.aisecurius.com',
@@ -242,7 +283,10 @@ result = solver.atb_captcha(app_id='af25e409b33d722a95e56a230ff8771c',
 
 
 ### Capy
-Token-based method to bypass Capy puzzle captcha. [API method description](https://2captcha.com/2captcha-api#solving_capy).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_capy)</sup>
+
+Token-based method to bypass Capy puzzle captcha.
 ```python
 result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
                      url='http://mysite.com/',
@@ -250,31 +294,46 @@ result = solver.capy(sitekey='PUZZLE_Abc1dEFghIJKLM2no34P56q7rStu8v',
                      param1=..., ...)
 ```
 ### Grid
-Grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes. [API method description](https://2captcha.com/2captcha-api#grid).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#grid)</sup>
+
+Grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
 ```python
 result = solver.grid('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Canvas
-Canvas method can be used when you need to draw a line around an object on an image. Returns a set of points' coordinates to draw a polygon. [API method description](https://2captcha.com/2captcha-api#canvas).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#canvas)</sup>
+
+Canvas method can be used when you need to draw a line around an object on an image. Returns a set of points' coordinates to draw a polygon.
 ```python
 result = solver.canvas('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### ClickCaptcha
-ClickCaptcha method returns coordinates of points on the captcha image. Can be used if you need to click on particular points in the image. [API method description](https://2captcha.com/2captcha-api#coordinates).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#coordinates)</sup>
+
+ClickCaptcha method returns coordinates of points on the captcha image. Can be used if you need to click on particular points in the image.
 ```python
 result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### Rotate
-This method can be used to solve a captcha that asks to rotate an object. Mostly used to bypass FunCaptcha. Returns the rotation angle. [API method description](https://2captcha.com/2captcha-api#solving_rotatecaptcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#solving_rotatecaptcha)</sup>
+
+This method can be used to solve a captcha that asks to rotate an object. Mostly used to bypass FunCaptcha. Returns the rotation angle.
 ```python
 result = solver.rotate('path/to/captcha.jpg', param1=..., ...)
 ```
 
 ### MTCaptcha
-Use this method to solve MTCaptcha and obtain a token to bypass the protection. [API method description](https://2captcha.com/2captcha-api#mtcaptcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#mtcaptcha)</sup>
+
+Use this method to solve MTCaptcha and obtain a token to bypass the protection.
 ```python
 result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
                           url='https://2captcha.com/demo/mtcaptcha',
@@ -282,7 +341,10 @@ result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
 ```
 
 ### Friendly Captcha
-Friendly Captcha solving method. Returns a token. [API method description](https://2captcha.com/2captcha-api#friendly-captcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#friendly-captcha)</sup>
+
+Friendly Captcha solving method. Returns a token.
 ```python
 result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
                                  url='https://friendlycaptcha.com/demo',
@@ -290,7 +352,10 @@ result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
 ```
 
 ### Cutcaptcha
-Use this method to solve Cutcaptcha. Returns the response in JSON. [API method description](https://2captcha.com/2captcha-api#cutcaptcha).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#cutcaptcha)</sup>
+
+Use this method to solve Cutcaptcha. Returns the response in JSON.
 ```python
 result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320',
                            apikey='SAs61IAI',
@@ -299,7 +364,10 @@ result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320'
 ```
 
 ### Tencent
-Use this method to solve Cutcaptcha. Returns a token. [API method description](https://2captcha.com/2captcha-api#tencent).
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#tencent)</sup>
+
+Use this method to solve Cutcaptcha. Returns a token.
 ```python
 result = solver.tencent(app_id="197326679",
                         url="https://mysite.com/page/with/tencent",
