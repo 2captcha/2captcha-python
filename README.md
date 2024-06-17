@@ -37,6 +37,7 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
     - [Error handling](#error-handling)
     - [Proxies](#proxies)
     - [Async calls](#async-calls)
+  - [Examples](#examples)
 
 ## Installation
 
@@ -116,7 +117,7 @@ result = solver.normal('https://site-with-captcha.com/path/to/captcha.jpg', para
 <sup>[API method description.](https://2captcha.com/2captcha-api#audio)</sup>
 
 To bypass an audio captcha (mp3 formats only) use the following method. 
-You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt".
+You must provide the language as `lang = 'en'`. Supported languages are "en", "ru", "de", "el", "pt", "fr".
 
 ```python 
 result = solver.audio('path/to/captcha.mp3', lang = 'lang', param1=..., ...)
@@ -377,7 +378,11 @@ result = solver.tencent(app_id="197326679",
 ## Other methods
 
 ### send / get_result
-These methods can be used for manual captcha submission and answer polling.
+These methods can be used for manual captcha submission and answer polling. The `send()` method supports sending any captcha 
+type, to specify the captcha type you must send value `method` manually, for example `method='hcaptcha'` for solving hCapthca. 
+You can find the value of the `method` parameter in the [API documentation](https://2captcha.com/2captcha-api).
+
+Example for solving Normal captcha manually:
 ```python
 import time
 . . . . . 
@@ -386,6 +391,17 @@ import time
 id = solver.send(file='path/to/captcha.jpg')
 time.sleep(20)
 
+code = solver.get_result(id)
+```
+Example for solving hCaptcha manually:
+```python
+import time
+. . . . . 
+id = solver.send(sitekey='41b778e7-8f20-45cc-a804-1f1ebb45c579',
+                 url='https://2captcha.com/demo/hcaptcha?difficulty=easy',
+                 method='hcaptcha')
+print(id)
+time.sleep(20)
 code = solver.get_result(id)
 ```
 
@@ -425,7 +441,7 @@ except TimeoutException as e:
 ### Proxies
 
 You can pass your proxy as an additional argument for methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, tencent, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
 The proxy will be forwarded to the API to solve the captcha.
 
 We have our own proxies that we can offer you. [Buy residential proxies] for avoid restrictions and blocks. [Quick start].
@@ -456,6 +472,8 @@ async def captchaSolver(image):
 
 captcha_result = asyncio.run(captchaSolver(image))
 ```
+## Examples
+Examples of solving all supported captcha types are located in the [examples] directory.
 
 
 [2Captcha]: https://2captcha.com/
@@ -467,3 +485,4 @@ captcha_result = asyncio.run(captchaSolver(image))
 [asyncio]: https://docs.python.org/3/library/asyncio.html
 [Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
 [Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
+[examples]: ./examples
