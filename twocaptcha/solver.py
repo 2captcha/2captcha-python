@@ -361,7 +361,7 @@ class TwoCaptcha():
         api_server : str, optional
             The domain part of script URL you found on page. Default value: https://jp.api.capy.me/.
         version : str, optional
-            The version of captcha task: puzzle (assemble a puzzle) or avatar (drag an object). Default: puzzle.
+            The version of captcha task: "puzzle" (assemble a puzzle) or "avatar" (drag an object). Default: puzzle.
         softId : int, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
@@ -643,11 +643,16 @@ class TwoCaptcha():
             Value of sitekey parameter you found on page.
         url : str
             Full URL of the page where you see the captcha.
+        useragent : str
+            User-Agent of your browser. Must match the User-Agent you use to access the site.
+            Use only modern browsers released within the last 6 months.
         action : str. optional
             Value of optional action parameter you found on page, can be defined in data-action attribute or passed
             to turnstile.render call.
         data : str, optional
             The value of cData passed to turnstile.render call. Also can be defined in data-cdata attribute.
+        pagedata : str, optional
+            The value of the chlPageData parameter when calling turnstile.render.
         softId : int, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
@@ -874,8 +879,10 @@ class TwoCaptcha():
 
         Parameters
         _________
+        method : str
+            The name of the method must be found in the documentation https://2captcha.com/2captcha-api
         kwargs: dict
-
+            All captcha params
         Returns
 
         """
