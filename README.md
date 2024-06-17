@@ -37,6 +37,7 @@ The easiest way to quickly integrate the 2Captcha captcha-solving service into y
     - [Error handling](#error-handling)
     - [Proxies](#proxies)
     - [Async calls](#async-calls)
+  - [Examples](#examples)
 
 ## Installation
 
@@ -388,6 +389,8 @@ async def captchaSolver(image):
 
 captcha_result = asyncio.run(captchaSolver(image))
 ```
+## Examples
+Examples of solving all supported captcha types are located in the [examples] directory.
 
 
 [2Captcha]: https://2captcha.com/
@@ -399,3 +402,4 @@ captcha_result = asyncio.run(captchaSolver(image))
 [asyncio]: https://docs.python.org/3/library/asyncio.html
 [Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
 [Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
+[examples]: ./examples
