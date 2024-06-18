@@ -54,7 +54,7 @@ class TwoCaptcha():
         self.exceptions = SolverExceptions
 
     def normal(self, file, **kwargs):
-        '''Wrapper for solving normal captcha (image).
+        '''Wrapper for solving a normal captcha (image).
 
         Parameters
         __________
