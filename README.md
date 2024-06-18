@@ -485,7 +485,7 @@ captcha_result = asyncio.run(captchaSolver(image))
 ## Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
 
-### Useful links
+<!-- Shared links for README.md -->
 [2Captcha]: https://2captcha.com/
 [2captcha sofware catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
