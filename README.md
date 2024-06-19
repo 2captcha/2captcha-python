@@ -74,11 +74,11 @@ solver = TwoCaptcha(**config)
 
 ### TwoCaptcha instance options
 
-| Option           | Default value  | Description                                                                                                                                        |
-| ---------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| server           | `2captcha.com` | API server. You can set it to `rucaptcha.com` if your account is registered there                                                                  |
-| softId           | -              | your software ID obtained after publishing in [2captcha software catalog]                                                                           |
-| callback         | -              | URL of your web server that receives the captcha recognition result. The URL should be first registered in [pingback settings] of your account      |
+| Option           | Default value  | Description                                                                                                                                            |
+| ---------------- | -------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| server           | `2captcha.com` | API server. You can set it to `rucaptcha.com` if your account is registered there                                                                      |
+| softId           | 4580           | your software ID obtained after publishing in [2captcha software catalog]                                                                              |
+| callback         | -              | URL of your web server that receives the captcha recognition result. The URL should be first registered in [pingback settings] of your account         |
 | defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from the `res.php` API endpoint |
 | recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
@@ -487,7 +487,7 @@ Examples of solving all supported captcha types are located in the [examples] di
 
 ### Useful links
 [2Captcha]: https://2captcha.com/
-[2captcha sofware catalog]: https://2captcha.com/software
+[2captcha software catalog]: https://2captcha.com/software
 [pingback settings]: https://2captcha.com/setting/pingback
 [post options]: https://2captcha.com/2captcha-api#normal_post
 [list of supported languages]: https://2captcha.com/2captcha-api#language
