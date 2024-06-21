@@ -1,5 +1,5 @@
 # Python Module for 2Captcha API
-The easiest way to quickly integrate the 2Captcha captcha-solving service into your code and automate the solving of any type of captcha.
+The easiest way to quickly integrate the [2Captcha] captcha-solving service into your code and automate the solving of any type of captcha.
 
 - [Python Module for 2Captcha API](#python-module-for-2captcha-api)
   - [Installation](#installation)
