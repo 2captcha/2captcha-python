@@ -219,7 +219,7 @@ result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
 
 <sup>[API method description.](https://2captcha.com/2captcha-api#lemin)</sup>
 
-Use this method to solve hCaptcha challenge. Returns JSON with an answer containing the following values: answer, challenge_id.
+Use this method to solve the Lemin captcha. Returns JSON with an answer containing the following values: answer, challenge_id.
 ```python
 result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d901d',
                             div_id='lemin-cropped-captcha', 
