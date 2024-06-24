@@ -355,6 +355,11 @@ result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
 <sup>[API method description.](https://2captcha.com/2captcha-api#friendly-captcha)</sup>
 
 Friendly Captcha solving method. Returns a token.
+
+
+
+> **Important:** To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
+
 ```python
 result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
                                  url='https://friendlycaptcha.com/demo',
@@ -415,12 +420,18 @@ code = solver.get_result(id)
 ```
 
 ### balance
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#additional-methods)</sup>
+
 Use this method to get your account's balance
 ```python
 balance = solver.balance()
 ```
 
 ### report
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#complain)</sup>
+
 Use this method to report good or bad captcha answers.
 ```python
 solver.report(id, True) # captcha solved correctly
@@ -428,7 +439,8 @@ solver.report(id, False) # captcha solved incorrectly
 ```
 
 ### Error handling
-In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions. 
+In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions.
+The list of all errors can be found in the  [API documentation](https://2captcha.com/2captcha-api#list-of-inphp-errors).
 ```python
 try:
     result = solver.text('If tomorrow is Saturday, what day is today?')
@@ -482,8 +494,13 @@ async def captchaSolver(image):
 
 captcha_result = asyncio.run(captchaSolver(image))
 ```
-## Examples
+### Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
+
+## Useful articles
+
+- Amazon captcha solver: Code example for bypassing the [Amazon captcha](https://2captcha.com/blog/amazon-captcha-solving)
+- [Captcha bypass in Selenium](https://2captcha.com/blog/captcha-bypass-in-selenium)
 
 <!-- Shared links for README.md -->
 [2Captcha]: https://2captcha.com/
