@@ -34,10 +34,11 @@ The easiest way to quickly integrate the [2Captcha] captcha-solving service into
     - [send / get_result](#send--get_result)
     - [balance](#balance)
     - [report](#report)
-    - [Error handling](#error-handling)
-    - [Proxies](#proxies)
-    - [Async calls](#async-calls)
+  - [Error handling](#error-handling)
+  - [Proxies](#proxies)
+  - [Async calls](#async-calls)
   - [Examples](#examples)
+  - [Useful articles](#useful-articles)
 
 ## Installation
 
@@ -83,7 +84,9 @@ solver = TwoCaptcha(**config)
 | recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
 
-> **IMPORTANT:** Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+> [!IMPORTANT]
+> Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+
 To get the answer manually use [get_result method](#send--get_result)
 
 ## Solve captcha
@@ -355,6 +358,10 @@ result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
 <sup>[API method description.](https://2captcha.com/2captcha-api#friendly-captcha)</sup>
 
 Friendly Captcha solving method. Returns a token.
+
+> [!IMPORTANT]
+> To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
+
 ```python
 result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
                                  url='https://friendlycaptcha.com/demo',
@@ -415,20 +422,27 @@ code = solver.get_result(id)
 ```
 
 ### balance
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#additional-methods)</sup>
+
 Use this method to get your account's balance
 ```python
 balance = solver.balance()
 ```
 
 ### report
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#complain)</sup>
+
 Use this method to report good or bad captcha answers.
 ```python
 solver.report(id, True) # captcha solved correctly
 solver.report(id, False) # captcha solved incorrectly
 ```
 
-### Error handling
-In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions. 
+## Error handling
+In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions.
+The list of all errors can be found in the  [API documentation](https://2captcha.com/2captcha-api#list-of-inphp-errors).
 ```python
 try:
     result = solver.text('If tomorrow is Saturday, what day is today?')
@@ -447,7 +461,7 @@ except TimeoutException as e:
 ```
 
 
-### Proxies
+## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
 keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
@@ -463,7 +477,7 @@ proxy={
 }
 ```
 
-### Async calls
+## Async calls
 You can also make async calls with [asyncio], for example:
 
 ```python
@@ -484,6 +498,11 @@ captcha_result = asyncio.run(captchaSolver(image))
 ```
 ## Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
+
+## Useful articles
+
+- Amazon captcha solver: Code example for bypassing the [Amazon captcha](https://2captcha.com/blog/amazon-captcha-solving)
+- [Captcha bypass in Selenium](https://2captcha.com/blog/captcha-bypass-in-selenium)
 
 <!-- Shared links for README.md -->
 [2Captcha]: https://2captcha.com/
