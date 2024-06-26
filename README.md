@@ -83,7 +83,9 @@ solver = TwoCaptcha(**config)
 | recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
 
-> **IMPORTANT:** Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+> [!IMPORTANT]
+> Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
+
 To get the answer manually use [get_result method](#send--get_result)
 
 ## Solve captcha
@@ -356,9 +358,8 @@ result = solver.mtcaptcha(sitekey='MTPublic-KzqLY1cKH',
 
 Friendly Captcha solving method. Returns a token.
 
-
-
-> **Important:** To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
+> [!IMPORTANT]
+> To successfully use the received token, the captcha widget must not be loaded on the page. To do this, you need to abort request to `/friendlycaptcha/...module.min.js` on the page. When the captcha widget is already loaded on the page, there is a high probability that the received token will not work.
 
 ```python
 result = solver.friendly_captcha(sitekey='FCMGEMUD2KTDSQ5H',
