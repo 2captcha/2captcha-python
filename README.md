@@ -34,10 +34,11 @@ The easiest way to quickly integrate the [2Captcha] captcha-solving service into
     - [send / get_result](#send--get_result)
     - [balance](#balance)
     - [report](#report)
-    - [Error handling](#error-handling)
-    - [Proxies](#proxies)
-    - [Async calls](#async-calls)
+  - [Error handling](#error-handling)
+  - [Proxies](#proxies)
+  - [Async calls](#async-calls)
   - [Examples](#examples)
+  - [Useful articles](#useful-articles)
 
 ## Installation
 
@@ -439,7 +440,7 @@ solver.report(id, True) # captcha solved correctly
 solver.report(id, False) # captcha solved incorrectly
 ```
 
-### Error handling
+## Error handling
 In case of an error, the captcha solver throws an exception. It's important to properly handle these cases. We recommend using `try except` to handle exceptions.
 The list of all errors can be found in the  [API documentation](https://2captcha.com/2captcha-api#list-of-inphp-errors).
 ```python
@@ -460,7 +461,7 @@ except TimeoutException as e:
 ```
 
 
-### Proxies
+## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
 keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
@@ -476,7 +477,7 @@ proxy={
 }
 ```
 
-### Async calls
+## Async calls
 You can also make async calls with [asyncio], for example:
 
 ```python
@@ -495,7 +496,7 @@ async def captchaSolver(image):
 
 captcha_result = asyncio.run(captchaSolver(image))
 ```
-### Examples
+## Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
 
 ## Useful articles
