@@ -18,7 +18,7 @@ solver = TwoCaptcha(api_key)
 try:
     result = solver.turnstile(
         sitekey='0x4AAAAAAAVrOwQWPlm3Bnr5',
-        url='https://2captcha.com/demo/turnstile',
+        url='https://2captcha.com/demo/cloudflare-turnstile',
     )
 
 except Exception as e:
