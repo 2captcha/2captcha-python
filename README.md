@@ -49,6 +49,7 @@ Examples of API requests for different captcha types are available on the [Pytho
   - [Proxies](#proxies)
   - [Async calls](#async-calls)
   - [Examples](#examples)
+  - [Examples using Selenium](#examples-using-selenium)
   - [Useful articles](#useful-articles)
 - [Get in touch](#get-in-touch)
 - [Join the team 👪](#join-the-team-)
@@ -511,6 +512,9 @@ captcha_result = asyncio.run(captchaSolver(image))
 ```
 ## Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
+
+## Examples using Selenium
+Also we have a [separate repository](https://github.com/2captcha/captcha-solver-selenium-python-examples) you can find examples of captcha solving using [Selenium](https://pypi.org/project/selenium/) library. At the moment we have implemented examples of bypassing [reCAPTCHA](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/reCAPTCHA), [hCaptcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/hCaptcha), [normal captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/normal_captcha) (image captcha) and [text captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/text_captcha) using Selenium.
 
 ## Useful articles
 
