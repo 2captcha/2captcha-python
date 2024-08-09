@@ -7,12 +7,12 @@
 <a href="https://github.com/2captcha/2captcha-java"><img src="https://github.com/user-attachments/assets/a3d923f6-4fec-4c07-ac50-e20da6370911" width="50" height="30"></a>
 <a href="https://github.com/2captcha/2captcha-csharp"><img src="https://github.com/user-attachments/assets/f4d449de-780b-49ed-bb0a-b70c82ec4b32" width="38" height="30"></a>
 
-# Python Module for 2Captcha API
+# Python Module for 2Captcha API (captcha solver)
 
 The easiest way to quickly integrate the [2Captcha] captcha-solving service into your code and automate the solving of any type of captcha.
 Examples of API requests for different captcha types are available on the [Python captcha solver](https://2captcha.com/lang/python) page.
 
-- [Python Module for 2Captcha API](#python-module-for-2captcha-api)
+- [Python Module for 2Captcha API (captcha solver)](#python-module-for-2captcha-api-captcha-solver)
   - [Installation](#installation)
   - [Configuration](#configuration)
     - [TwoCaptcha instance options](#twocaptcha-instance-options)
