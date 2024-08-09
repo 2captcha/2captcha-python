@@ -535,7 +535,7 @@ There are many ways to contribute, of which development is only one! Find your n
 <a href="mailto:job@2captcha.com"><img src="https://github.com/user-attachments/assets/36d23ef5-7866-4841-8e17-261cc8a4e033" width="80" height="30"></a>
 
 
-# License
+## License
 
 The code in this repository is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
 
