@@ -53,6 +53,8 @@ Examples of API requests for different captcha types are available on the [Pytho
   - [Useful articles](#useful-articles)
 - [Get in touch](#get-in-touch)
 - [Join the team 👪](#join-the-team-)
+- [License](#license)
+  - [Graphics and Trademarks](#graphics-and-trademarks)
 
 ## Installation
 
@@ -531,6 +533,16 @@ Also we have a [separate repository](https://github.com/2captcha/captcha-solver-
 There are many ways to contribute, of which development is only one! Find your next job. Open positions: AI experts, scrapers, developers, technical support, and much more! 😍
 
 <a href="mailto:job@2captcha.com"><img src="https://github.com/user-attachments/assets/36d23ef5-7866-4841-8e17-261cc8a4e033" width="80" height="30"></a>
+
+
+# License
+
+The code in this repository is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
+
+### Graphics and Trademarks
+
+The graphics and trademarks included in this repository are not covered by the MIT License. Please contact <a href="mailto:support@2captcha.com">support</a> for permissions regarding the use of these materials.
+
 
 <!-- Shared links for README.md -->
 [2Captcha]: https://2captcha.com/
