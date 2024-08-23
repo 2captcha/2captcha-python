@@ -22,13 +22,14 @@ config = {
     		'defaultTimeout':    120,
     		'recaptchaTimeout':  600,
     		'pollingInterval':   10,
+            'extendedResponse': True,
 	    }
 
 solver = TwoCaptcha(**config)
 
 try:
-    result = solver.hcaptcha(sitekey='f7de0da3-3303-44e8-ab48-fa32ff8ccc7b',
-                             url='https://2captcha.com/ru/demo/hcaptcha-invisible',
+    result = solver.hcaptcha(sitekey='c0421d06-b92e-47fc-ab9a-5caa43c04538',
+                             url='https://2captcha.com/ru/demo/hcaptcha',
                              # invisible=1,
                              # data="rqdata",
                              # useragent="",
@@ -43,3 +44,4 @@ except Exception as e:
 
 else:
     sys.exit('result: ' + str(result))
+
