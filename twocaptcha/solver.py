@@ -810,6 +810,30 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
+        """Wrapper for solving DataDome Captcha.
+
+        Parameters
+        __________
+        captcha_url: str
+            The value of the 'src' parameter for the 'iframe' element containing the captcha on the page.
+        pageurl: str
+            Full URL of the page that triggers the captcha when you go to it.
+        userAgent: str
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        """
+
+        result = self.solve(method='datadome',
+                            captcha_url=captcha_url,
+                            pageurl=pageurl,
+                            userAgent=userAgent,
+                            proxy=proxy,
+                            **kwargs)
+
+        return result
+
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 

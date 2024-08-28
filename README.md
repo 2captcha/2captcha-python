@@ -407,6 +407,17 @@ result = solver.tencent(app_id="197326679",
                         param1=..., ...)
 ```
 
+### DataDome
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#datadome)</sup>
+
+Use this method to solve DataDome captcha.
+```python
+result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?initialCid=...",
+                         pageurl="https://dd.burak.fr/",
+                         param1=..., ...)
+```
+
 ## Other methods
 
 ### send / get_result
