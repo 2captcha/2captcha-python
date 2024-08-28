@@ -13,7 +13,7 @@ class DatadomeTest(AbstractTest):
     def test_all_params(self):
         params = {
             'captcha_url': 'https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAZirHgKBVrxwAsVuKlQ%3D%3D&c',
-            'pageurl': 'https://dd.burak.fr/',
+            'pageurl': 'https://mysite.com/page/with/datadome',
             'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
             'proxy': {'type': 'HTTP', 'uri': 'login:password@IP_address:PORT'}
         }
@@ -21,7 +21,7 @@ class DatadomeTest(AbstractTest):
         sends = {
             'method':    'datadome',
             'captcha_url': 'https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAZirHgKBVrxwAsVuKlQ%3D%3D&c',
-            'pageurl': 'https://dd.burak.fr/',
+            'pageurl': 'https://mysite.com/page/with/datadome',
             'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
             'proxy': 'login:password@IP_address:PORT',
             'proxytype': 'HTTP'

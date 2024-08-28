@@ -414,7 +414,7 @@ result = solver.tencent(app_id="197326679",
 Use this method to solve DataDome captcha.
 ```python
 result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?initialCid=...",
-                         pageurl="https://dd.burak.fr/",
+                         pageurl="https://mysite.com/page/with/datadome",
                          param1=..., ...)
 ```
 
