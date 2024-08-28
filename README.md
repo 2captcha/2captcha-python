@@ -41,6 +41,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
+    - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get_result](#send--get_result)
     - [balance](#balance)
@@ -405,6 +406,17 @@ Use this method to solve Cutcaptcha. Returns a token.
 result = solver.tencent(app_id="197326679",
                         url="https://mysite.com/page/with/tencent",
                         param1=..., ...)
+```
+
+### CyberSiARA
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#cybersiara)</sup>
+
+Use this method to solve CyberSiARA. Returns a token.
+```python
+result = solver.cybersiara(master_url_id='tpjOCKjjpdzv3d8Ub2E9COEWKt1vl1Mv',
+                           pageurl='https://demo.mycybersiara.com/',
+                           param1=..., ...)
 ```
 
 ## Other methods

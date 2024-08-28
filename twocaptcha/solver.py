@@ -810,6 +810,16 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def cybersiara(self, master_url_id, pageurl, userAgent, **kwargs):
+
+        result = self.solve(method='cybersiara',
+                            master_url_id=master_url_id,
+                            pageurl=pageurl,
+                            userAgent=userAgent,
+                            **kwargs)
+
+        return result
+
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
