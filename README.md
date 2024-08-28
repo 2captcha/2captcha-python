@@ -41,6 +41,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
+    - [Datadome](#datadome)
   - [Other methods](#other-methods)
     - [send / get_result](#send--get_result)
     - [balance](#balance)
