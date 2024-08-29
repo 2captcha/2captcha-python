@@ -821,7 +821,7 @@ class TwoCaptcha():
             Full URL of the page that triggers the captcha when you go to it.
         userAgent: str
             User-Agent of the browser that will be used by the employee when loading the captcha.
-        proxy : dict, optional
+        proxy : dict
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         """
 
