@@ -501,7 +501,7 @@ except TimeoutException as e:
 ## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome. 
 
 The proxy will be forwarded to the API to solve the captcha.
 
