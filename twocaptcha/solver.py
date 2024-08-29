@@ -811,7 +811,19 @@ class TwoCaptcha():
         return result
 
     def cybersiara(self, master_url_id, pageurl, userAgent, **kwargs):
+        '''Wrapper for solving CyberSiARA captcha.
 
+        Parameters
+        __________
+        master_url_id : str
+            TThe value of the MasterUrlId parameter from the request to API/CyberSiara/GetCyberSiara.
+        pageurl : str
+            Full URL of the page with captcha.
+        userAgent : str
+            User-Agent of your browser.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
         result = self.solve(method='cybersiara',
                             master_url_id=master_url_id,
                             pageurl=pageurl,
