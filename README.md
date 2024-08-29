@@ -41,6 +41,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
+    - [Datadome](#datadome)
   - [Other methods](#other-methods)
     - [send / get_result](#send--get_result)
     - [balance](#balance)
@@ -407,6 +408,26 @@ result = solver.tencent(app_id="197326679",
                         param1=..., ...)
 ```
 
+### DataDome
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#datadome)</sup>
+
+Use this method to solve DataDome captcha.
+
+> [!IMPORTANT]
+> To solve the DataDome captcha, you must use a proxy. It is recommended to use [residential proxies].
+
+```python
+result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?initialCid=...",
+                         pageurl="https://mysite.com/page/with/datadome",
+                         userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+                         proxy={
+                            'type': 'HTTP',
+                            'uri': 'login:password@IP_address:PORT'
+                         },
+                         param1=..., ...)
+```
+
 ## Other methods
 
 ### send / get_result
@@ -480,7 +501,7 @@ except TimeoutException as e:
 ## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome. 
 
 The proxy will be forwarded to the API to solve the captcha.
 
@@ -555,3 +576,4 @@ The graphics and trademarks included in this repository are not covered by the M
 [Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
 [Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
 [examples]: ./examples
+[residential proxies]: https://2captcha.com/proxy/residential-proxies
