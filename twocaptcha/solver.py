@@ -816,7 +816,7 @@ class TwoCaptcha():
         Parameters
         __________
         master_url_id : str
-            TThe value of the MasterUrlId parameter from the request to API/CyberSiara/GetCyberSiara.
+            The value of the MasterUrlId parameter from the request to API/CyberSiara/GetCyberSiara.
         pageurl : str
             Full URL of the page with captcha.
         userAgent : str
