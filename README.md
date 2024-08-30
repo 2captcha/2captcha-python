@@ -41,7 +41,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Friendly Captcha](#friendly-captcha)
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
-    - [Datadome](#datadome)
+    - [DataDome](#datadome)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -87,6 +87,7 @@ config = {
             'defaultTimeout':    120,
             'recaptchaTimeout':  600,
             'pollingInterval':   10,
+            'extendedResponse':  False
         }
 solver = TwoCaptcha(**config)
 ```
