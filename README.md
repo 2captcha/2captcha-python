@@ -42,7 +42,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
   - [Other methods](#other-methods)
-    - [send / get_result](#send--get_result)
+    - [send / get\_result](#send--get_result)
     - [balance](#balance)
     - [report](#report)
   - [Error handling](#error-handling)
@@ -51,10 +51,10 @@ Examples of API requests for different captcha types are available on the [Pytho
   - [Examples](#examples)
   - [Examples using Selenium](#examples-using-selenium)
   - [Useful articles](#useful-articles)
-- [Get in touch](#get-in-touch)
-- [Join the team 👪](#join-the-team-)
-- [License](#license)
-  - [Graphics and Trademarks](#graphics-and-trademarks)
+  - [Get in touch](#get-in-touch)
+  - [Join the team 👪](#join-the-team-)
+  - [License](#license)
+    - [Graphics and Trademarks](#graphics-and-trademarks)
 
 ## Installation
 
@@ -99,6 +99,8 @@ solver = TwoCaptcha(**config)
 | defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from the `res.php` API endpoint |
 | recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
+| extendedResponse | None           | Set to `True` to get the response with additional fields or in more practical format (enables `JSON` response from `res.php` API endpoint). Suitable for [hCaptcha](#hcaptcha), [ClickCaptcha](#clickcaptcha), [Canvas](#canvas) |
+
 
 > [!IMPORTANT]
 > Once `callback` is defined for the `TwoCaptcha` instance, all methods return only the captcha ID and DO NOT poll the API to get the result. The result will be sent to the callback URL.
