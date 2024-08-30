@@ -41,7 +41,8 @@ class TwoCaptcha():
                  defaultTimeout=120,
                  recaptchaTimeout=600,
                  pollingInterval=10,
-                 server = '2captcha.com'):
+                 server = '2captcha.com',
+                 extendedResponse=None):
 
         self.API_KEY = apiKey
         self.soft_id = softId
@@ -52,6 +53,7 @@ class TwoCaptcha():
         self.api_client = ApiClient(post_url = str(server))
         self.max_files = 9
         self.exceptions = SolverExceptions
+        self.extendedResponse = extendedResponse
 
     def normal(self, file, **kwargs):
         '''Wrapper for solving a normal captcha (image).
@@ -875,14 +877,23 @@ class TwoCaptcha():
         result = {'captchaId': id_}
 
         if self.callback is None:
-
             timeout = float(timeout or self.default_timeout)
             sleep = int(polling_interval or self.polling_interval)
 
             code = self.wait_result(id_, timeout, sleep)
-            result.update({'code': code})
 
-        return result
+            if self.extendedResponse == True:
+
+                new_code = {
+                    key if key != 'request' else 'code': value
+                    for key, value in code.items()
+                    if key != 'status'
+                }
+                result.update(new_code)
+            else:
+                result.update({'code': code})
+
+            return result
 
     def wait_result(self, id_, timeout, polling_interval):
 
@@ -944,6 +955,7 @@ class TwoCaptcha():
         return response[3:]
 
     def get_result(self, id_):
+        import json
         """This method can be used for manual captcha answer polling.
 
         Parameters
@@ -955,15 +967,31 @@ class TwoCaptcha():
         answer : text
         """
 
-        response = self.api_client.res(key=self.API_KEY, action='get', id=id_)
+        if self.extendedResponse == True:
 
-        if response == 'CAPCHA_NOT_READY':
-            raise NetworkException
+            response = self.api_client.res(key=self.API_KEY, action='get', id=id_, json=1)
 
-        if not response.startswith('OK|'):
-            raise ApiException(f'cannot recognize response {response}')
+            response_data = json.loads(response)
 
-        return response[3:]
+            if response_data.get("status") == 0:
+                raise NetworkException
+
+            if not response_data.get("status") == 1:
+                raise ApiException(f'Unexpected status in response: {response_data}')
+
+            return response_data
+
+        else:
+
+            response = self.api_client.res(key=self.API_KEY, action='get', id=id_)
+
+            if response == 'CAPCHA_NOT_READY':
+                raise NetworkException
+
+            if not response.startswith('OK|'):
+                raise ApiException(f'cannot recognize response {response}')
+
+            return response[3:]
 
     def balance(self):
         '''Get my balance

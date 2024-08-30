@@ -13,7 +13,7 @@ from twocaptcha import TwoCaptcha
 
 api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
-solver = TwoCaptcha(api_key, defaultTimeout=300, pollingInterval=10)
+solver = TwoCaptcha(api_key, defaultTimeout=300, pollingInterval=10, extendedResponse=True)
 
 """
 Important: the value of the 'challenge' parameter is dynamic, for each request to our API you need to get a new value.

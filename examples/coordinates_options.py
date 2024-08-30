@@ -13,7 +13,7 @@ from twocaptcha import TwoCaptcha
 
 api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
-solver = TwoCaptcha(api_key, defaultTimeout=120, pollingInterval=5)
+solver = TwoCaptcha(api_key, defaultTimeout=120, pollingInterval=5, extendedResponse=True)
 
 try:
     result = solver.coordinates('./images/grid_2.jpg',
