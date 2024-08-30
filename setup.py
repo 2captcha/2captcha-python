@@ -36,6 +36,6 @@ setup(name='2captcha-python',
           '2captcha', 'captcha', 'api', 'captcha solver', 'reCAPTCHA', 'hCaptcha',
           'FunCaptcha', 'Geetest', 'image captcha', 'Coordinates', 'Click Captcha',
           'Geetest V4', 'Lemin captcha', 'Amazon WAF', 'Cloudflare Turnstile',
-          'Capy Puzzle', 'MTCaptcha', 'Friendly Captcha', 'Tencent', 'Cutcaptcha', 'DataDome'],
+          'Capy Puzzle', 'MTCaptcha', 'Friendly Captcha', 'Tencent', 'Cutcaptcha', 'DataDome', 'cybersiara'],
       python_requires='>=3.6',
       test_suite='tests')

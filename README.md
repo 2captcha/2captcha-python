@@ -42,6 +42,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
     - [Datadome](#datadome)
+    - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get_result](#send--get_result)
     - [balance](#balance)
@@ -428,6 +429,18 @@ result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?
                          param1=..., ...)
 ```
 
+### CyberSiARA
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#cybersiara)</sup>
+
+Use this method to solve CyberSiARA. Returns a token.
+```python
+result = solver.cybersiara(master_url_id='tpjOCKjjpdzv3d8Ub2E9COEWKt1vl1Mv',
+                           pageurl='https://demo.mycybersiara.com/',
+                           userAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+                           param1=..., ...)
+```
+
 ## Other methods
 
 ### send / get_result
@@ -501,7 +514,8 @@ except TimeoutException as e:
 ## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome, cybersiara. 
+
 
 The proxy will be forwarded to the API to solve the captcha.
 
