@@ -43,7 +43,38 @@ class TwoCaptcha():
                  pollingInterval=10,
                  server = '2captcha.com',
                  extendedResponse=None):
+        """
+        Class constructor for interacting with the 2captcha API.
 
+        Parameters
+        __________
+        apiKey : str
+            Your personal API key in your account settings.
+        softId : int, optional
+            Your software ID obtained after publishing in 2captcha software catalog - https://2captcha.com/software.
+            Default: 4580.
+        callback : str, optional
+            URL of your web server that receives the captcha recognition result.
+            The URL should be first registered in pingback - https://2captcha.com/setting/pingback - settings of your account.
+            Default: None.
+        defaultTimeout : int, optional
+            Polling timeout in seconds for all captcha types except reCAPTCHA.
+            Defines how long the module tries to get the answer from the res.php API endpoint.
+            Default: 120.
+        recaptchaTimeout : int, optional
+            Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the res.php API endpoint.
+            Default: 600.
+        pollingInterval : int, optional
+            Interval in seconds between requests to the res.php API endpoint. Setting values less than 5 seconds is not recommended.
+            Default: 10.
+        server : str, optional
+            API server. You can set it to rucaptcha.com if your account is registered there.
+            Default: 2captcha.com.
+        extendedResponse : bool, optional
+            Set to True to get the response with additional fields or in more practical format (enables JSON response from
+            res.php API endpoint). Suitable for hCaptcha, ClickCaptcha, Canvas.
+            Default: None.
+        """
         self.API_KEY = apiKey
         self.soft_id = softId
         self.callback = callback
@@ -162,7 +193,7 @@ class TwoCaptcha():
         '''Wrapper for solving recaptcha (v2, v3).
 
         Parameters
-        _______________
+        __________
         sitekey : str
             Value of sitekey parameter you found on page.
         url : str
@@ -224,7 +255,7 @@ class TwoCaptcha():
             Tells us to use your user-agent value.
         data[key] : str, optional
             Custom data to pass to FunCaptcha. For example: data[blob]=stringValue.
-        softId : str, optional
+        softId : int, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
         callback : str, optional
@@ -243,7 +274,7 @@ class TwoCaptcha():
     def geetest(self, gt, challenge, url, **kwargs):
         '''Wrapper for solving geetest captcha.
 
-        Parameters:
+        Parameters
         __________
         gt : str
             Value of gt parameter you found on target website.
@@ -933,7 +964,7 @@ class TwoCaptcha():
         """This method can be used for manual captcha submission
 
         Parameters
-        _________
+        __________
         method : str
             The name of the method must be found in the documentation https://2captcha.com/2captcha-api
         kwargs: dict
