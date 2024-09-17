@@ -117,7 +117,7 @@ class TwoCaptcha():
         lang : str, optional
             Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
         hintText : str, optional
-            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            Max 140 characters. Encoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
             For example: type red symbols only.
         hintImg : img, optional
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -174,7 +174,7 @@ class TwoCaptcha():
         Parameters
         __________
         text : str
-            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            Max 140 characters. Encoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
             For example: type red symbols only.
         lang: str, optional
             Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
@@ -420,7 +420,7 @@ class TwoCaptcha():
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select images
+            Max 140 characters. Encoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select images
             with trees. Not required if you're sending instruction as an image with imginstructions.
         hintImg : img
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -469,7 +469,7 @@ class TwoCaptcha():
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select
+            Max 140 characters. Encoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select
             images with trees. Not required if you're sending instruction as an image with imginstructions.
         hintImg : img
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -516,7 +516,7 @@ class TwoCaptcha():
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving the captcha. For example: click on
+            Max 140 characters. Encoding: UTF-8. Text with instruction for solving the captcha. For example: click on
             images with ghosts. Not required if the image already contains the instruction.
         hintImg : img
              Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
