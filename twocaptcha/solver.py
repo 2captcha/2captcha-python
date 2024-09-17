@@ -381,7 +381,8 @@ class TwoCaptcha():
     def grid(self, file, **kwargs):
         '''Wrapper for solving grid captcha (image).
 
-        Required:
+        Parameters
+        __________
         file : file
             Captcha image file. * required if you submit image as a file (method=post).
         body : str
@@ -396,6 +397,14 @@ class TwoCaptcha():
             Number of rows in reCAPTCHA grid.
         cols : itn, optional
             Number of columns in reCAPTCHA grid.
+        img_type : str, optional
+            The type of captcha to solve. Supported values:
+            - funcaptcha: FunCaptcha where you need to click the correct square.
+            - funcaptcha_compare: FunCaptcha where you select the square using arrows.
+            - recaptcha: reCAPTCHA.
+            - hcaptcha: hCaptcha.
+            Important: You must also provide the textinstructions parameter with the original instructions in English,
+            and send the original image files, not screenshots.
         previousId : str, optional
             Id of your previous request with the same captcha challenge.
         canSkip : int, optional
