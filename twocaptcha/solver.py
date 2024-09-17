@@ -34,6 +34,100 @@ class TimeoutException(SolverExceptions):
 
 
 class TwoCaptcha():
+    """
+    Class for interacting with the 2captcha API.
+
+    This class provides methods for solving various types of CAPTCHAs, such as image CAPTCHAs, audio CAPTCHAs, reCAPTCHAs,
+    hCAPTCHAs, and others. It handles sending CAPTCHAs to the 2captcha service and retrieving the solution.
+
+    Parameters
+    __________
+    API_KEY : str
+        Your personal API key for accessing the 2captcha API.
+    soft_id : int, optional
+        Software ID obtained after publishing in the 2captcha software catalog. Default is 4580.
+    callback : str, optional
+        URL of your server to receive the result of the captcha recognition via callback.
+        It must be registered in your 2captcha account settings. Default is None.
+    default_timeout : int, optional
+        The timeout (in seconds) for polling responses for normal CAPTCHAs, excluding reCAPTCHA. Default is 120.
+    recaptcha_timeout : int, optional
+        The timeout (in seconds) for polling responses specifically for reCAPTCHAs. Default is 600.
+    polling_interval : int, optional
+        The interval (in seconds) between requests to the 2captcha API for retrieving the captcha solution. Default is 10.
+    api_client : ApiClient
+        An instance of the ApiClient class to handle API requests.
+    max_files : int
+        Maximum number of files that can be sent to the API in one request. Default is 9.
+    exceptions : SolverExceptions
+        Custom exceptions for handling API errors.
+    extendedResponse : bool, optional
+        If True, enables extended responses from the 2captcha API, which provides more detailed result data. Default is None.
+
+    Methods
+    _______
+    normal(file, **kwargs)
+        To bypass a normal captcha (distorted text on an image) use the following method. This method can also be used
+        to recognize any text in an image.
+    audio(file, lang, **kwargs)
+        Use the following method to bypass an audio captcha (mp3 formats only).
+    text(text, **kwargs)
+        This method can be used to bypass a captcha that requires answering a question provided in clear text.
+    recaptcha(sitekey, url, version='v2', enterprise=0, **kwargs)
+        Use the following method to solve reCAPTCHA V2 or V3 and obtain a token to bypass the protection.
+    funcaptcha(sitekey, url, **kwargs)
+        FunCaptcha (Arkoselabs) solving method. Returns a token.
+    geetest(gt, challenge, url, **kwargs)
+        Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
+    hcaptcha(sitekey, url, **kwargs)
+        Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
+    keycaptcha(s_s_c_user_id, s_s_c_session_id, s_s_c_web_server_sign, s_s_c_web_server_sign2, url, **kwargs)
+        Token-based method to solve KeyCaptcha.
+    capy(sitekey, url, **kwargs)
+        Token-based method to bypass Capy puzzle captcha.
+    grid(file, **kwargs)
+        The grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of
+        captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
+    canvas(file, **kwargs)
+        The canvas method can be used when you need to draw a line around an object on an image. Returns a set of points'
+        coordinates to draw a polygon.
+    coordinates(file, **kwargs)
+        The ClickCaptcha method returns the coordinates of points on the captcha image. It can be used if you need to
+        click on particular points in the image.
+    rotate(files, **kwargs)
+        This method can be used to solve a captcha that asks to rotate an object. It is mostly used to bypass FunCaptcha.
+        Returns the rotation angle.
+    geetest_v4(captcha_id, url, **kwargs)
+        Use this method to solve GeeTest v4. Returns the response in JSON.
+    lemin(captcha_id, div_id, url, **kwargs)
+        Use this method to solve the Lemin captcha. Returns JSON with an answer containing the following values: answer,
+        challenge_id.
+    atb_captcha(app_id, api_server, url, **kwargs)
+        Use this method to solve atbCaptcha challenge. Returns a token to bypass the captcha.
+    turnstile(sitekey, url, **kwargs)
+        Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
+    amazon_waf(sitekey, iv, context, url, **kwargs)
+        Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat
+        mitigation for Amazon AWS. Returns JSON with the token.
+    mtcaptcha(sitekey, url, **kwargs)
+        Use this method to solve MTCaptcha and obtain a token to bypass the protection.
+    friendly_captcha(sitekey, url, **kwargs)
+        Friendly Captcha solving method. Returns a token.
+    tencent(app_id, url, **kwargs)
+        Use this method to solve Cutcaptcha. Returns a token.
+    cutcaptcha(misery_key, apikey, url, **kwargs)
+        Use this method to solve Cutcaptcha. Returns the response in JSON.
+    datadome(captcha_url, pageurl, userAgent, proxy, **kwargs)
+        Use this method to solve DataDome captcha.
+    cybersiara(master_url_id, pageurl, userAgent, **kwargs)
+        Use this method to solve CyberSiARA. Returns a token.
+    solve(timeout=0, polling_interval=0, **kwargs)
+        Sends CAPTCHA data and retrieves the result.
+    balance()
+        Retrieves the balance of your 2captcha account.
+    report(id_, correct)
+        Reports the correctness of a solved CAPTCHA.
+    """
     def __init__(self,
                  apiKey,
                  softId=4580,
