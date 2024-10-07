@@ -405,7 +405,7 @@ result = solver.cutcaptcha(misery_key='ad52c87af17e2ec09b8d918c9f00416b1cb8c320'
 
 <sup>[API method description.](https://2captcha.com/2captcha-api#tencent)</sup>
 
-Use this method to solve Cutcaptcha. Returns a token.
+Use this method to solve Tencent captcha. Returns a token.
 ```python
 result = solver.tencent(app_id="197326679",
                         url="https://mysite.com/page/with/tencent",
