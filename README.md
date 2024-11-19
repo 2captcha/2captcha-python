@@ -26,7 +26,6 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [FunCaptcha](#funcaptcha)
     - [GeeTest](#geetest)
     - [GeeTest v4](#geetest-v4)
-    - [hCaptcha](#hcaptcha)
     - [Lemin Cropped Captcha](#lemin-cropped-captcha)
     - [Cloudflare Turnstile](#cloudflare-turnstile)
     - [Amazon WAF](#amazon-waf)
@@ -102,7 +101,7 @@ solver = TwoCaptcha(**config)
 | defaultTimeout   | 120            | Polling timeout in seconds for all captcha types except reCAPTCHA. Defines how long the module tries to get the answer from the `res.php` API endpoint |
 | recaptchaTimeout | 600            | Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the `res.php` API endpoint                          |
 | pollingInterval  | 10             | Interval in seconds between requests to the `res.php` API endpoint. Setting values less than 5 seconds is not recommended                              |
-| extendedResponse | None           | Set to `True` to get the response with additional fields or in more practical format (enables `JSON` response from `res.php` API endpoint). Suitable for [hCaptcha](#hcaptcha), [ClickCaptcha](#clickcaptcha), [Canvas](#canvas) |
+| extendedResponse | None           | Set to `True` to get the response with additional fields or in more practical format (enables `JSON` response from `res.php` API endpoint). Suitable for [ClickCaptcha](#clickcaptcha), [Canvas](#canvas) |
 
 
 > [!IMPORTANT]
@@ -224,17 +223,6 @@ result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
                             param1=..., ...)
 
 ```
-
-
-### hCaptcha
-
-<sup>[API method description.](https://2captcha.com/2captcha-api#solving_hcaptcha)</sup>
-
-Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
-```python
-result = solver.hcaptcha(sitekey='10000000-ffff-ffff-ffff-000000000001',
-                            url='https://www.site.com/page/', 
-                            param1=..., ...)
 
 ```
 
@@ -448,7 +436,7 @@ result = solver.cybersiara(master_url_id='tpjOCKjjpdzv3d8Ub2E9COEWKt1vl1Mv',
 
 ### send / get_result
 These methods can be used for manual captcha submission and answer polling. The `send()` method supports sending any captcha 
-type, to specify the captcha type you must send value `method` manually, for example `method='hcaptcha'` for solving hCapthca. 
+type, to specify the captcha type you must send value `method` manually, for example `method='recaptcha'` for solving reCaptcha. 
 You can find the value of the `method` parameter in the [API documentation](https://2captcha.com/2captcha-api).
 
 Example for solving Normal captcha manually:
@@ -460,17 +448,6 @@ import time
 id = solver.send(file='path/to/captcha.jpg')
 time.sleep(20)
 
-code = solver.get_result(id)
-```
-Example for solving hCaptcha manually:
-```python
-import time
-. . . . . 
-id = solver.send(sitekey='41b778e7-8f20-45cc-a804-1f1ebb45c579',
-                 url='https://2captcha.com/demo/hcaptcha?difficulty=easy',
-                 method='hcaptcha')
-print(id)
-time.sleep(20)
 code = solver.get_result(id)
 ```
 
@@ -516,7 +493,7 @@ except TimeoutException as e:
 
 ## Proxies
 
-You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, hcaptcha, 
+You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, 
 keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome, cybersiara. 
 
 
@@ -554,7 +531,7 @@ captcha_result = asyncio.run(captchaSolver(image))
 Examples of solving all supported captcha types are located in the [examples] directory.
 
 ## Examples using Selenium
-Also we have a [separate repository](https://github.com/2captcha/captcha-solver-selenium-python-examples) you can find examples of captcha solving using [Selenium](https://pypi.org/project/selenium/) library. At the moment we have implemented examples of bypassing [reCAPTCHA](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/reCAPTCHA), [hCaptcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/hCaptcha), [Cloudflare](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/cloudflare), [Coordinates](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/coordinates), [MTCaptcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/mtcaptcha),  [normal captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/normal_captcha) (image captcha) and [text captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/text_captcha) using Selenium.
+Also we have a [separate repository](https://github.com/2captcha/captcha-solver-selenium-python-examples) you can find examples of captcha solving using [Selenium](https://pypi.org/project/selenium/) library. At the moment we have implemented examples of bypassing [reCAPTCHA](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/reCAPTCHA), [Cloudflare](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/cloudflare), [Coordinates](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/coordinates), [MTCaptcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/mtcaptcha),  [normal captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/normal_captcha) (image captcha) and [text captcha](https://github.com/2captcha/captcha-solver-selenium-python-examples/tree/main/examples/text_captcha) using Selenium.
 
 ## Useful articles
 
