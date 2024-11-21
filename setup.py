@@ -33,7 +33,7 @@ setup(name='2captcha-python',
           "Intended Audience :: Developers",
       ],
       keywords=[
-          '2captcha', 'captcha', 'api', 'captcha solver', 'reCAPTCHA', 'hCaptcha',
+          '2captcha', 'captcha', 'api', 'captcha solver', 'reCAPTCHA',
           'FunCaptcha', 'Geetest', 'image captcha', 'Coordinates', 'Click Captcha',
           'Geetest V4', 'Lemin captcha', 'Amazon WAF', 'Cloudflare Turnstile',
           'Capy Puzzle', 'MTCaptcha', 'Friendly Captcha', 'Tencent', 'Cutcaptcha', 'DataDome', 'cybersiara'],
