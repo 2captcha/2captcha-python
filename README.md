@@ -26,6 +26,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [FunCaptcha](#funcaptcha)
     - [GeeTest](#geetest)
     - [GeeTest v4](#geetest-v4)
+    - [Yandex Smart](#yandex-smart)
     - [Lemin Cropped Captcha](#lemin-cropped-captcha)
     - [Cloudflare Turnstile](#cloudflare-turnstile)
     - [Amazon WAF](#amazon-waf)
@@ -240,6 +241,18 @@ result = solver.lemin(captcha_id='CROPPED_1abcd2f_a1234b567c890d12ef3a456bc78d90
 
 ```
 
+### Yandex Smart
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#yandex-smart)</sup>
+
+Use this method to solve Yandex Smart Captcha. Returns JSON with the token.
+```python
+result = solver.yandex_smart(sitekey='0x1AAAAh45AAAAkg0s2VIOD34y5hy4h4h',
+               url='http://mysite.com/', 
+               softId=123,
+               proxy={'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'},
+               userAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36')
+```
 
 ### Cloudflare Turnstile
 
