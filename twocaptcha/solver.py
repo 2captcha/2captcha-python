@@ -856,6 +856,33 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def yandex_smart(self, sitekey, url, **kwargs):
+        '''Wrapper for solving Yandex Smart.
+
+        Parameters
+        __________
+        sitekey : str
+            The value of data-sitekey attribute of captcha's div element on page.
+        url : str
+            Full URL of the page where you solve the captcha.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        userAgent: str, optional
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        '''
+
+        result = self.solve(sitekey=sitekey,
+                            url=url,
+                            method='yandex',
+                            **kwargs)
+        return result
+
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
