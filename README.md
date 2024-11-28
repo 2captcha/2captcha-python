@@ -224,8 +224,6 @@ result = solver.geetest_v4(captcha_id='e392e1d7fd421dc63325744d5a2b9c73',
 
 ```
 
-```
-
 
 ### Lemin Cropped Captcha
 
