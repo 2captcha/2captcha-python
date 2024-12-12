@@ -12,14 +12,14 @@ class YandexSmartCaptchaTest(AbstractTest):
 
     def test_all_params(self):
         params = {
-            'sitekey': 'FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9',
-            'url':     'https://captcha-api.yandex.ru/demo',
+            'sitekey': 'FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdPpL4O',
+            'url':     'https://www.site.com/page/',
         }
 
         sends = {
             'method':  'yandex',
-            'sitekey': 'FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdxjtNB9',
-            'pageurl': 'https://captcha-api.yandex.ru/demo',
+            'sitekey': 'FEXfAbHQsToo97VidNVk3j4dC74nGW1DgdPpL4O',
+            'pageurl': 'https://www.site.com/page/',
         }
 
         return self.send_return(sends, self.solver.yandex_smart, **params)
