@@ -247,7 +247,6 @@ Use this method to solve Yandex Smart Captcha. Returns JSON with the token.
 ```python
 result = solver.yandex_smart(sitekey='0x1AAAAh45AAAAkg0s2VIOD34y5hy4h4h',
                url='http://mysite.com/', 
-               softId=123,
                proxy={'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'},
                userAgent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36')
 ```
