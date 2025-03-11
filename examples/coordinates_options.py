@@ -19,7 +19,9 @@ try:
     result = solver.coordinates('./images/grid_2.jpg',
                                 lang='en',
                                 hintImg='./images/grid_hint.jpg',
-                                hintText='Select all images with an Orange')
+                                hintText='Select all images with an Orange',
+                                min_clicks=2,
+                                max_clicks=3)
 except Exception as e:
     sys.exit(e)
 
