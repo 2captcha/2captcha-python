@@ -492,6 +492,10 @@ class TwoCaptcha():
              instruction as text with textinstructions.
         lang : str, optional
             Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        min_clicks : int, optional
+            The minimum number of clicks that need to be done.
+        max_clicks : int, optional
+            The maximum number of clicks that can be done.
         softId : int, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
