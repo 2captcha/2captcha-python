@@ -1,6 +1,11 @@
 from .api import ApiClient
-from .solver import (TwoCaptcha, SolverExceptions, ValidationException,
-                     NetworkException, ApiException, TimeoutException)
+from .solver import TwoCaptcha
+
+from .async_api import AsyncApiClient
+from .async_solver import AsyncTwoCaptcha
+
+from .solver import SolverExceptions, ValidationException, NetworkException, ApiException, TimeoutException
+
 
 """
 Python 3 package for easy integration with the API of 2captcha captcha solving service to bypass recaptcha, 
