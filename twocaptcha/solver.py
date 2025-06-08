@@ -1,36 +1,20 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os
+import sys
 import time
-import requests
 from base64 import b64encode
 
+import requests
 
 try:
     from .api import ApiClient
-
+    from .exceptions.solver import ValidationException, NetworkException, TimeoutException, ApiException, \
+        SolverExceptions
 except ImportError:
     from api import ApiClient
-
-
-class SolverExceptions(Exception):
-    pass
-
-
-class ValidationException(SolverExceptions):
-    pass
-
-
-class NetworkException(SolverExceptions):
-    pass
-
-
-class ApiException(SolverExceptions):
-    pass
-
-
-class TimeoutException(SolverExceptions):
-    pass
+    from twocaptcha.exceptions.solver import ValidationException, NetworkException, TimeoutException, ApiException, \
+        SolverExceptions
 
 
 class TwoCaptcha():
@@ -41,7 +25,7 @@ class TwoCaptcha():
                  defaultTimeout=120,
                  recaptchaTimeout=600,
                  pollingInterval=10,
-                 server = '2captcha.com',
+                 server='2captcha.com',
                  extendedResponse=None):
 
         self.API_KEY = apiKey
@@ -50,7 +34,7 @@ class TwoCaptcha():
         self.default_timeout = defaultTimeout
         self.recaptcha_timeout = recaptchaTimeout
         self.polling_interval = pollingInterval
-        self.api_client = ApiClient(post_url = str(server))
+        self.api_client = ApiClient(post_url=str(server))
         self.max_files = 9
         self.exceptions = SolverExceptions
         self.extendedResponse = extendedResponse
@@ -127,7 +111,7 @@ class TwoCaptcha():
             body = b64encode(response.content).decode('utf-8')
         elif file.endswith(".mp3"):
             with open(file, "rb") as media:
-                body = b64encode(media.read()).decode('utf-8')                
+                body = b64encode(media.read()).decode('utf-8')
         else:
             raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
 
@@ -557,7 +541,6 @@ class TwoCaptcha():
 
         result = self.solve(files=files, method='rotatecaptcha', **kwargs)
         return result
-    
 
     def geetest_v4(self, captcha_id, url, **kwargs):
         '''Wrapper for solving geetest_v4 captcha.
@@ -583,7 +566,6 @@ class TwoCaptcha():
                             method='geetest_v4',
                             **kwargs)
         return result
-    
 
     def lemin(self, captcha_id, div_id, url, **kwargs):
         '''Wrapper for solving Lemin Cropped Captcha.
@@ -638,7 +620,6 @@ class TwoCaptcha():
                             method='atb_captcha',
                             **kwargs)
         return result
-    
 
     def turnstile(self, sitekey, url, **kwargs):
         '''Wrapper for solving Cloudflare Turnstile.
@@ -674,7 +655,6 @@ class TwoCaptcha():
                             method='turnstile',
                             **kwargs)
         return result
-    
 
     def amazon_waf(self, sitekey, iv, context, url, **kwargs):
         '''Wrapper for solving Amazon WAF.
@@ -704,12 +684,12 @@ class TwoCaptcha():
         '''
 
         result = self.solve(sitekey=sitekey,
-                            iv=iv, 
+                            iv=iv,
                             context=context,
                             url=url,
                             method='amazon_waf',
                             **kwargs)
-        
+
         return result
 
     def mtcaptcha(self, sitekey, url, **kwargs):
@@ -838,7 +818,7 @@ class TwoCaptcha():
                             proxy=proxy,
                             **kwargs)
         return result
-      
+
     def cybersiara(self, master_url_id, pageurl, userAgent, **kwargs):
         '''Wrapper for solving CyberSiARA captcha.
 
@@ -1119,7 +1099,7 @@ class TwoCaptcha():
         if not_exists:
             raise ValidationException(f'File not found: {not_exists}')
 
-        files = {f'file_{e+1}': f for e, f in enumerate(files)}
+        files = {f'file_{e + 1}': f for e, f in enumerate(files)}
         return files
 
     def check_hint_img(self, params):
@@ -1146,6 +1126,5 @@ class TwoCaptcha():
 
 
 if __name__ == '__main__':
-
     key = sys.argv[1]
     sol = TwoCaptcha(key)
