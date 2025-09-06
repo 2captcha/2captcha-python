@@ -2,20 +2,16 @@
 
 import requests
 
-
-class NetworkException(Exception):
-    pass
-
-
-class ApiException(Exception):
-    pass
+try:
+    from .exceptions.api import NetworkException, ApiException
+except ImportError:
+    from twocaptcha.exceptions.api import NetworkException, ApiException
 
 
 class ApiClient():
-    def __init__(self, post_url = '2captcha.com'):
+    def __init__(self, post_url='2captcha.com'):
         self.post_url = post_url
-        
-        
+
     def in_(self, files={}, **kwargs):
         '''
         
@@ -43,7 +39,7 @@ class ApiClient():
         '''
 
         try:
-            current_url = 'https://'+self.post_url+'/in.php'
+            current_url = 'https://' + self.post_url + '/in.php'
             if files:
 
                 files = {key: open(path, 'rb') for key, path in files.items()}
@@ -101,7 +97,7 @@ class ApiClient():
         '''
 
         try:
-            current_url_out = 'https://'+self.post_url+'/res.php'
+            current_url_out = 'https://' + self.post_url + '/res.php'
             resp = requests.get(current_url_out, params=kwargs)
 
             if resp.status_code != 200:

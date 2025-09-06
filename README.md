@@ -76,6 +76,18 @@ from twocaptcha import TwoCaptcha
 
 solver = TwoCaptcha('YOUR_API_KEY')
 ```
+
+<details>
+<summary>Async</summary>
+
+```python 
+from twocaptcha import AsyncTwoCaptcha
+
+solver = AsyncTwoCaptcha('YOUR_API_KEY')
+```
+
+</details>
+
 Also, there are a few options that can be configured:
 
 ```python 
@@ -517,7 +529,55 @@ proxy={
 ```
 
 ## Async calls
-You can also make async calls with [asyncio], for example:
+
+To use the async version, just replace `TwoCaptcha` with `AsyncTwoCaptcha`:
+
+```python
+import asyncio
+from twocaptcha import AsyncTwoCaptcha
+
+async def solve_captcha():
+    solver = AsyncTwoCaptcha('YOUR_API_KEY')
+    
+    try:
+        recaptcha_result = await solver.recaptcha(...)
+        return recaptcha_result
+    except Exception as e:
+        print(e)
+        return None
+
+if __name__ == '__main__':
+    result = asyncio.run(solve_captcha())
+```
+
+The `AsyncTwoCaptcha` class supports all the same methods and parameters as the synchronous `TwoCaptcha` class but operates asynchronously. Configuration is identical.
+
+### Solving Multiple Captchas in Parallel
+
+One of the main advantages of using async support is the ability to solve multiple captchas concurrently:
+
+```python
+async def solve_multiple_captchas():
+    solver = AsyncTwoCaptcha('YOUR_API_KEY')
+    
+    # Start all tasks simultaneously
+    task1 = asyncio.create_task(solver.text('What color is the sky on a clear day?'))
+    task2 = asyncio.create_task(solver.text('What is 2+2?'))
+    task3 = asyncio.create_task(solver.text('Name of the planet we live on?'))
+    
+    # Wait for all tasks to complete
+    results = await asyncio.gather(task1, task2, task3, return_exceptions=True)
+    return results
+
+# This completes much faster than solving captchas sequentially
+results = asyncio.run(solve_multiple_captchas())
+```
+
+Examples of solving all supported captcha types asynchronously are located in the [examples/async directory] directory.
+
+### Legacy Async Method
+
+For backward compatibility, you can also use the traditional executor-based approach with the synchronous client:
 
 ```python
 import asyncio
@@ -535,6 +595,7 @@ async def captchaSolver(image):
 
 captcha_result = asyncio.run(captchaSolver(image))
 ```
+
 ## Examples
 Examples of solving all supported captcha types are located in the [examples] directory.
 
@@ -574,6 +635,8 @@ The graphics and trademarks included in this repository are not covered by the M
 [post options]: https://2captcha.com/2captcha-api#normal_post
 [list of supported languages]: https://2captcha.com/2captcha-api#language
 [examples directory]: /examples
+[examples/sync directory]: /examples/sync
+[examples/async directory]: /examples/async
 [asyncio]: https://docs.python.org/3/library/asyncio.html
 [Buy residential proxies]: https://2captcha.com/proxy/residential-proxies
 [Quick start]: https://2captcha.com/proxy?openAddTrafficModal=true
