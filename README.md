@@ -52,11 +52,11 @@ Examples of API requests for different captcha types are available on the [Pytho
   - [Async calls](#async-calls)
   - [Examples](#examples)
   - [Examples using Selenium](#examples-using-selenium)
-  - [Useful articles](#useful-articles)
-  - [Get in touch](#get-in-touch)
-  - [Join the team 👪](#join-the-team-)
-  - [License](#license)
-    - [Graphics and Trademarks](#graphics-and-trademarks)
+- [Useful articles](#useful-articles)
+- [Get in touch](#get-in-touch)
+- [Join the team 👪](#join-the-team-)
+- [License](#license)
+  - [Graphics and Trademarks](#graphics-and-trademarks)
 
 ## Installation
 
