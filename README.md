@@ -42,6 +42,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
     - [DataDome](#datadome)
+    - [VKImage](#vkimage)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -439,6 +440,16 @@ result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?
                          },
                          param1=..., ...)
 ```
+### VKImage
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
+
+This method can be used to solve VK captcha using graphical captcha. Returns the number of steps and solution value in the target site's API format. Or get an extended response by passing the `extendedResponse=True` attribute to the class instance
+
+```python
+result = solver.vkimage('path/to/captcha.jpg', steps='[5,4,7,7,14,22,8,...]', ...)
+```
+
 
 ### CyberSiARA
 

@@ -930,6 +930,47 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def vkimage(self, files, steps, **kwargs):
+        '''Wrapper for solving vkimage captcha.
+
+        Parameters
+        __________
+        file : str
+            Captcha image as a file or base64.
+        steps: str
+            Array of steps.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+        if isinstance(files, str):
+
+            payload = self.get_method(files)
+            payload.pop('method', None)
+
+            result = self.solve(method='vkimage', steps=steps, **payload, **kwargs)
+            return result
+
+        elif isinstance(files, dict):
+            files = list(files.values())
+
+        files = self.extract_files(files)
+
+        result = self.solve(method='vkimage',
+                            files=files,
+                            steps=steps,
+                            **kwargs)
+        return result
+
+    def vkcaptcha(self, redirect_uri, userAgent, proxytype, proxy):
+
+        result = self.solve(misery_key=misery_key,
+                            api_key=apikey,
+                            url=url,
+                            method='cutcaptcha',
+                            **kwargs)
+        return result
+
     def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
         """Wrapper for solving DataDome Captcha.
 
