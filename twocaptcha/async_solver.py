@@ -1,117 +1,25 @@
 #!/usr/bin/env python3
 
+import asyncio
 import os
 import sys
 import time
 from base64 import b64encode
 
-import requests
+import aiofiles
+import httpx
 
 try:
-    from .api import ApiClient
+    from .async_api import AsyncApiClient
     from .exceptions.solver import ValidationException, NetworkException, TimeoutException, ApiException, \
         SolverExceptions
 except ImportError:
-    from api import ApiClient
+    from async_api import AsyncApiClient
     from twocaptcha.exceptions.solver import ValidationException, NetworkException, TimeoutException, ApiException, \
         SolverExceptions
 
 
-class TwoCaptcha():
-    """
-    Class for interacting with the 2captcha API.
-
-    This class provides methods for solving various types of CAPTCHAs, such as image CAPTCHAs, audio CAPTCHAs, reCAPTCHAs,
-    hCAPTCHAs, and others. It handles sending CAPTCHAs to the 2captcha service and retrieving the solution.
-
-    Parameters
-    __________
-    API_KEY : str
-        Your personal API key for accessing the 2captcha API.
-    soft_id : int, optional
-        Software ID obtained after publishing in the 2captcha software catalog. Default is 4580.
-    callback : str, optional
-        URL of your server to receive the result of the captcha recognition via callback.
-        It must be registered in your 2captcha account settings. Default is None.
-    default_timeout : int, optional
-        The timeout (in seconds) for polling responses for normal CAPTCHAs, excluding reCAPTCHA. Default is 120.
-    recaptcha_timeout : int, optional
-        The timeout (in seconds) for polling responses specifically for reCAPTCHAs. Default is 600.
-    polling_interval : int, optional
-        The interval (in seconds) between requests to the 2captcha API for retrieving the captcha solution. Default is 10.
-    api_client : ApiClient
-        An instance of the ApiClient class to handle API requests.
-    max_files : int
-        Maximum number of files that can be sent to the API in one request. Default is 9.
-    exceptions : SolverExceptions
-        Custom exceptions for handling API errors.
-    extendedResponse : bool, optional
-        If True, enables extended responses from the 2captcha API, which provides more detailed result data. Default is None.
-
-    Methods
-    _______
-    normal(file, **kwargs)
-        To bypass a normal captcha (distorted text on an image) use the following method. This method can also be used
-        to recognize any text in an image.
-    audio(file, lang, **kwargs)
-        Use the following method to bypass an audio captcha (mp3 formats only).
-    text(text, **kwargs)
-        This method can be used to bypass a captcha that requires answering a question provided in clear text.
-    recaptcha(sitekey, url, version='v2', enterprise=0, **kwargs)
-        Use the following method to solve reCAPTCHA V2 or V3 and obtain a token to bypass the protection.
-    funcaptcha(sitekey, url, **kwargs)
-        FunCaptcha (Arkoselabs) solving method. Returns a token.
-    geetest(gt, challenge, url, **kwargs)
-        Method to solve GeeTest puzzle captcha. Returns a set of tokens as JSON.
-    hcaptcha(sitekey, url, **kwargs)
-        Use this method to solve the hCaptcha challenge. Returns a token to bypass the captcha.
-    keycaptcha(s_s_c_user_id, s_s_c_session_id, s_s_c_web_server_sign, s_s_c_web_server_sign2, url, **kwargs)
-        Token-based method to solve KeyCaptcha.
-    capy(sitekey, url, **kwargs)
-        Token-based method to bypass Capy puzzle captcha.
-    grid(file, **kwargs)
-        The grid method was originally called the Old reCAPTCHA V2 method. The method can be used to bypass any type of
-        captcha where you can apply a grid on an image and click specific grid boxes. Returns numbers of boxes.
-    canvas(file, **kwargs)
-        The canvas method can be used when you need to draw a line around an object on an image. Returns a set of points'
-        coordinates to draw a polygon.
-    coordinates(file, **kwargs)
-        The ClickCaptcha method returns the coordinates of points on the captcha image. It can be used if you need to
-        click on particular points in the image.
-    rotate(files, **kwargs)
-        This method can be used to solve a captcha that asks to rotate an object. It is mostly used to bypass FunCaptcha.
-        Returns the rotation angle.
-    geetest_v4(captcha_id, url, **kwargs)
-        Use this method to solve GeeTest v4. Returns the response in JSON.
-    lemin(captcha_id, div_id, url, **kwargs)
-        Use this method to solve the Lemin captcha. Returns JSON with an answer containing the following values: answer,
-        challenge_id.
-    atb_captcha(app_id, api_server, url, **kwargs)
-        Use this method to solve atbCaptcha challenge. Returns a token to bypass the captcha.
-    turnstile(sitekey, url, **kwargs)
-        Use this method to solve Cloudflare Turnstile. Returns JSON with the token.
-    amazon_waf(sitekey, iv, context, url, **kwargs)
-        Use this method to solve Amazon WAF Captcha also known as AWS WAF Captcha is a part of Intelligent threat
-        mitigation for Amazon AWS. Returns JSON with the token.
-    mtcaptcha(sitekey, url, **kwargs)
-        Use this method to solve MTCaptcha and obtain a token to bypass the protection.
-    friendly_captcha(sitekey, url, **kwargs)
-        Friendly Captcha solving method. Returns a token.
-    tencent(app_id, url, **kwargs)
-        Use this method to solve Cutcaptcha. Returns a token.
-    cutcaptcha(misery_key, apikey, url, **kwargs)
-        Use this method to solve Cutcaptcha. Returns the response in JSON.
-    datadome(captcha_url, pageurl, userAgent, proxy, **kwargs)
-        Use this method to solve DataDome captcha.
-    cybersiara(master_url_id, pageurl, userAgent, **kwargs)
-        Use this method to solve CyberSiARA. Returns a token.
-    solve(timeout=0, polling_interval=0, **kwargs)
-        Sends CAPTCHA data and retrieves the result.
-    balance()
-        Retrieves the balance of your 2captcha account.
-    report(id_, correct)
-        Reports the correctness of a solved CAPTCHA.
-    """
+class AsyncTwoCaptcha():
     def __init__(self,
                  apiKey,
                  softId=4580,
@@ -121,50 +29,19 @@ class TwoCaptcha():
                  pollingInterval=10,
                  server='2captcha.com',
                  extendedResponse=None):
-        """
-        Class constructor for interacting with the 2captcha API.
 
-        Parameters
-        __________
-        apiKey : str
-            Your personal API key in your account settings.
-        softId : int, optional
-            Your software ID obtained after publishing in 2captcha software catalog - https://2captcha.com/software.
-            Default: 4580.
-        callback : str, optional
-            URL of your web server that receives the captcha recognition result.
-            The URL should be first registered in pingback - https://2captcha.com/setting/pingback - settings of your account.
-            Default: None.
-        defaultTimeout : int, optional
-            Polling timeout in seconds for all captcha types except reCAPTCHA.
-            Defines how long the module tries to get the answer from the res.php API endpoint.
-            Default: 120.
-        recaptchaTimeout : int, optional
-            Polling timeout for reCAPTCHA in seconds. Defines how long the module tries to get the answer from the res.php API endpoint.
-            Default: 600.
-        pollingInterval : int, optional
-            Interval in seconds between requests to the res.php API endpoint. Setting values less than 5 seconds is not recommended.
-            Default: 10.
-        server : str, optional
-            API server. You can set it to rucaptcha.com if your account is registered there.
-            Default: 2captcha.com.
-        extendedResponse : bool, optional
-            Set to True to get the response with additional fields or in more practical format (enables JSON response from
-            res.php API endpoint). Suitable for hCaptcha, ClickCaptcha, Canvas.
-            Default: None.
-        """
         self.API_KEY = apiKey
         self.soft_id = softId
         self.callback = callback
         self.default_timeout = defaultTimeout
         self.recaptcha_timeout = recaptchaTimeout
         self.polling_interval = pollingInterval
-        self.api_client = ApiClient(post_url=str(server))
+        self.api_client = AsyncApiClient(post_url=str(server))
         self.max_files = 9
         self.exceptions = SolverExceptions
         self.extendedResponse = extendedResponse
 
-    def normal(self, file, **kwargs):
+    async def normal(self, file, **kwargs):
         '''Wrapper for solving a normal captcha (image).
 
         Parameters
@@ -195,7 +72,7 @@ class TwoCaptcha():
         lang : str, optional
             Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
         hintText : str, optional
-            Max 140 characters. Encoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
             For example: type red symbols only.
         hintImg : img, optional
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -208,11 +85,11 @@ class TwoCaptcha():
             the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
-        method = self.get_method(file)
-        result = self.solve(**method, **kwargs)
+        method = await self.get_method(file)
+        result = await self.solve(**method, **kwargs)
         return result
 
-    def audio(self, file, lang, **kwargs):
+    async def audio(self, file, lang, **kwargs):
         '''Wrapper for solving audio captcha.
 
         Parameters
@@ -230,29 +107,31 @@ class TwoCaptcha():
         elif not '.' in file and len(file) > 50:
             body = file
         elif file.endswith(".mp3") and file.startswith("http"):
-            response = requests.get(file)
-            if response.status_code != 200:
-                raise ValidationException(f'File could not be downloaded from url: {file}')
-            body = b64encode(response.content).decode('utf-8')
+            async with httpx.AsyncClient(follow_redirects=True) as client:
+                response = await client.get(file)
+                if response.status_code != 200:
+                    raise ValidationException(f'File could not be downloaded from url: {file}')
+                body = b64encode(response.content).decode('utf-8')
         elif file.endswith(".mp3"):
-            with open(file, "rb") as media:
-                body = b64encode(media.read()).decode('utf-8')
+            async with aiofiles.open(file, "rb") as media:
+                file_content = await media.read()
+                body = b64encode(file_content).decode('utf-8')
         else:
             raise ValidationException('File extension is not .mp3 or it is not a base64 string.')
 
         if not lang or lang not in ("en", "ru", "de", "el", "pt", "fr"):
             raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt", "fr". You send {lang}')
 
-        result = self.solve(body=body, method=method, **kwargs)
+        result = await self.solve(body=body, method=method, **kwargs)
         return result
 
-    def text(self, text, **kwargs):
+    async def text(self, text, **kwargs):
         '''Wrapper for solving text captcha.
 
         Parameters
         __________
         text : str
-            Max 140 characters. Encoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
+            Max 140 characters. Endcoding: UTF-8. Text will be shown to worker to help him to solve the captcha correctly.
             For example: type red symbols only.
         lang: str, optional
             Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
@@ -264,14 +143,14 @@ class TwoCaptcha():
             the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
-        result = self.solve(text=text, method='post', **kwargs)
+        result = await self.solve(text=text, method='post', **kwargs)
         return result
 
-    def recaptcha(self, sitekey, url, version='v2', enterprise=0, **kwargs):
+    async def recaptcha(self, sitekey, url, version='v2', enterprise=0, **kwargs):
         '''Wrapper for solving recaptcha (v2, v3).
 
         Parameters
-        __________
+        _______________
         sitekey : str
             Value of sitekey parameter you found on page.
         url : str
@@ -315,10 +194,10 @@ class TwoCaptcha():
             **kwargs,
         }
 
-        result = self.solve(timeout=self.recaptcha_timeout, **params)
+        result = await self.solve(timeout=self.recaptcha_timeout, **params)
         return result
 
-    def funcaptcha(self, sitekey, url, **kwargs):
+    async def funcaptcha(self, sitekey, url, **kwargs):
         '''Wrapper for solving funcaptcha.
 
         Parameters
@@ -333,7 +212,7 @@ class TwoCaptcha():
             Tells us to use your user-agent value.
         data[key] : str, optional
             Custom data to pass to FunCaptcha. For example: data[blob]=stringValue.
-        softId : int, optional
+        softId : str, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
         callback : str, optional
@@ -343,16 +222,16 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(publickey=sitekey,
-                            url=url,
-                            method='funcaptcha',
-                            **kwargs)
+        result = await self.solve(publickey=sitekey,
+                                  url=url,
+                                  method='funcaptcha',
+                                  **kwargs)
         return result
 
-    def geetest(self, gt, challenge, url, **kwargs):
+    async def geetest(self, gt, challenge, url, **kwargs):
         '''Wrapper for solving geetest captcha.
 
-        Parameters
+        Parameters:
         __________
         gt : str
             Value of gt parameter you found on target website.
@@ -380,14 +259,14 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(gt=gt,
-                            challenge=challenge,
-                            url=url,
-                            method='geetest',
-                            **kwargs)
+        result = await self.solve(gt=gt,
+                                  challenge=challenge,
+                                  url=url,
+                                  method='geetest',
+                                  **kwargs)
         return result
 
-    def hcaptcha(self, sitekey, url, **kwargs):
+    async def hcaptcha(self, sitekey, url, **kwargs):
         '''Wrapper for solving hcaptcha.
 
         Parameters
@@ -414,15 +293,15 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            url=url,
-                            method='hcaptcha',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  url=url,
+                                  method='hcaptcha',
+                                  **kwargs)
         return result
 
-    def keycaptcha(self, s_s_c_user_id, s_s_c_session_id,
-                   s_s_c_web_server_sign, s_s_c_web_server_sign2, url,
-                   **kwargs):
+    async def keycaptcha(self, s_s_c_user_id, s_s_c_session_id,
+                         s_s_c_web_server_sign, s_s_c_web_server_sign2, url,
+                         **kwargs):
         '''Wrapper for solving.
 
         Parameters
@@ -457,10 +336,10 @@ class TwoCaptcha():
             **kwargs,
         }
 
-        result = self.solve(**params)
+        result = await self.solve(**params)
         return result
 
-    def capy(self, sitekey, url, **kwargs):
+    async def capy(self, sitekey, url, **kwargs):
         '''Wrapper for solving capy.
 
         Parameters
@@ -483,23 +362,22 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(captchakey=sitekey,
-                            url=url,
-                            method='capy',
-                            **kwargs)
+        result = await self.solve(captchakey=sitekey,
+                                  url=url,
+                                  method='capy',
+                                  **kwargs)
         return result
 
-    def grid(self, file, **kwargs):
+    async def grid(self, file, **kwargs):
         '''Wrapper for solving grid captcha (image).
 
-        Parameters
-        __________
+        Required:
         file : file
             Captcha image file. * required if you submit image as a file (method=post).
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Encoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select images
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select images
             with trees. Not required if you're sending instruction as an image with imginstructions.
         hintImg : img
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -508,14 +386,6 @@ class TwoCaptcha():
             Number of rows in reCAPTCHA grid.
         cols : itn, optional
             Number of columns in reCAPTCHA grid.
-        img_type : str, optional
-            The type of captcha to solve. Supported values:
-            - funcaptcha: FunCaptcha where you need to click the correct square.
-            - funcaptcha_compare: FunCaptcha where you select the square using arrows.
-            - recaptcha: reCAPTCHA.
-            - hcaptcha: hCaptcha.
-            Important: You must also provide the textinstructions parameter with the original instructions in English,
-            and send the original image files, not screenshots.
         previousId : str, optional
             Id of your previous request with the same captcha challenge.
         canSkip : int, optional
@@ -535,7 +405,7 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        method = self.get_method(file)
+        method = await self.get_method(file)
 
         params = {
             'recaptcha': 1,
@@ -543,10 +413,10 @@ class TwoCaptcha():
             **kwargs,
         }
 
-        result = self.solve(**params)
+        result = await self.solve(**params)
         return result
 
-    def canvas(self, file, **kwargs):
+    async def canvas(self, file, **kwargs):
         '''Wrapper for solving canvas captcha (image).
 
         Parameters
@@ -556,7 +426,7 @@ class TwoCaptcha():
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Encoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving reCAPTCHA. For example: select
             images with trees. Not required if you're sending instruction as an image with imginstructions.
         hintImg : img
             Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -581,7 +451,7 @@ class TwoCaptcha():
             raise ValidationException(
                 'parameters required: hintText and/or hintImg')
 
-        method = self.get_method(file)
+        method = await self.get_method(file)
 
         params = {
             'recaptcha': 1,
@@ -590,10 +460,10 @@ class TwoCaptcha():
             **kwargs,
         }
 
-        result = self.solve(**params)
+        result = await self.solve(**params)
         return result
 
-    def coordinates(self, file, **kwargs):
+    async def coordinates(self, file, **kwargs):
         '''Wrapper for solving coordinates captcha (image).
 
         Parameters
@@ -603,7 +473,7 @@ class TwoCaptcha():
         body : str
             Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
         hintText : str
-            Max 140 characters. Encoding: UTF-8. Text with instruction for solving the captcha. For example: click on
+            Max 140 characters. Endcoding: UTF-8. Text with instruction for solving the captcha. For example: click on
             images with ghosts. Not required if the image already contains the instruction.
         hintImg : img
              Max 400x150px, 100 kB. Image with instruction for solving reCAPTCHA. Not required if you're sending
@@ -622,7 +492,7 @@ class TwoCaptcha():
             the server. More info here https://2captcha.com/2captcha-api#pingback.
         '''
 
-        method = self.get_method(file)
+        method = await self.get_method(file)
 
         params = {
             'coordinatescaptcha': 1,
@@ -630,10 +500,10 @@ class TwoCaptcha():
             **kwargs,
         }
 
-        result = self.solve(**params)
+        result = await self.solve(**params)
         return result
 
-    def rotate(self, files, **kwargs):
+    async def rotate(self, files, **kwargs):
         '''Wrapper for solving rotate captcha (image).
 
         Parameters
@@ -662,10 +532,10 @@ class TwoCaptcha():
         '''
 
         if isinstance(files, str):
+            file = await self.get_method(files)
+            file = file.get('file')
 
-            file = self.get_method(files)['file']
-
-            result = self.solve(file=file, method='rotatecaptcha', **kwargs)
+            result = await self.solve(file=file, method='rotatecaptcha', **kwargs)
             return result
 
         elif isinstance(files, dict):
@@ -673,10 +543,10 @@ class TwoCaptcha():
 
         files = self.extract_files(files)
 
-        result = self.solve(files=files, method='rotatecaptcha', **kwargs)
+        result = await self.solve(files=files, method='rotatecaptcha', **kwargs)
         return result
 
-    def geetest_v4(self, captcha_id, url, **kwargs):
+    async def geetest_v4(self, captcha_id, url, **kwargs):
         '''Wrapper for solving geetest_v4 captcha.
 
         Parameters
@@ -695,13 +565,13 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(captcha_id=captcha_id,
-                            url=url,
-                            method='geetest_v4',
-                            **kwargs)
+        result = await self.solve(captcha_id=captcha_id,
+                                  url=url,
+                                  method='geetest_v4',
+                                  **kwargs)
         return result
 
-    def lemin(self, captcha_id, div_id, url, **kwargs):
+    async def lemin(self, captcha_id, div_id, url, **kwargs):
         '''Wrapper for solving Lemin Cropped Captcha.
 
         Parameters
@@ -724,14 +594,14 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(captcha_id=captcha_id,
-                            div_id=div_id,
-                            url=url,
-                            method='lemin',
-                            **kwargs)
+        result = await self.solve(captcha_id=captcha_id,
+                                  div_id=div_id,
+                                  url=url,
+                                  method='lemin',
+                                  **kwargs)
         return result
 
-    def atb_captcha(self, app_id, api_server, url, **kwargs):
+    async def atb_captcha(self, app_id, api_server, url, **kwargs):
         '''Wrapper for solving atbCAPTCHA.
 
         Parameters
@@ -748,14 +618,14 @@ class TwoCaptcha():
 
         '''
 
-        result = self.solve(app_id=app_id,
-                            api_server=api_server,
-                            url=url,
-                            method='atb_captcha',
-                            **kwargs)
+        result = await self.solve(app_id=app_id,
+                                  api_server=api_server,
+                                  url=url,
+                                  method='atb_captcha',
+                                  **kwargs)
         return result
 
-    def turnstile(self, sitekey, url, **kwargs):
+    async def turnstile(self, sitekey, url, **kwargs):
         '''Wrapper for solving Cloudflare Turnstile.
 
         Parameters
@@ -784,13 +654,13 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            url=url,
-                            method='turnstile',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  url=url,
+                                  method='turnstile',
+                                  **kwargs)
         return result
 
-    def amazon_waf(self, sitekey, iv, context, url, **kwargs):
+    async def amazon_waf(self, sitekey, iv, context, url, **kwargs):
         '''Wrapper for solving Amazon WAF.
 
         Parameters
@@ -817,16 +687,16 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            iv=iv,
-                            context=context,
-                            url=url,
-                            method='amazon_waf',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  iv=iv,
+                                  context=context,
+                                  url=url,
+                                  method='amazon_waf',
+                                  **kwargs)
 
         return result
 
-    def mtcaptcha(self, sitekey, url, **kwargs):
+    async def mtcaptcha(self, sitekey, url, **kwargs):
         '''Wrapper for solving MTCaptcha.
 
         Parameters
@@ -845,13 +715,13 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            url=url,
-                            method='mt_captcha',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  url=url,
+                                  method='mt_captcha',
+                                  **kwargs)
         return result
 
-    def friendly_captcha(self, sitekey, url, **kwargs):
+    async def friendly_captcha(self, sitekey, url, **kwargs):
         '''Wrapper for solving Friendly Captcha.
 
         Parameters
@@ -870,13 +740,13 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            url=url,
-                            method='friendly_captcha',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  url=url,
+                                  method='friendly_captcha',
+                                  **kwargs)
         return result
 
-    def tencent(self, app_id, url, **kwargs):
+    async def tencent(self, app_id, url, **kwargs):
         '''Wrapper for solving Tencent captcha.
 
         Parameters
@@ -896,13 +766,13 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(app_id=app_id,
-                            url=url,
-                            method="tencent",
-                            **kwargs)
+        result = await self.solve(app_id=app_id,
+                                  url=url,
+                                  method="tencent",
+                                  **kwargs)
         return result
 
-    def cutcaptcha(self, misery_key, apikey, url, **kwargs):
+    async def cutcaptcha(self, misery_key, apikey, url, **kwargs):
         '''Wrapper for solving Friendly Captcha.
 
         Parameters
@@ -923,14 +793,14 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
 
-        result = self.solve(misery_key=misery_key,
-                            api_key=apikey,
-                            url=url,
-                            method='cutcaptcha',
-                            **kwargs)
+        result = await self.solve(misery_key=misery_key,
+                                  api_key=apikey,
+                                  url=url,
+                                  method='cutcaptcha',
+                                  **kwargs)
         return result
 
-    def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
+    async def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
         """Wrapper for solving DataDome Captcha.
 
         Parameters
@@ -945,15 +815,15 @@ class TwoCaptcha():
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         """
 
-        result = self.solve(method='datadome',
-                            captcha_url=captcha_url,
-                            pageurl=pageurl,
-                            userAgent=userAgent,
-                            proxy=proxy,
-                            **kwargs)
+        result = await self.solve(method='datadome',
+                                  captcha_url=captcha_url,
+                                  pageurl=pageurl,
+                                  userAgent=userAgent,
+                                  proxy=proxy,
+                                  **kwargs)
         return result
 
-    def cybersiara(self, master_url_id, pageurl, userAgent, **kwargs):
+    async def cybersiara(self, master_url_id, pageurl, userAgent, **kwargs):
         '''Wrapper for solving CyberSiARA captcha.
 
         Parameters
@@ -967,14 +837,14 @@ class TwoCaptcha():
         proxy : dict, optional
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
         '''
-        result = self.solve(method='cybersiara',
-                            master_url_id=master_url_id,
-                            pageurl=pageurl,
-                            userAgent=userAgent,
-                            **kwargs)
+        result = await self.solve(method='cybersiara',
+                                  master_url_id=master_url_id,
+                                  pageurl=pageurl,
+                                  userAgent=userAgent,
+                                  **kwargs)
         return result
 
-    def yandex_smart(self, sitekey, url, **kwargs):
+    async def yandex_smart(self, sitekey, url, **kwargs):
         '''Wrapper for solving Yandex Smart.
 
         Parameters
@@ -995,13 +865,13 @@ class TwoCaptcha():
             User-Agent of the browser that will be used by the employee when loading the captcha.
         '''
 
-        result = self.solve(sitekey=sitekey,
-                            url=url,
-                            method='yandex',
-                            **kwargs)
+        result = await self.solve(sitekey=sitekey,
+                                  url=url,
+                                  method='yandex',
+                                  **kwargs)
         return result
 
-    def solve(self, timeout=0, polling_interval=0, **kwargs):
+    async def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
         Parameters
@@ -1018,17 +888,16 @@ class TwoCaptcha():
         result : string
         '''
 
-        id_ = self.send(**kwargs)
+        id_ = await self.send(**kwargs)
         result = {'captchaId': id_}
 
         if self.callback is None:
             timeout = float(timeout or self.default_timeout)
             sleep = int(polling_interval or self.polling_interval)
 
-            code = self.wait_result(id_, timeout, sleep)
+            code = await self.wait_result(id_, timeout, sleep)
 
             if self.extendedResponse == True:
-
                 new_code = {
                     key if key != 'request' else 'code': value
                     for key, value in code.items()
@@ -1040,23 +909,18 @@ class TwoCaptcha():
 
             return result
 
-    def wait_result(self, id_, timeout, polling_interval):
-
+    async def wait_result(self, id_, timeout, polling_interval):
         max_wait = time.time() + timeout
 
         while time.time() < max_wait:
-
             try:
-                return self.get_result(id_)
-
+                return await self.get_result(id_)
             except NetworkException:
-
-                time.sleep(polling_interval)
+                await asyncio.sleep(polling_interval)
 
         raise TimeoutException(f'timeout {timeout} exceeded')
 
-    def get_method(self, file):
-
+    async def get_method(self, file):
         if not file:
             raise ValidationException('File required')
 
@@ -1064,21 +928,22 @@ class TwoCaptcha():
             return {'method': 'base64', 'body': file}
 
         if file.startswith('http'):
-            img_resp = requests.get(file)
-            if img_resp.status_code != 200:
-                raise ValidationException(f'File could not be downloaded from url: {file}')
-            return {'method': 'base64', 'body': b64encode(img_resp.content).decode('utf-8')}
+            async with httpx.AsyncClient(follow_redirects=True) as client:
+                img_resp = await client.get(file)
+                if img_resp.status_code != 200:
+                    raise ValidationException(f'File could not be downloaded from url: {file}')
+                return {'method': 'base64', 'body': b64encode(img_resp.content).decode('utf-8')}
 
         if not os.path.exists(file):
             raise ValidationException(f'File not found: {file}')
 
         return {'method': 'post', 'file': file}
 
-    def send(self, **kwargs):
+    async def send(self, **kwargs):
         """This method can be used for manual captcha submission
 
         Parameters
-        __________
+        _________
         method : str
             The name of the method must be found in the documentation https://2captcha.com/2captcha-api
         kwargs: dict
@@ -1086,20 +951,19 @@ class TwoCaptcha():
         Returns
 
         """
-
         params = self.default_params(kwargs)
         params = self.rename_params(params)
 
         params, files = self.check_hint_img(params)
 
-        response = self.api_client.in_(files=files, **params)
+        response = await self.api_client.in_(files=files, **params)
 
         if not response.startswith('OK|'):
             raise ApiException(f'cannot recognize response {response}')
 
         return response[3:]
 
-    def get_result(self, id_):
+    async def get_result(self, id_):
         import json
         """This method can be used for manual captcha answer polling.
 
@@ -1111,11 +975,8 @@ class TwoCaptcha():
 
         answer : text
         """
-
         if self.extendedResponse == True:
-
-            response = self.api_client.res(key=self.API_KEY, action='get', id=id_, json=1)
-
+            response = await self.api_client.res(key=self.API_KEY, action='get', id=id_, json=1)
             response_data = json.loads(response)
 
             if response_data.get("status") == 0:
@@ -1125,10 +986,8 @@ class TwoCaptcha():
                 raise ApiException(f'Unexpected status in response: {response_data}')
 
             return response_data
-
         else:
-
-            response = self.api_client.res(key=self.API_KEY, action='get', id=id_)
+            response = await self.api_client.res(key=self.API_KEY, action='get', id=id_)
 
             if response == 'CAPCHA_NOT_READY':
                 raise NetworkException
@@ -1138,18 +997,17 @@ class TwoCaptcha():
 
             return response[3:]
 
-    def balance(self):
+    async def balance(self):
         '''Get my balance
 
         Returns
 
         balance : float
         '''
-
-        response = self.api_client.res(key=self.API_KEY, action='getbalance')
+        response = await self.api_client.res(key=self.API_KEY, action='getbalance')
         return float(response)
 
-    def report(self, id_, correct):
+    async def report(self, id_, correct):
         '''Report of solved captcha: good/bad.
 
         Parameters
@@ -1164,14 +1022,11 @@ class TwoCaptcha():
             None.
 
         '''
-
         rep = 'reportgood' if correct else 'reportbad'
-        self.api_client.res(key=self.API_KEY, action=rep, id=id_)
-
+        await self.api_client.res(key=self.API_KEY, action=rep, id=id_)
         return
 
     def rename_params(self, params):
-
         replace = {
             'caseSensitive': 'regsense',
             'minLen': 'min_len',
@@ -1209,7 +1064,6 @@ class TwoCaptcha():
         return new_params
 
     def default_params(self, params):
-
         params.update({'key': self.API_KEY})
 
         callback = params.pop('callback', self.callback)
@@ -1223,7 +1077,6 @@ class TwoCaptcha():
         return params
 
     def extract_files(self, files):
-
         if len(files) > self.max_files:
             raise ValidationException(
                 f'Too many files (max: {self.max_files})')
@@ -1237,7 +1090,6 @@ class TwoCaptcha():
         return files
 
     def check_hint_img(self, params):
-
         hint = params.pop('imginstructions', None)
         files = params.pop('files', {})
 
@@ -1260,5 +1112,9 @@ class TwoCaptcha():
 
 
 if __name__ == '__main__':
-    key = sys.argv[1]
-    sol = TwoCaptcha(key)
+    async def main():
+        key = sys.argv[1]
+        sol = AsyncTwoCaptcha(key)
+
+
+    asyncio.run(main())

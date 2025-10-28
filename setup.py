@@ -3,12 +3,12 @@
 from setuptools import setup, find_packages
 import re
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
 def get_version():
-    with open('twocaptcha/__init__.py', 'r') as f:
+    with open('twocaptcha/__init__.py', 'r', encoding="utf-8") as f:
         return re.search(r'__version__ = ["\'](.*?)["\']', f.read()).group(1)
 
 
@@ -18,7 +18,7 @@ setup(name='2captcha-python',
       long_description=long_description,
       long_description_content_type="text/markdown",
       url='https://github.com/2captcha/2captcha-python/',
-      install_requires=['requests'],
+      install_requires=['requests', 'httpx', 'aiofiles'],
       author='2Captcha',
       author_email='info@2captcha.com',
       packages=find_packages(),
