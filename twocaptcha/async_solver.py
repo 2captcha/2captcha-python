@@ -107,7 +107,7 @@ class AsyncTwoCaptcha():
         elif not '.' in file and len(file) > 50:
             body = file
         elif file.endswith(".mp3") and file.startswith("http"):
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
                 response = await client.get(file)
                 if response.status_code != 200:
                     raise ValidationException(f'File could not be downloaded from url: {file}')
@@ -928,7 +928,7 @@ class AsyncTwoCaptcha():
             return {'method': 'base64', 'body': file}
 
         if file.startswith('http'):
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
                 img_resp = await client.get(file)
                 if img_resp.status_code != 200:
                     raise ValidationException(f'File could not be downloaded from url: {file}')

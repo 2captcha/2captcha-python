@@ -44,7 +44,7 @@ class AsyncApiClient():
         try:
             current_url = 'https://' + self.post_url + '/in.php'
 
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
                 if files:
                     async with AsyncExitStack() as stack:
                         file_objects = {}
@@ -107,7 +107,7 @@ class AsyncApiClient():
         try:
             current_url_out = 'https://' + self.post_url + '/res.php'
 
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
                 resp = await client.get(current_url_out, params=kwargs)
 
                 if resp.status_code != 200:
