@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 import unittest
+from pathlib import Path
 
-file = '../examples/images/canvas.jpg'
+images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+file = str(images_path / 'canvas.jpg')
 hint = 'Draw around apple'
-hint_img = '../examples/images/canvas_hint.jpg'
+hint_img = str(images_path / 'canvas_hint.jpg')
 
 checks = {'canvas': 1, 'recaptcha': 1, 'textinstructions': hint}
 
@@ -13,9 +15,6 @@ try:
 
 except ImportError:
     from abstract_async import AsyncAbstractTest
-
-    file = file[3:]
-    hint_img = hint_img[3:]
 
 
 class AsyncCanvasTest(AsyncAbstractTest):

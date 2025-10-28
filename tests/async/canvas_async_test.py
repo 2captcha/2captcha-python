@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
 import unittest
+from pathlib import Path
 
-file = '../../examples/images/canvas.jpg'
-hint_img = '../../examples/images/canvas_hint.jpg'
+images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+file = str(images_path / 'canvas.jpg')
+hint_img = str(images_path / 'canvas_hint.jpg')
 hint = 'Draw around apple'
 
 try:
     from .abstract_async import AsyncAbstractTest
 
-    file = file[3:]
-    hint_img = hint_img[3:]
 except ImportError:
     from abstract_async import AsyncAbstractTest
 

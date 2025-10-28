@@ -3,6 +3,7 @@ import asyncio
 import os
 import sys
 import unittest
+from pathlib import Path
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
@@ -62,7 +63,8 @@ class AsyncAbstractTest(unittest.TestCase):
         asyncio.run(self._async_too_many_files(method, **kwargs))
 
     async def _async_too_many_files(self, method, **kwargs):
-        files = ['../../examples/images/rotate.jpg'] * (self.solver.max_files + 1)
+        images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+        files = [str(images_path / 'rotate.jpg')] * (self.solver.max_files + 1)
         with self.assertRaises(self.solver.exceptions):
             await method(files, **kwargs)
 

@@ -13,11 +13,11 @@ class FriendlyCaptchaTest(AbstractTest):
     def test_all_params(self):
         params = {
             'sitekey': 'FCMGEMUD2KTDSQ5H',
-            'url':     'https://friendlycaptcha.com/demo',
+            'url': 'https://friendlycaptcha.com/demo',
         }
 
         sends = {
-            'method':  'friendly_captcha',
+            'method': 'friendly_captcha',
             'sitekey': 'FCMGEMUD2KTDSQ5H',
             'pageurl': 'https://friendlycaptcha.com/demo',
         }

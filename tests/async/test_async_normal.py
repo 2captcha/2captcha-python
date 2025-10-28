@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 
 import unittest
+from pathlib import Path
 
-file = '../examples/images/normal.jpg'
-hint_img = '../examples/images/grid_hint.jpg'
+images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+file = str(images_path / 'normal.jpg')
+hint_img = str(images_path / 'grid_hint.jpg')
 
 try:
     from .abstract_async import AsyncAbstractTest
-
 except ImportError:
     from abstract_async import AsyncAbstractTest
-
-    file = file[3:]
-    hint_img = hint_img[3:]
 
 
 class AsyncNormalTest(AsyncAbstractTest):

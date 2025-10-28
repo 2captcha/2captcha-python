@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 
 import unittest
+from pathlib import Path
 
-files = ['../examples/images/rotate.jpg']
+images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+files = [str(images_path / 'rotate.jpg')]
 
-hint_img = '../examples/images/grid_hint.jpg'
+hint_img = str(images_path / 'grid_hint.jpg')
 hint_text = 'Put the images in the correct way up'
 
 try:
     from .abstract_async import AsyncAbstractTest
-
 except ImportError:
     from abstract_async import AsyncAbstractTest
-
-    files = [f[3:] for f in files]
-    hint_img = hint_img[3:]
 
 files_dict = {f'file_{e + 1}': f for e, f in enumerate(files)}
 

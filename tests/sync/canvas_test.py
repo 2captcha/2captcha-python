@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 
 import unittest
+from pathlib import Path
 
-
-
-file = '../../examples/images/canvas.jpg'
-hint_img = '../../examples/images/canvas_hint.jpg'
+images_path = Path(__file__).resolve().parents[2] / 'examples' / 'images'
+file = str(images_path / 'canvas.jpg')
+hint_img = str(images_path / 'canvas_hint.jpg')
 hint = 'Draw around apple'
 
 try:
     from .abstract import AbstractTest
-
-    file = file[3:]
-    hint_img = hint_img[3:]
 except ImportError:
     from abstract import AbstractTest
 
@@ -21,7 +18,6 @@ checks = {'canvas': 1, 'recaptcha': 1, 'textinstructions': hint}
 
 class CanvasTest(AbstractTest):
     def test_file_param(self):
-
         sends = {'method': 'post', 'file': file, **checks}
         return self.send_return(sends,
                                 self.solver.canvas,
@@ -29,7 +25,6 @@ class CanvasTest(AbstractTest):
                                 hintText=hint)
 
     def test_base64_param(self):
-
         b64 = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
         sends = {
             'method': 'base64',
@@ -66,10 +61,8 @@ class CanvasTest(AbstractTest):
         return self.send_return(sends, self.solver.canvas, file=file, **params)
 
     def test_not_found(self):
-
         return self.invalid_file(self.solver.canvas, hintText=hint)
 
 
 if __name__ == '__main__':
-
     unittest.main()
