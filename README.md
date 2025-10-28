@@ -43,6 +43,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Tencent](#tencent)
     - [DataDome](#datadome)
     - [VKImage](#vkimage)
+    - [VKCaptcha](#vkcaptcha)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -440,16 +441,34 @@ result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?
                          },
                          param1=..., ...)
 ```
+
 ### VKImage
 
 <sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
 
-This method can be used to solve VK captcha using graphical captcha. Returns the number of steps and solution value in the target site's API format. Or get an extended response by passing the `extendedResponse=True` attribute to the class instance
+This method can be used to solve VK captcha using graphical captcha. Returns the number of steps and solution value in the target site's API format.
 
 ```python
 result = solver.vkimage('path/to/captcha.jpg', steps='[5,4,7,7,14,22,8,...]', ...)
 ```
 
+### VKCaptcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
+
+This method can be used to solve VK Captcha using a token.
+
+> [!IMPORTANT]
+> To solve the VK Captcha, you must use a proxy. It is recommended to use [residential proxies].
+
+```python
+result = solver.vkcaptcha(redirect_uri='https://id.vk.ru/...',
+                          userAgent='Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36..',
+                          proxy={
+                            'type': 'HTTP',
+                            'uri': 'login:password@IP_address:PORT'}
+                          )
+```
 
 ### CyberSiARA
 

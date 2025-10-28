@@ -962,12 +962,48 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
-    def vkcaptcha(self, redirect_uri, userAgent, proxytype, proxy):
+    def vkcaptcha(self, redirect_uri, userAgent, proxy, **kwargs):
+        '''Wrapper for solving VK captcha using tokens.
 
-        result = self.solve(misery_key=misery_key,
-                            api_key=apikey,
-                            url=url,
-                            method='cutcaptcha',
+        Parameters
+        __________
+        redirect_uri : str
+            The URL that is returned for requests to the captchas API.
+        userAgent : str
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='vkcaptcha',
+                            redirect_uri=redirect_uri,
+                            useragent=userAgent,
+                            proxy=proxy,
+                            **kwargs)
+        return result
+
+    def captchafox(self, sitekey, pageurl, userAgent, proxy, **kwargs):
+        '''Wrapper for solving VK captcha using tokens.
+
+        Parameters
+        __________
+        sitekey : str
+            The sitekey parameter value found on the page or in network requests.
+        pageurl : str
+            Full URL of the page with captcha.
+        userAgent : str
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='captchafox',
+                            sitekey=sitekey,
+                            pageurl=pageurl,
+                            useragent=userAgent,
+                            proxy=proxy,
                             **kwargs)
         return result
 
