@@ -21,8 +21,7 @@ async def solve_captcha():
     try:
         return await solver.text('If tomorrow is Saturday, what day is today?')
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

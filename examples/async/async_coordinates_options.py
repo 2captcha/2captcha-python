@@ -26,8 +26,7 @@ async def solve_captcha():
                                         min_clicks=2,
                                         max_clicks=3)
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

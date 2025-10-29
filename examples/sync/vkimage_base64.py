@@ -16,7 +16,7 @@ api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
 solver = TwoCaptcha(api_key)
 
-with open('./images/vk.jpg', 'rb') as f:
+with open('../images/vk.jpg', 'rb') as f:
     b64 = b64encode(f.read()).decode('utf-8')
 
 try:

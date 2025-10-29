@@ -31,8 +31,7 @@ async def solve_captcha():
             url='https://efw47fpad9.execute-api.us-east-1.amazonaws.com/latest',
         )
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

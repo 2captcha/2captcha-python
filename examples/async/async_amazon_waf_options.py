@@ -48,8 +48,7 @@ async def solve_amazon_waf():
             # }
             )
     except Exception as e:
-        print(e)
-        raise e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

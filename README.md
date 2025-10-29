@@ -44,6 +44,8 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [DataDome](#datadome)
     - [VKImage](#vkimage)
     - [VKCaptcha](#vkcaptcha)
+    - [CaptchaFox](#captchafox)
+    - [Prosopo](#prosopo)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -456,7 +458,7 @@ result = solver.vkimage('path/to/captcha.jpg', steps='[5,4,7,7,14,22,8,...]', ..
 
 <sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
 
-This method can be used to solve VK Captcha using a token.
+This method can be used to solve VK Captcha using a token. Returns a token.
 
 > [!IMPORTANT]
 > To solve the VK Captcha, you must use a proxy. It is recommended to use [residential proxies].
@@ -468,6 +470,32 @@ result = solver.vkcaptcha(redirect_uri='https://id.vk.ru/...',
                             'type': 'HTTP',
                             'uri': 'login:password@IP_address:PORT'}
                           )
+```
+
+### CaptchaFox
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#captchafox)</sup>
+
+This method can be used to solve CaptchaFox using a token. Returns a token.
+
+```python
+result = solver.captchafox(sitekey='sk_ILKWNruBBVKDOM7dZs59KHnDLEWiH',
+                           pageurl='https://mysite.com/page/with/captchafox',
+                           userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+                           proxy={'type': 'HTTPS',
+                                  'uri': 'login:password@IP_address:PORT'})
+```
+
+### Prosopo
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#prosopo-procaptcha)</sup>
+
+This method can be used to solve Prosopo captcha using a token. Returns a token.
+
+```python
+result = solver.prosopo(sitekey='5EZVvsHMrKCFKp5NYNoTyDjTjetoVo1Z4UNNb1DkVLS0JbqR',
+                        pageurl='https://mysite.com/page/with/prosopo'
+                        )
 ```
 
 ### CyberSiARA

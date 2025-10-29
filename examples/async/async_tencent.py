@@ -24,8 +24,7 @@ async def solve_captcha():
             url="https://mysite.com/page/with/tencent"
         )
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

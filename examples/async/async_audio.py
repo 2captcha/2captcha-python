@@ -21,8 +21,7 @@ async def solve_captcha():
     try:
         return await solver.audio('../audio/example.mp3', lang='en')
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

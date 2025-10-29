@@ -984,7 +984,7 @@ class TwoCaptcha():
         return result
 
     def captchafox(self, sitekey, pageurl, userAgent, proxy, **kwargs):
-        '''Wrapper for solving VK captcha using tokens.
+        '''Wrapper for solving CaptchaFox using tokens.
 
         Parameters
         __________
@@ -1004,6 +1004,26 @@ class TwoCaptcha():
                             pageurl=pageurl,
                             useragent=userAgent,
                             proxy=proxy,
+                            **kwargs)
+        return result
+
+    def prosopo(self, sitekey, pageurl, **kwargs):
+        '''Wrapper for solving Prosopo captcha using tokens.
+
+        Parameters
+        __________
+        sitekey : str
+            The sitekey parameter value found on the page or in network requests.
+        pageurl : str
+            Full URL of the page with captcha.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='prosopo',
+                            sitekey=sitekey,
+                            pageurl=pageurl,
                             **kwargs)
         return result
 

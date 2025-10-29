@@ -27,8 +27,7 @@ async def solve_captcha():
     try:
         return await solver.coordinates(b64)
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

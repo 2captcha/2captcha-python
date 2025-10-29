@@ -13,12 +13,25 @@ from twocaptcha import TwoCaptcha
 
 api_key = os.getenv('APIKEY_2CAPTCHA', 'YOUR_API_KEY')
 
-solver = TwoCaptcha(api_key)
+config = {
+            'server':           '2captcha.com', # can be also set to 'rucaptcha.com'
+    		'apiKey':           api_key,
+    		'softId':            123,
+    		'defaultTimeout':    120,
+    		'recaptchaTimeout':  600,
+    		'pollingInterval':   10,
+	    }
+
+solver = TwoCaptcha(**config)
 
 try:
-    result = solver.mtcaptcha(
-        sitekey='MTPublic-KzqLY1cKH',
-        url='https://2captcha.com/demo/mtcaptcha',
+    result = solver.prosopo(
+        sitekey='5EZVvsHMrKCFKp5NYNoTyDjTjetoVo1Z4UNNb1DkVLS0JbqR',
+        pageurl='https://mysite.com/page/with/prosopo',
+        # proxy={
+        #     'type': 'HTTPS',
+        #     'uri': 'login:password@IP_address:PORT'
+        # }
     )
 
 except Exception as e:

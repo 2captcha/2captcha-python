@@ -31,8 +31,7 @@ async def solve_captcha():
                 'uri': 'login:password@123.123.123.123:8080'
             })
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':
