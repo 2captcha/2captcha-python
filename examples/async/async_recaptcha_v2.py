@@ -23,8 +23,7 @@ async def solve_captcha():
             sitekey='6LdO5_IbAAAAAAeVBL9TClS19NUTt5wswEb3Q7C5',
             url='https://2captcha.com/demo/recaptcha-v2-invisible')
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

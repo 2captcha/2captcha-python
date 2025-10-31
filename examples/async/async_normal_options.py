@@ -32,8 +32,7 @@ async def solve_captcha():
             # hintText='Type red symbols only',
         )
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

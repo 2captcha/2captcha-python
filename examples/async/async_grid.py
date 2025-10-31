@@ -26,8 +26,7 @@ async def solve_captcha():
             cols=3
         )
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

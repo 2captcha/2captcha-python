@@ -930,6 +930,103 @@ class TwoCaptcha():
                             **kwargs)
         return result
 
+    def vkimage(self, files, steps, **kwargs):
+        '''Wrapper for solving vkimage captcha.
+
+        Parameters
+        __________
+        file : str
+            Captcha image as a file or base64.
+        steps: str
+            Array of steps.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+        if isinstance(files, str):
+
+            payload = self.get_method(files)
+            payload.pop('method', None)
+
+            result = self.solve(method='vkimage', steps=steps, **payload, **kwargs)
+            return result
+
+        elif isinstance(files, dict):
+            files = list(files.values())
+
+        files = self.extract_files(files)
+
+        result = self.solve(method='vkimage',
+                            files=files,
+                            steps=steps,
+                            **kwargs)
+        return result
+
+    def vkcaptcha(self, redirect_uri, userAgent, proxy, **kwargs):
+        '''Wrapper for solving VK captcha using tokens.
+
+        Parameters
+        __________
+        redirect_uri : str
+            The URL that is returned for requests to the captchas API.
+        userAgent : str
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='vkcaptcha',
+                            redirect_uri=redirect_uri,
+                            useragent=userAgent,
+                            proxy=proxy,
+                            **kwargs)
+        return result
+
+    def captchafox(self, sitekey, pageurl, userAgent, proxy, **kwargs):
+        '''Wrapper for solving CaptchaFox using tokens.
+
+        Parameters
+        __________
+        sitekey : str
+            The sitekey parameter value found on the page or in network requests.
+        pageurl : str
+            Full URL of the page with captcha.
+        userAgent : str
+            User-Agent of the browser that will be used by the employee when loading the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='captchafox',
+                            sitekey=sitekey,
+                            pageurl=pageurl,
+                            useragent=userAgent,
+                            proxy=proxy,
+                            **kwargs)
+        return result
+
+    def prosopo(self, sitekey, pageurl, **kwargs):
+        '''Wrapper for solving Prosopo captcha using tokens.
+
+        Parameters
+        __________
+        sitekey : str
+            The sitekey parameter value found on the page or in network requests.
+        pageurl : str
+            Full URL of the page with captcha.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+
+
+        result = self.solve(method='prosopo',
+                            sitekey=sitekey,
+                            pageurl=pageurl,
+                            **kwargs)
+        return result
+
     def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
         """Wrapper for solving DataDome Captcha.
 

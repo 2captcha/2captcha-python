@@ -30,8 +30,7 @@ async def solve_captcha():
             # hintText='Select all images with an Orange',
         )
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

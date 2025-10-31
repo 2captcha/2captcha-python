@@ -26,8 +26,7 @@ async def solve_captcha():
             # hintImg  = '../images/rotate_hint.jpg'
             hintText='Put the images in the correct way up')
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

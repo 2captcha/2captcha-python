@@ -21,8 +21,7 @@ async def solve_captcha():
     try:
         return await solver.coordinates('../images/grid.jpg')
     except Exception as e:
-        print(e)
-        return e
+        sys.exit(e)
 
 
 if __name__ == '__main__':

@@ -42,6 +42,10 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Cutcaptcha](#cutcaptcha)
     - [Tencent](#tencent)
     - [DataDome](#datadome)
+    - [VKImage](#vkimage)
+    - [VKCaptcha](#vkcaptcha)
+    - [CaptchaFox](#captchafox)
+    - [Prosopo](#prosopo)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -438,6 +442,60 @@ result = solver.datadome(captcha_url="https://geo.captcha-delivery.com/captcha/?
                             'uri': 'login:password@IP_address:PORT'
                          },
                          param1=..., ...)
+```
+
+### VKImage
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
+
+This method can be used to solve VK captcha using graphical captcha. Returns the number of steps and solution value in the target site's API format.
+
+```python
+result = solver.vkimage('path/to/captcha.jpg', steps='[5,4,7,7,14,22,8,...]', ...)
+```
+
+### VKCaptcha
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#vkcaptcha)</sup>
+
+This method can be used to solve VK Captcha using a token. Returns a token.
+
+> [!IMPORTANT]
+> To solve the VK Captcha, you must use a proxy. It is recommended to use [residential proxies].
+
+```python
+result = solver.vkcaptcha(redirect_uri='https://id.vk.ru/...',
+                          userAgent='Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36..',
+                          proxy={
+                            'type': 'HTTP',
+                            'uri': 'login:password@IP_address:PORT'}
+                          )
+```
+
+### CaptchaFox
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#captchafox)</sup>
+
+This method can be used to solve CaptchaFox using a token. Returns a token.
+
+```python
+result = solver.captchafox(sitekey='sk_ILKWNruBBVKDOM7dZs59KHnDLEWiH',
+                           pageurl='https://mysite.com/page/with/captchafox',
+                           userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
+                           proxy={'type': 'HTTPS',
+                                  'uri': 'login:password@IP_address:PORT'})
+```
+
+### Prosopo
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#prosopo-procaptcha)</sup>
+
+This method can be used to solve Prosopo captcha using a token. Returns a token.
+
+```python
+result = solver.prosopo(sitekey='5EZVvsHMrKCFKp5NYNoTyDjTjetoVo1Z4UNNb1DkVLS0JbqR',
+                        pageurl='https://mysite.com/page/with/prosopo'
+                        )
 ```
 
 ### CyberSiARA
