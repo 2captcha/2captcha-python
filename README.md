@@ -46,6 +46,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [VKCaptcha](#vkcaptcha)
     - [CaptchaFox](#captchafox)
     - [Prosopo](#prosopo)
+    - [Temu](#temu)
     - [CyberSiARA](#cybersiara)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
@@ -496,6 +497,19 @@ This method can be used to solve Prosopo captcha using a token. Returns a token.
 result = solver.prosopo(sitekey='5EZVvsHMrKCFKp5NYNoTyDjTjetoVo1Z4UNNb1DkVLS0JbqR',
                         pageurl='https://mysite.com/page/with/prosopo'
                         )
+```
+
+### Temu
+
+<sup>[API method description.](https://2captcha.com/ru/2captcha-api#temucaptcha)</sup>
+
+This method can be used to solve Temu captcha. Returns a coordinates.
+
+```python
+result = solver.temu(body="data:image/png;base64,iVBORw0KG...",
+                     part1="data:image/png;base64,iVBORw0KG...",
+                     part2="data:image/png;base64,iVBORw0KG...",
+                     part3="data:image/png;base64,iVBORw0KG...")
 ```
 
 ### CyberSiARA
