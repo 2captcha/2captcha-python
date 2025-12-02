@@ -897,6 +897,29 @@ class AsyncTwoCaptcha():
                             **kwargs)
         return result
 
+    async def temu(self, body, part1, part2, part3, **kwargs):
+        '''Wrapper for solving Temu captcha .
+
+        Parameters
+        __________
+        body : str
+            Main captcha image as a base64 string.
+        part1 : str
+            Tile element as a base64 string.
+        part2 : str
+            Tile element as a base64 string.
+        part3 : str
+            Tile element as a base64 string.
+        '''
+
+        result = await self.solve(method='temuimage',
+                            body=body,
+                            part1=part1,
+                            part2=part2,
+                            part3=part3,
+                            **kwargs)
+        return result
+
     async def datadome(self, captcha_url, pageurl, userAgent, proxy, **kwargs):
         """Wrapper for solving DataDome Captcha.
 
