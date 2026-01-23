@@ -555,6 +555,8 @@ class AsyncTwoCaptcha():
             Value of captcha_id parameter you found on target website.
         url: str
             Full URL of the page where you see Geetest captcha.
+        risk_type: str, optional
+            Value of risk_type parameter is contained in the captcha loading request.
         softId : int, optional
             ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
             spendings of their software users.
