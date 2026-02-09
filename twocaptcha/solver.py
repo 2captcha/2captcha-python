@@ -243,7 +243,7 @@ class TwoCaptcha():
         if not lang or lang not in ("en", "ru", "de", "el", "pt", "fr"):
             raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt", "fr". You send {lang}')
 
-        result = self.solve(body=body, method=method, **kwargs)
+        result = self.solve(body=body, method=method, lang=lang, **kwargs)
         return result
 
     def text(self, text, **kwargs):

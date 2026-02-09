@@ -122,7 +122,7 @@ class AsyncTwoCaptcha():
         if not lang or lang not in ("en", "ru", "de", "el", "pt", "fr"):
             raise ValidationException(f'Lang not in "en", "ru", "de", "el", "pt", "fr". You send {lang}')
 
-        result = await self.solve(body=body, method=method, **kwargs)
+        result = await self.solve(body=body, method=method, lang=lang, **kwargs)
         return result
 
     async def text(self, text, **kwargs):
