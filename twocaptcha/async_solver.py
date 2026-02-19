@@ -1145,8 +1145,8 @@ class AsyncTwoCaptcha():
 
         '''
         rep = 'reportgood' if correct else 'reportbad'
-        await self.api_client.res(key=self.API_KEY, action=rep, id=id_)
-        return
+        answer = await self.api_client.res(key=self.API_KEY, action=rep, id=id_)
+        return answer
 
     def rename_params(self, params):
         replace = {

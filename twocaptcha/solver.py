@@ -1288,9 +1288,9 @@ class TwoCaptcha():
         '''
 
         rep = 'reportgood' if correct else 'reportbad'
-        self.api_client.res(key=self.API_KEY, action=rep, id=id_)
+        answer = self.api_client.res(key=self.API_KEY, action=rep, id=id_)
 
-        return
+        return answer
 
     def rename_params(self, params):
 
