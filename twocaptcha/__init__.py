@@ -17,4 +17,4 @@ support@2captcha.com
 """
 
 __author__ = '2captcha'
-__version__ = '2.0.2'
+__version__ = '2.0.3'
