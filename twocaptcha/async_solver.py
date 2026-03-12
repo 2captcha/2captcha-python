@@ -868,6 +868,11 @@ class AsyncTwoCaptcha():
             User-Agent of the browser that will be used by the employee when loading the captcha.
         proxy : dict
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        api_server : str, optional
+            Default: https://cdn.captchafox.com/. Depending on the parameter value, the token format
+            changes — it will be prefixed with MAM_. For this, you need to set the server URL to:
+            https://s.uicdn.com/mampkg/@mamdev/core.frontend.libs.captchafox/. Two different APIs
+            return two different tokens. Choose the one you need.
         '''
 
 
