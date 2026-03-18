@@ -25,7 +25,7 @@ class AsyncTemuTest(AsyncAbstractTest):
             'part3': 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
         }
 
-        self.send_return(sends, self.solver.lemin, **params)
+        self.send_return(sends, self.solver.temu, **params)
 
 
 if __name__ == '__main__':
