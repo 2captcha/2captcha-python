@@ -105,6 +105,10 @@ class TwoCaptcha():
         Use this method to solve DataDome captcha.
     cybersiara(master_url_id, pageurl, userAgent, **kwargs)
         Use this method to solve CyberSiARA. Returns a token.
+    yandex_smart(self, sitekey, url, **kwargs)
+        Wrapper for solving Yandex Smart.
+    altcha(self, pageurl, challenge_url=None, challenge_json=None, **kwargs)
+        Wrapper for solving Altcha Captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1127,6 +1131,41 @@ class TwoCaptcha():
                             method='yandex',
                             **kwargs)
         return result
+
+    def altcha(self, pageurl, challenge_url=None, challenge_json=None, **kwargs):
+        '''Wrapper for solving Altcha Captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page where you solve the captcha.
+        challenge_url : str
+            The value of the 'challenge_url' parameter for the 'altcha-widget' element containing the captcha on the page.
+            You can send either challenge_url or challenge_json parameter, but not two of it simultaneously.
+        challenge_json : str
+            The contents of the file from the 'challenge_url' parameter. You can send either challenge_url or challenge_json
+            parameter, but not two of it simultaneously.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+
+        '''
+
+        if (challenge_url is None) == (challenge_json is None):
+            raise ValidationException(
+                'You must provide exactly one of challenge_url or challenge_json'
+            )
+        params = {
+            'pageurl': pageurl,
+            'method': "altcha",
+            **kwargs,
+        }
+        if challenge_url is not None:
+            params['challenge_url'] = challenge_url
+        if challenge_json is not None:
+            params['challenge_json'] = challenge_json
+        
+        return self.solve(**params)
+
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
