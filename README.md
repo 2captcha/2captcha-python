@@ -533,7 +533,7 @@ Use this method to solve Altcha Captcha. Returns a token.
 ```python
 result = solver.altcha(pageurl='https://mysite.com/page/with/altcha',
                        challenge_json='{"algorithm":"SHA-256","challenge":"a4c9d8e7f1b23a6c...",..."signature":"7b3e2a9d5c8f1046e2d91c3a..."}',
-                       # or: challenge_url='https://example.com/altcha-challenge',)
+                       # challenge_url='https://example.com/altcha-challenge',)
 ```
 
 ## Other methods
