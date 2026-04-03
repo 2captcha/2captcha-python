@@ -998,40 +998,29 @@ class AsyncTwoCaptcha():
                                   **kwargs)
         return result
 
-    async def altcha(self, pageurl, challenge_url=None, challenge_json=None, **kwargs):
+    async def altcha(self, pageurl, **kwargs):
         '''Wrapper for solving Altcha Captcha.
 
         Parameters
         __________
         pageurl : str
             Full URL of the page where you solve the captcha.
-        challenge_url : str
+        challenge_url : str, optional
             The value of the 'challenge_url' parameter for the 'altcha-widget' element containing the captcha on the page.
-            You can send either challenge_url or challenge_json parameter, but not two of it simultaneously.
-        challenge_json : str
-            The contents of the file from the 'challenge_url' parameter. You can send either challenge_url or challenge_json
-            parameter, but not two of it simultaneously.
+            At least one of the parameters 'challenge_url', 'challenge_json' must be passed.
+        challenge_json : str, optional
+            The contents of the file from the 'challenge_url' parameter.
+            At least one of the parameters 'challenge_url', 'challenge_json' must be passed.
         proxy : dict, optional
             {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
 
         '''
 
-        if (challenge_url is None) == (challenge_json is None):
-            raise ValidationException(
-                'You must provide exactly one of challenge_url or challenge_json'
-            )
+        result = self.solve(pageurl=pageurl,
+                            method='altcha',
+                            **kwargs)
 
-        params = {
-        'pageurl': pageurl,
-        'method': 'altcha',
-        **kwargs,}
-
-        if challenge_url is not None:
-            params['challenge_url'] = challenge_url
-        if challenge_json is not None:
-            params['challenge_json'] = challenge_json
-
-        return await self.solve(**params)
+        return await result
 
     async def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
