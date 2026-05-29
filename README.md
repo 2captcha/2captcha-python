@@ -49,6 +49,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Temu](#temu)
     - [CyberSiARA](#cybersiara)
     - [Altcha Captcha](#altcha-Captcha)
+    - [Binance](#binance)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -534,6 +535,17 @@ Use this method to solve Altcha Captcha. Returns a token.
 result = solver.altcha(pageurl='https://mysite.com/page/with/altcha',
                        challenge_json='{"algorithm":"SHA-256","challenge":"a4c9d8e7f1b23a6c...",..."signature":"7b3e2a9d5c8f1046e2d91c3a..."}',
                        # challenge_url='https://example.com/altcha-challenge',)
+```
+
+### Binance
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#binance)</sup>
+
+Use this method to solve Binance Captcha. Returns a token.
+```python
+result = solver.binance(sitekey='register',
+                        pageurl='https://mysite.com/page/with/binance',
+                        validate_id='e20c622fa9384952832fc1c2a6b75c0a',)
 ```
 
 ## Other methods
