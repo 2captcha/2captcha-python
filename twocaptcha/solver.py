@@ -1156,6 +1156,31 @@ class TwoCaptcha():
             **kwargs)
         
         return result
+    
+    def binance(self, pageurl, sitekey, validate_id, **kwargs):
+        '''Wrapper for solving Binance captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page where you solve the captcha.
+        sitekey : str
+            Value of 'bizId', 'bizType', or 'bizCode' from page requests.
+        validate_id : str
+            Dynamic value of 'validateId', 'securityId', or 'securityCheckResponseValidateId'.
+        useragent : str, optional
+            Browser User-Agent. We recommend sending a valid Windows browser string.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="binance",
+            pageurl=pageurl,
+            sitekey=sitekey,
+            validate_id=validate_id,
+            **kwargs)
+
+        return result
 
 
     def solve(self, timeout=0, polling_interval=0, **kwargs):
