@@ -109,6 +109,10 @@ class TwoCaptcha():
         Wrapper for solving Yandex Smart.
     altcha(self, pageurl, challenge_url=None, challenge_json=None, **kwargs)
         Wrapper for solving Altcha Captcha.
+    binance(self, pageurl, sitekey, validate_id, **kwargs)
+        Wrapper for solving Binance captcha.
+    yidun(self, sitekey, pageurl, **kwargs)
+        Wrapper for solving Yidun captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1178,6 +1182,39 @@ class TwoCaptcha():
             pageurl=pageurl,
             sitekey=sitekey,
             validate_id=validate_id,
+            **kwargs)
+
+        return result
+    
+    def yidun(self, sitekey, pageurl, **kwargs):
+        '''Wrapper for solving Yidun captcha.
+
+        Parameters
+        __________
+        
+        sitekey : str
+            The 'sitekey' value found in the website source code.
+        pageurl : str
+            Full URL of the page containing the captcha.
+        yidun_get_lib : str, optional
+            Path to the JavaScript file that loads the captcha on the page. Important: use the full URL (https://...). Recommended if the site includes challenge, hcg, or hct fields.
+        yidun_api_server_subdomain : str, optional
+            Yidun API server subdomain. Enter only the domain, without the https:// prefix.
+        challenge : str, optional
+            Usually sent in network requests during captcha initialization or display.
+        hcg : str, optional
+            Captcha hash used when forming the request. You can get this together with challenge.
+        hct : int, optional
+            Numeric timestamp or identifier used for Enterprise version validation.
+        useragent : str, optional
+            Browser User-Agent. We recommend sending a valid Windows browser string.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="yidun",
+            pageurl=pageurl,
+            sitekey=sitekey,
             **kwargs)
 
         return result

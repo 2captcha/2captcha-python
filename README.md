@@ -50,6 +50,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [CyberSiARA](#cybersiara)
     - [Altcha Captcha](#altcha-Captcha)
     - [Binance](#binance)
+    - [Yidun](#yidun)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -546,6 +547,17 @@ Use this method to solve Binance Captcha. Returns a token.
 result = solver.binance(sitekey='register',
                         pageurl='https://mysite.com/page/with/binance',
                         validate_id='e20c622fa9384952832fc1c2a6b75c0a',)
+```
+
+### Yidun
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#yidun)</sup>
+
+Use this method to solve Yidun - NECaptcha. Returns a token.
+```python
+result = solver.yidun(sitekey='6b4d7e0c4f5a4c7db2f3a1e8c9d6f123',
+                      pageurl='https://mysite.com/page/with/yadun',
+    )
 ```
 
 ## Other methods
