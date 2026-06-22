@@ -115,6 +115,8 @@ class TwoCaptcha():
         Wrapper for solving Yidun captcha.
     hunt(self, pageurl, api_get_lib, **kwargs)
         Wrapper for solving Hunt captcha.
+    alibaba(self, pageurl, scene_id, prefix, **kwargs)
+        Wrapper for solving Alibaba captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1242,6 +1244,43 @@ class TwoCaptcha():
             method="hunt",
             pageurl=pageurl,
             api_get_lib=api_get_lib,
+            **kwargs)
+
+        return result
+
+    def alibaba(self, pageurl, scene_id, prefix, **kwargs):
+        '''Wrapper for solving Alibaba captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        scene_id : str
+            Captcha scenario identifier.
+        prefix : str
+            Prefix from the captcha loading request subdomain.
+        user_id : str, optional
+            User or session identifier on the website.
+        user_user_id : str, optional
+            Additional user identifier.
+        verify_type : str, optional
+            Verification mechanism version or type.
+        region : str, optional
+            Captcha processing region.
+        user_certify_id : str, optional
+            Verification ID for the current captcha session.
+        api_get_lib : str, optional
+            URL of the Alibaba Captcha JS library.
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="alibaba",
+            pageurl=pageurl,
+            scene_id=scene_id,
+            prefix=prefix,
             **kwargs)
 
         return result

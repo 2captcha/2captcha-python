@@ -52,6 +52,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Binance](#binance)
     - [Yidun](#yidun)
     - [Hunt](#hunt)
+    - [Alibaba](#alibaba)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -570,6 +571,18 @@ Use this method to solve Hunt captcha. Returns a token.
 result = solver.hunt(pageurl='https://example.com/page-with-hunt',
                      api_get_lib='https://example.com/hd-api/external/apps/app-id/api.js',
                      )
+```
+
+### Alibaba
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#alibaba)</sup>
+
+Use this method to solve Alibaba captcha. Returns a token.
+```python
+result = solver.alibaba(pageurl='https://www.example.com',
+                        scene_id='abc123xyz4',
+                        prefix='dlw3kug',
+                        )
 ```
 
 ## Other methods
