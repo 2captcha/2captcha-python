@@ -51,6 +51,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Altcha Captcha](#altcha-Captcha)
     - [Binance](#binance)
     - [Yidun](#yidun)
+    - [Hunt](#hunt)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -558,6 +559,17 @@ Use this method to solve Yidun - NECaptcha. Returns a token.
 result = solver.yidun(sitekey='6b4d7e0c4f5a4c7db2f3a1e8c9d6f123',
                       pageurl='https://mysite.com/page/with/yadun',
     )
+```
+
+### Hunt
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#hunt)</sup>
+
+Use this method to solve Hunt captcha. Returns a token.
+```python
+result = solver.hunt(pageurl='https://example.com/page-with-hunt',
+                     api_get_lib='https://example.com/hd-api/external/apps/app-id/api.js',
+                     )
 ```
 
 ## Other methods

@@ -1077,6 +1077,31 @@ class AsyncTwoCaptcha():
 
         return await result
 
+    async def hunt(self, pageurl, api_get_lib, **kwargs):
+        '''Wrapper for solving Hunt captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        api_get_lib : str
+            Full link to the api.js file that loads the captcha on the page.
+        data : str, optional
+            Value of `meta.token` that the site returned after a request with X-HD.
+            Use only for the captcha solving mode (second step).
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="hunt",
+            pageurl=pageurl,
+            api_get_lib=api_get_lib,
+            **kwargs)
+
+        return await result
+
     async def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
