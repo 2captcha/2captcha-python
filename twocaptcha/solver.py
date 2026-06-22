@@ -119,6 +119,8 @@ class TwoCaptcha():
         Wrapper for solving Alibaba captcha.
     tspd(self, pageurl, tspd_cookie, html_page_base64, proxy, **kwargs)
         Wrapper for solving TSPD captcha.
+    basilisk(self, pageurl, sitekey, **kwargs)
+        Wrapper for solving Basilisk captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1309,6 +1311,28 @@ class TwoCaptcha():
             tspd_cookie=tspd_cookie,
             html_page_base64=html_page_base64,
             proxy=proxy,
+            **kwargs)
+
+        return result
+
+    def basilisk(self, pageurl, sitekey, **kwargs):
+        '''Wrapper for solving Basilisk captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        sitekey : str
+            The value of the data-site-key parameter found on the page.
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="basilisk",
+            pageurl=pageurl,
+            sitekey=sitekey,
             **kwargs)
 
         return result

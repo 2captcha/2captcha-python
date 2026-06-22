@@ -54,6 +54,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Hunt](#hunt)
     - [Alibaba](#alibaba)
     - [TSPD](#tspd)
+    - [Basilisk](#basilisk)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -597,6 +598,17 @@ result = solver.tspd(pageurl='https://example.com/login',
                      html_page_base64='PCFET0NUWVBFIGh0bWw+...',
                      proxy={'type': 'HTTP', 'uri': 'login:password@IP_address:PORT'},
                      )
+```
+
+### Basilisk
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#basilisk)</sup>
+
+Use this method to solve Basilisk captcha. Returns a token.
+```python
+result = solver.basilisk(pageurl='https://example.com/login',
+                         sitekey='b7890h...19fb2600897',
+                         )
 ```
 
 ## Other methods

@@ -1165,6 +1165,28 @@ class AsyncTwoCaptcha():
 
         return await result
 
+    async def basilisk(self, pageurl, sitekey, **kwargs):
+        '''Wrapper for solving Basilisk captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        sitekey : str
+            The value of the data-site-key parameter found on the page.
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        proxy : dict, optional
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        '''
+        result = self.solve(
+            method="basilisk",
+            pageurl=pageurl,
+            sitekey=sitekey,
+            **kwargs)
+
+        return await result
+
     async def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
