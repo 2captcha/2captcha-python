@@ -117,6 +117,8 @@ class TwoCaptcha():
         Wrapper for solving Hunt captcha.
     alibaba(self, pageurl, scene_id, prefix, **kwargs)
         Wrapper for solving Alibaba captcha.
+    tspd(self, pageurl, tspd_cookie, html_page_base64, proxy, **kwargs)
+        Wrapper for solving TSPD captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1281,6 +1283,32 @@ class TwoCaptcha():
             pageurl=pageurl,
             scene_id=scene_id,
             prefix=prefix,
+            **kwargs)
+
+        return result
+
+    def tspd(self, pageurl, tspd_cookie, html_page_base64, proxy, **kwargs):
+        '''Wrapper for solving TSPD captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        tspd_cookie : str
+            Cookies received on the TSPD challenge page.
+        html_page_base64 : str
+            Full HTML of the challenge page, Base64 encoded.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        useragent : str, optional
+            Browser User-Agent. We recommend sending a valid Windows browser string.
+        '''
+        result = self.solve(
+            method="tspd",
+            pageurl=pageurl,
+            tspd_cookie=tspd_cookie,
+            html_page_base64=html_page_base64,
+            proxy=proxy,
             **kwargs)
 
         return result

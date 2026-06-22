@@ -53,6 +53,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Yidun](#yidun)
     - [Hunt](#hunt)
     - [Alibaba](#alibaba)
+    - [TSPD](#tspd)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -583,6 +584,19 @@ result = solver.alibaba(pageurl='https://www.example.com',
                         scene_id='abc123xyz4',
                         prefix='dlw3kug',
                         )
+```
+
+### TSPD
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#tspd)</sup>
+
+Use this method to solve TSPD captcha. Returns a JSON string with cookies.
+```python
+result = solver.tspd(pageurl='https://example.com/login',
+                     tspd_cookie='TS386a400d029=082670...010245; TS386a400d078=082670...dbb3b0c',
+                     html_page_base64='PCFET0NUWVBFIGh0bWw+...',
+                     proxy={'type': 'HTTP', 'uri': 'login:password@IP_address:PORT'},
+                     )
 ```
 
 ## Other methods
