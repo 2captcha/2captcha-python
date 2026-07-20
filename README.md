@@ -380,7 +380,7 @@ result = solver.coordinates('path/to/captcha.jpg', param1=..., ...)
 This method can be used to solve a captcha that asks to rotate an object. It is mostly used to bypass FunCaptcha. Returns the rotation angle.
 
 ```python
-result = solver.rotate('path/to/captcha.jpg', param1=..., ...)
+result = solver.rotate('path/to/captcha.jpg' or 'base64', param1=..., ...)
 ```
 
 ### MTCaptcha

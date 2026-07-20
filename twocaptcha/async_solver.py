@@ -508,10 +508,9 @@ class AsyncTwoCaptcha():
 
         Parameters
         __________
-        files : file
-            Captcha image file. * required if you submit image as a file (method=post).
-        body : str
-            Base64-encoded captcha image. * required if you submit image as Base64-encoded string (method=base64).
+        files : file or str
+            Captcha image file (method=post), or a Base64-encoded captcha image string (method=base64) passed
+            directly as this same argument.
         angle : int, optional
             Angle for one rotation step in degrees. If not defined we'll use the default value for FunCaptcha: 40 degrees.
             Default: 40.
@@ -532,10 +531,10 @@ class AsyncTwoCaptcha():
         '''
 
         if isinstance(files, str):
-            file = await self.get_method(files)
-            file = file.get('file')
+            payload = await self.get_method(files)
+            payload.pop('method', None)
 
-            result = await self.solve(file=file, method='rotatecaptcha', **kwargs)
+            result = await self.solve(method='rotatecaptcha', **payload, **kwargs)
             return result
 
         elif isinstance(files, dict):
