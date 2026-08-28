@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import json
 import os
 import sys
 import time
@@ -121,6 +122,8 @@ class TwoCaptcha():
         Wrapper for solving TSPD captcha.
     basilisk(self, pageurl, sitekey, **kwargs)
         Wrapper for solving Basilisk captcha.
+    drag_and_drop(self, body, images, **kwargs)
+        Wrapper for solving Drag & Drop captcha. Wrapper for solving Drag & Drop captcha. Returns a result dictionary with coordinates in `code`.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1332,6 +1335,59 @@ class TwoCaptcha():
             method="basilisk",
             pageurl=pageurl,
             sitekey=sitekey,
+            **kwargs)
+
+        return result
+
+    def drag_and_drop(self, body, images, **kwargs):
+        '''Wrapper for solving Drag & Drop captcha.
+
+        Parameters
+        __________
+        body : str
+            Background image: file path, URL, or Base64-encoded image string. Always sent to the API as
+            a Base64-encoded string.
+        images : list
+            List of images (file path, URL, or Base64-encoded string) that need to be dragged onto the
+            background. Order matters: the response contains coordinates in the same order.
+        hintText : str, optional
+            Max 140 characters. Encoding: UTF-8. Text with instruction for solving the captcha. For example:
+            "Drag the images to proper position".
+        language : int, optional
+            0 - not specified. 1 - Cyrillic captcha. 2 - Latin captcha.
+            Default: 0.
+        lang : str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        header_acao : int, optional
+            0 - disabled. 1 - enabled. If enabled in.php will include Access-Control-Allow-Origin:* header in
+            the response.
+            Default: 0.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+
+        Returns
+        _______
+        dict
+            {'captchaId': 'TASK_ID', 'code': 'COORDINATES'}. The coordinates string in `result['code']` contains
+            one entry per image from `images`, in the same order, separated by "|". An image that wasn't moved
+            may be returned by the API as "null".
+        '''
+
+        def to_base64(image):
+            image_method = self.get_method(image)
+            if 'body' in image_method:
+                return image_method['body']
+            with open(image_method['file'], 'rb') as img:
+                return b64encode(img.read()).decode('utf-8')
+
+        result = self.solve(
+            method='drag_drop',
+            body=to_base64(body),
+            images=json.dumps([to_base64(image) for image in images]),
             **kwargs)
 
         return result
