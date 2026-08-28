@@ -55,6 +55,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [Alibaba](#alibaba)
     - [TSPD](#tspd)
     - [Basilisk](#basilisk)
+    - [Drag & Drop](#drag--drop)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -609,6 +610,26 @@ Use this method to solve Basilisk captcha. Returns a token.
 result = solver.basilisk(pageurl='https://example.com/login',
                          sitekey='b7890h...19fb2600897',
                          )
+```
+
+### Drag & Drop
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#drag-and-drop-captcha)</sup>
+
+Use this method to solve a captcha where one or more images need to be dragged onto specific positions on a background image.
+`body` and each item in `images` can be a file path, a URL, or a Base64-encoded string.
+
+Returns the standard result dictionary `{'captchaId': 'TASK_ID', 'code': 'COORDINATES'}`. The coordinates string in
+`result['code']` contains one entry per image from `images`, in the same order, separated by `|`. An image that
+wasn't moved may be returned by the API as `null`.
+
+```python
+result = solver.drag_and_drop(
+    body='path/to/background.jpg',
+    images=['path/to/image1.jpg', 'path/to/image2.jpg'],
+)
+
+coordinates = result['code']
 ```
 
 ## Other methods

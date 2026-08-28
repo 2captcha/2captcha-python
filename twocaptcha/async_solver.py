@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import asyncio
+import json
 import os
 import sys
 import time
@@ -1182,6 +1183,63 @@ class AsyncTwoCaptcha():
             method="basilisk",
             pageurl=pageurl,
             sitekey=sitekey,
+            **kwargs)
+
+        return await result
+
+    async def drag_and_drop(self, body, images, **kwargs):
+        '''Wrapper for solving Drag & Drop captcha.
+
+        Parameters
+        __________
+        body : str
+            Background image: file path, URL, or Base64-encoded image string. Always sent to the API as
+            a Base64-encoded string.
+        images : list
+            List of images (file path, URL, or Base64-encoded string) that need to be dragged onto the
+            background. Order matters: the response contains coordinates in the same order.
+        hintText : str, optional
+            Max 140 characters. Encoding: UTF-8. Text with instruction for solving the captcha. For example:
+            "Drag the images to proper position".
+        language : int, optional
+            0 - not specified. 1 - Cyrillic captcha. 2 - Latin captcha.
+            Default: 0.
+        lang : str, optional
+            Language code. See the list of supported languages https://2captcha.com/2captcha-api#language.
+        header_acao : int, optional
+            0 - disabled. 1 - enabled. If enabled in.php will include Access-Control-Allow-Origin:* header in
+            the response.
+            Default: 0.
+        softId : int, optional
+            ID of software developer. Developers who integrated their software with 2Captcha get reward: 10% of
+            spendings of their software users.
+        callback : str, optional
+            URL for pingback (callback) response that will be sent when captcha is solved. URL should be registered on
+            the server. More info here https://2captcha.com/2captcha-api#pingback.
+
+        Returns
+        _______
+        dict
+            {'captchaId': 'TASK_ID', 'code': 'COORDINATES'}. The coordinates string in `result['code']` contains
+            one entry per image from `images`, in the same order, separated by "|". An image that wasn't moved
+            may be returned by the API as "null".
+        '''
+
+        async def to_base64(image):
+            image_method = await self.get_method(image)
+            if 'body' in image_method:
+                return image_method['body']
+            async with aiofiles.open(image_method['file'], 'rb') as img:
+                file_content = await img.read()
+                return b64encode(file_content).decode('utf-8')
+
+        body_b64 = await to_base64(body)
+        images_b64 = [await to_base64(image) for image in images]
+
+        result = self.solve(
+            method='drag_drop',
+            body=body_b64,
+            images=json.dumps(images_b64),
             **kwargs)
 
         return await result
