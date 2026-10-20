@@ -124,6 +124,8 @@ class TwoCaptcha():
         Wrapper for solving Basilisk captcha.
     drag_and_drop(self, body, images, **kwargs)
         Wrapper for solving Drag & Drop captcha. Wrapper for solving Drag & Drop captcha. Returns a result dictionary with coordinates in `code`.
+    imperva(self, pageurl, incapsula_script_url, incapsula_cookies, proxy, **kwargs)
+        Wrapper for solving Imperva (Incapsula) captcha.
     solve(timeout=0, polling_interval=0, **kwargs)
         Sends CAPTCHA data and retrieves the result.
     balance()
@@ -1388,6 +1390,34 @@ class TwoCaptcha():
             method='drag_drop',
             body=to_base64(body),
             images=json.dumps([to_base64(image) for image in images]),
+            **kwargs)
+
+        return result
+
+    def imperva(self, pageurl, incapsula_script_url, incapsula_cookies, proxy, **kwargs):
+        '''Wrapper for solving Imperva (Incapsula) captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        incapsula_script_url : str
+            URL or path of the Incapsula script, for example /_Incapsula_Resource?...
+        incapsula_cookies : str
+            Incapsula cookies received from the website before solving the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        reese84_url_endpoint : str, optional
+            Reese84 endpoint, if it is required on a particular website.
+        '''
+        result = self.solve(
+            method="incapsula",
+            pageurl=pageurl,
+            incapsula_script_url=incapsula_script_url,
+            incapsula_cookies=incapsula_cookies,
+            proxy=proxy,
             **kwargs)
 
         return result

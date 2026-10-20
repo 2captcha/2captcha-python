@@ -1244,6 +1244,34 @@ class AsyncTwoCaptcha():
 
         return await result
 
+    async def imperva(self, pageurl, incapsula_script_url, incapsula_cookies, proxy, **kwargs):
+        '''Wrapper for solving Imperva (Incapsula) captcha.
+
+        Parameters
+        __________
+        pageurl : str
+            Full URL of the page with the captcha.
+        incapsula_script_url : str
+            URL or path of the Incapsula script, for example /_Incapsula_Resource?...
+        incapsula_cookies : str
+            Incapsula cookies received from the website before solving the captcha.
+        proxy : dict
+            {'type': 'HTTPS', 'uri': 'login:password@IP_address:PORT'}.
+        useragent : str, optional
+            Browser User-Agent used to open the page.
+        reese84_url_endpoint : str, optional
+            Reese84 endpoint, if it is required on a particular website.
+        '''
+        result = self.solve(
+            method="incapsula",
+            pageurl=pageurl,
+            incapsula_script_url=incapsula_script_url,
+            incapsula_cookies=incapsula_cookies,
+            proxy=proxy,
+            **kwargs)
+
+        return await result
+
     async def solve(self, timeout=0, polling_interval=0, **kwargs):
         '''Sends captcha, receives result.
 
