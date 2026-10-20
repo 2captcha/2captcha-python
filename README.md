@@ -56,6 +56,7 @@ Examples of API requests for different captcha types are available on the [Pytho
     - [TSPD](#tspd)
     - [Basilisk](#basilisk)
     - [Drag & Drop](#drag--drop)
+    - [Imperva (Incapsula)](#imperva-incapsula)
   - [Other methods](#other-methods)
     - [send / get\_result](#send--get_result)
     - [balance](#balance)
@@ -632,6 +633,26 @@ result = solver.drag_and_drop(
 coordinates = result['code']
 ```
 
+### Imperva (Incapsula)
+
+<sup>[API method description.](https://2captcha.com/2captcha-api#imperva)</sup>
+
+Use this method to solve Imperva (Incapsula) captcha. Returns a JSON string with cookies.
+
+> [!IMPORTANT]
+> To solve the Imperva (Incapsula) captcha, you must use a proxy. It is recommended to use [residential proxies].
+
+```python
+result = solver.imperva(pageurl='https://example.com/login',
+                        incapsula_script_url='/_Incapsula_Resource?SWUDNSAI=31&xinfo=1',
+                        incapsula_cookies='visid_incap_123456=sample; incap_ses_123_123456=sample',
+                        proxy={'type': 'HTTP', 'uri': 'login:password@IP_address:PORT'},
+                        )
+```
+
+The cookies from `domains` must be passed to the target website. If the solution contains `headers.User-Agent`,
+use the same User-Agent for requests to the website.
+
 ## Other methods
 
 ### send / get_result
@@ -694,7 +715,8 @@ except TimeoutException as e:
 ## Proxies
 
 You can pass your proxy as an additional argument for the following methods: recaptcha, funcaptcha, geetest, geetest v4, 
-keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome, cybersiara. 
+keycaptcha, capy puzzle, lemin, atbcaptcha, turnstile, amazon waf, mtcaptcha, friendly captcha, cutcaptcha, Tencent, DataDome, cybersiara, 
+Yandex Smart, VKCaptcha, CaptchaFox, Prosopo, Altcha, Binance, Yidun, Hunt, Alibaba, TSPD, Basilisk, Imperva (Incapsula). 
 
 
 The proxy will be forwarded to the API to solve the captcha.
